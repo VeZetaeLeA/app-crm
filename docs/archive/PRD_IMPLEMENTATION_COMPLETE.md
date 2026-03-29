@@ -1,6 +1,6 @@
 # 🎯 PRD TÉCNICO - IMPLEMENTACIÓN COMPLETADA
 
-**Proyecto:** DataWyrd  
+**Proyecto:** VeZetaeLeA  
 **Fecha:** 09 de Febrero, 2026  
 **Versión:** 1.2.5  
 **Estado:** ✅ **CERTIFICADO - LISTO PARA DEMO**
@@ -246,16 +246,16 @@ config/production.php         # Entorno producción
 ### 1. Preparar `.env` en Hostinger
 ```bash
 ENVIRONMENT=demo
-APP_NAME="Data Wyrd OS"
-APP_URL=https://vezetaelea.com/demo/datawyrd
+APP_NAME="VeZetaeLeA OS"
+APP_URL=https://vezetaelea.com/demo/VeZetaeLeA
 MAIL_ENABLED=true
 DB_HOST=localhost
-DB_DATABASE=u123456789_datawyrd_demo
+DB_DATABASE=u123456789_VeZetaeLeA_demo
 DB_USERNAME=u123456789_admin
 DB_PASSWORD=[PASSWORD_SEGURO]
-MAIL_USERNAME=noreply@datawyrd.com
+MAIL_USERNAME=noreply@VeZetaeLeA.com
 MAIL_PASSWORD=[ZOHO_APP_PASSWORD]
-MAIL_FROM_ADDRESS=noreply@datawyrd.com
+MAIL_FROM_ADDRESS=noreply@VeZetaeLeA.com
 APP_KEY=[GENERAR_32_CARACTERES]
 ```
 

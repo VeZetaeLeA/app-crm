@@ -54,7 +54,7 @@ DB_DATABASE=vezetaelea
 
 # Contenido:
 ENVIRONMENT=demo
-APP_NAME="Data Wyrd OS"
+APP_NAME="VeZetaeLeA OS"
 APP_URL=https://vezetaelea.com/demo/VeZetaeLeA
 MAIL_ENABLED=true
 DB_HOST=localhost
@@ -219,7 +219,7 @@ php -r "echo bin2hex(random_bytes(16));"
 ### `.env.example` (se sube a Git)
 ```bash
 ENVIRONMENT=local
-APP_NAME="Data Wyrd OS"
+APP_NAME="VeZetaeLeA OS"
 APP_URL=
 DB_HOST=localhost
 DB_DATABASE=
@@ -233,7 +233,7 @@ MAIL_PASSWORD=
 ### `.env` en LOCAL (NO se sube a Git)
 ```bash
 ENVIRONMENT=local
-APP_NAME="Data Wyrd OS"
+APP_NAME="VeZetaeLeA OS"
 APP_URL=http://localhost/VeZetaeLeA
 DB_HOST=localhost
 DB_DATABASE=VeZetaeLeA
@@ -247,7 +247,7 @@ MAIL_PASSWORD=
 ### `.env` en HOSTINGER (NO se sube a Git)
 ```bash
 ENVIRONMENT=demo
-APP_NAME="Data Wyrd OS"
+APP_NAME="VeZetaeLeA OS"
 APP_URL=https://vezetaelea.com/demo/VeZetaeLeA
 DB_HOST=localhost
 DB_DATABASE=vezetaelea

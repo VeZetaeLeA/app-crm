@@ -5,7 +5,7 @@ services:
     build: 
       context: .
       dockerfile: docker/app/Dockerfile
-    container_name: datawyrd_app
+    container_name: VeZetaeLeA_app
     restart: unless-stopped
     ports:
       - "8000:80"
@@ -17,13 +17,13 @@ services:
 
   db:
     image: mysql:8.0
-    container_name: datawyrd_db
+    container_name: VeZetaeLeA_db
     restart: unless-stopped
     environment:
-      MYSQL_DATABASE: datawyrd
+      MYSQL_DATABASE: VeZetaeLeA
       MYSQL_ROOT_PASSWORD: root
-      MYSQL_USER: datawyrd_user
-      MYSQL_PASSWORD: datawyrd_password
+      MYSQL_USER: VeZetaeLeA_user
+      MYSQL_PASSWORD: VeZetaeLeA_password
     ports:
       - "3306:3306"
     volumes:
@@ -31,7 +31,7 @@ services:
 
   redis:
     image: redis:alpine
-    container_name: datawyrd_redis
+    container_name: VeZetaeLeA_redis
     restart: unless-stopped
     ports:
       - "6379:6379"

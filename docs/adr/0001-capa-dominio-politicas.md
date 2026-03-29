@@ -4,7 +4,7 @@
 **Estado:** Aceptado  
 
 ## Contexto
-La aplicación DataWyrd ha crecido hasta un punto donde la lógica de negocio se encuentra dispersa entre controladores y modelos SQL. Esto dificulta el testing y hace que el mantenimiento sea propenso a errores de flujo (ej. transiciones de estado inválidas).
+La aplicación VeZetaeLeA ha crecido hasta un punto donde la lógica de negocio se encuentra dispersa entre controladores y modelos SQL. Esto dificulta el testing y hace que el mantenimiento sea propenso a errores de flujo (ej. transiciones de estado inválidas).
 
 ## Decisión
 Implementar una **Capa de Dominio** explícita basada en:

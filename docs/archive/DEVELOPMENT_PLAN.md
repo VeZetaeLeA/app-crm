@@ -1,6 +1,6 @@
-# 📊 Data Wyrd OS - Estado de Implementación
+# 📊 VeZetaeLeA OS - Estado de Implementación
 
-Este documento detalla el progreso del desarrollo de Data Wyrd OS, marcando las funcionalidades completadas y las pendientes según el roadmap del proyecto.
+Este documento detalla el progreso del desarrollo de VeZetaeLeA OS, marcando las funcionalidades completadas y las pendientes según el roadmap del proyecto.
 
 ---
 

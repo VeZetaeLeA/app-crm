@@ -7,7 +7,7 @@
 
 **VeZetaeLeA OS** es una plataforma CRM + Portal de Clientes + Sistema de Facturación sobre un framework PHP MVC personalizado.
 
-> **v2.0.0 — Rebranding:** Toda referencia a "DataWyrd" fue reemplazada por "VeZetaeLeA". Los prefijos de IDs son ahora `VZL-` (presupuestos: `VZL-B{AÑO}-{HEX4}`, facturas: `VZL-INV-{YYYYMMDD}-{HEX4}`).
+> **v2.0.0 — Rebranding:** Toda referencia a "VeZetaeLeA" fue reemplazada por "VeZetaeLeA". Los prefijos de IDs son ahora `VZL-` (presupuestos: `VZL-B{AÑO}-{HEX4}`, facturas: `VZL-INV-{YYYYMMDD}-{HEX4}`).
 
 ---
 

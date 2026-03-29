@@ -69,7 +69,7 @@ private function redirectByRole()
 
 El framework usa un patrón MVC simple:
 
-**URL:** `http://localhost/datawyrd/controller/method/param1/param2`
+**URL:** `http://localhost/VeZetaeLeA/controller/method/param1/param2`
 
 Se traduce a:
 - `controller` → Busca `app/controllers/ControllerController.php`
@@ -88,7 +88,7 @@ He creado un script de debug para facilitar el diagnóstico de problemas futuros
 
 **Ubicación:** `public/debug_login.php`
 
-**URL de acceso:** `http://localhost/datawyrd/debug_login.php`
+**URL de acceso:** `http://localhost/VeZetaeLeA/debug_login.php`
 
 **Funcionalidades:**
 1. ✅ Verifica conexión a base de datos
@@ -105,7 +105,7 @@ He creado un script de debug para facilitar el diagnóstico de problemas futuros
 - Ahora carga el layout público con todos los estilos
 
 #### 2. **Placeholder con vulnerabilidad** ✅
-- Cambiado de `admin@datawyrd.com` a `tu.email@ejemplo.com`
+- Cambiado de `admin@VeZetaeLeA.com` a `tu.email@ejemplo.com`
 
 #### 3. **CSS incompleto** ✅
 - Expandido `style.css` con todas las clases necesarias
@@ -118,9 +118,9 @@ He creado un script de debug para facilitar el diagnóstico de problemas futuros
 Para verificar que todo funciona:
 
 1. **Limpia el caché del navegador** (Ctrl+F5)
-2. Ve a: `http://localhost/datawyrd/auth/login`
+2. Ve a: `http://localhost/VeZetaeLeA/auth/login`
 3. Ingresa tus credenciales
-4. Deberías ser redirigido a: `http://localhost/datawyrd/dashboard`
+4. Deberías ser redirigido a: `http://localhost/VeZetaeLeA/dashboard`
 5. El dashboard mostrado dependerá de tu rol:
    - Admin → Dashboard con gestión completa
    - Staff → Dashboard con tickets asignados
@@ -131,7 +131,7 @@ Para verificar que todo funciona:
 Si aún tienes problemas:
 
 1. **Verifica que existe un usuario en la base de datos:**
-   - Usa el script debug: `http://localhost/datawyrd/debug_login.php`
+   - Usa el script debug: `http://localhost/VeZetaeLeA/debug_login.php`
    - Revisa que el usuario tenga `is_active = 1`
 
 2. **Verifica la configuración de sesiones en PHP:**

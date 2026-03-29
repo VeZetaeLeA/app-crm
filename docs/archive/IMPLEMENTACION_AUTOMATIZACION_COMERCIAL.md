@@ -1,4 +1,4 @@
-# 🤖 Automatización del Flujo Comercial - Data Wyrd OS
+# 🤖 Automatización del Flujo Comercial - VeZetaeLeA OS
 
 **Versión:** 1.0.0  
 **Estado:** ✅ Implementado  

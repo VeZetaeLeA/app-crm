@@ -1,6 +1,6 @@
 # ✅ CHECKLIST DE DESPLIEGUE A DEMO
 
-**Proyecto:** DataWyrd  
+**Proyecto:** VeZetaeLeA  
 **PRD:** Estabilización, Gestión de Entornos y Hardening Técnico  
 **Fecha:** 09 de Febrero, 2026  
 **Versión:** 1.3.0  
@@ -111,24 +111,24 @@ ENVIRONMENT=demo
 # ===========================================
 # APLICACIÓN
 # ===========================================
-APP_NAME="Data Wyrd OS"
-APP_URL=https://vezetaelea.com/demo/datawyrd
+APP_NAME="VeZetaeLeA OS"
+APP_URL=https://vezetaelea.com/demo/VeZetaeLeA
 
 # ===========================================
 # BASE DE DATOS (Hostinger)
 # ===========================================
 DB_HOST=localhost
-DB_DATABASE=uxxxxx_datawyrd
-DB_USERNAME=uxxxxx_datawyrd
+DB_DATABASE=uxxxxx_VeZetaeLeA
+DB_USERNAME=uxxxxx_VeZetaeLeA
 DB_PASSWORD=[PASSWORD_REAL]
 
 # ===========================================
 # EMAIL
 # ===========================================
 MAIL_ENABLED=false
-MAIL_USERNAME=noreply@datawyrd.com
+MAIL_USERNAME=noreply@VeZetaeLeA.com
 MAIL_PASSWORD=
-MAIL_FROM_ADDRESS=noreply@datawyrd.com
+MAIL_FROM_ADDRESS=noreply@VeZetaeLeA.com
 
 # ===========================================
 # SEGURIDAD (GENERAR NUEVA CLAVE)

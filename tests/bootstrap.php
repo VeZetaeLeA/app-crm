@@ -1,6 +1,6 @@
 <?php
 /**
- * PHPUnit Bootstrap for DataWyrd
+ * PHPUnit Bootstrap for VeZetaeLeA
  */
 
 define('BASE_PATH', dirname(__DIR__));

@@ -3,14 +3,14 @@
 Esta guía detalla cómo habilitar los pagos automatizados usando MercadoPago y configurar dinámicamente las instrucciones de transferencia bancaria directamente desde el archivo `.env`.
 
 ## 1. Configuración de Transferencia Bancaria (Manual / FinOps)
-El sistema **Data Wyrd OS** ya no utiliza textos forzados en el código. Para actualizar la información del banco que se muestra en las facturas de tus clientes, debes ajustar las siguientes variables en tu archivo `.env`:
+El sistema **VeZetaeLeA OS** ya no utiliza textos forzados en el código. Para actualizar la información del banco que se muestra en las facturas de tus clientes, debes ajustar las siguientes variables en tu archivo `.env`:
 
 ```env
 # ===========================================
 # INSTRUCCIONES BANCARIAS (TRANSFERENCIAS)
 # ===========================================
 BANK_NAME="Ecosistema Digital Bank"
-BANK_ACCOUNT_NAME="Data Wyrd Services LLC"
+BANK_ACCOUNT_NAME="VeZetaeLeA Services LLC"
 BANK_ACCOUNT_NUMBER="1234-5678-9012"
 BANK_CBU_ALIAS="vezetaelea.usd"
 ```
@@ -26,7 +26,7 @@ Cualquier cambio a estas variables impactará inversamente y en tiempo real a la
 3. Ingresa a la sección **Credenciales de Producción** (o Credenciales de Prueba si estás en un entorno local / sandbox).
 4. Copia el **Access Token** y la **Public Key**.
 
-### Paso 2.2: Configurar tu Sistema Data Wyrd OS
+### Paso 2.2: Configurar tu Sistema VeZetaeLeA OS
 Copia las credenciales obtenidas y colócalas en el archivo `.env` en la raíz de tu proyecto:
 
 ```env

@@ -1,4 +1,4 @@
-# 🔐 Guía de Seguridad y Mejores Prácticas - Data Wyrd OS
+# 🔐 Guía de Seguridad y Mejores Prácticas - VeZetaeLeA OS
 
 **Versión:** 2.5.0  
 **Última actualización:** 03 de Marzo, 2026 (Fase 4 - Intelligence & SecOps)  
@@ -499,7 +499,7 @@ sudo apt update && sudo apt upgrade
 ## 8. Seguridad en API (JWT)
 
 ### 8.1 Autenticación sin Estado
-La API v1 de Data Wyrd utiliza **JSON Web Tokens (JWT)** para eliminar la dependencia de sesiones en servidor.
+La API v1 de VeZetaeLeA utiliza **JSON Web Tokens (JWT)** para eliminar la dependencia de sesiones en servidor.
 
 ✅ **Implementación Segura (`Core\JWT`)**:
 - **Bypass CSRF**: Los endpoints `/api/*` ignoran el token CSRF para permitir consumo cross-domain controlado.

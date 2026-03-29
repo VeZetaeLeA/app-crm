@@ -14,14 +14,14 @@
 **Archivo modificado:** `app/controllers/AuthController.php`
 ```php
 // Antes:
-$this->view('public/login', ['title' => 'Iniciar Sesión | Data Wyrd']);
+$this->view('public/login', ['title' => 'Iniciar Sesión | VeZetaeLeA']);
 
 // Después:
-$this->viewLayout('public/login', 'public', ['title' => 'Iniciar Sesión | Data Wyrd']);
+$this->viewLayout('public/login', 'public', ['title' => 'Iniciar Sesión | VeZetaeLeA']);
 ```
 
 #### 2. **Placeholder con información sensible** ✅ RESUELTO
-**Problema:** El campo de email mostraba `admin@datawyrd.com` como placeholder, lo cual constituye una vulnerabilidad de seguridad al revelar un usuario válido del sistema.
+**Problema:** El campo de email mostraba `admin@VeZetaeLeA.com` como placeholder, lo cual constituye una vulnerabilidad de seguridad al revelar un usuario válido del sistema.
 
 **Solución:**
 - Cambiado el placeholder a un texto genérico: `tu.email@ejemplo.com`
@@ -30,7 +30,7 @@ $this->viewLayout('public/login', 'public', ['title' => 'Iniciar Sesión | Data 
 **Archivo modificado:** `app/views/public/login.php`
 ```php
 // Antes:
-placeholder="admin@datawyrd.com"
+placeholder="admin@VeZetaeLeA.com"
 
 // Después:
 placeholder="tu.email@ejemplo.com"
@@ -85,6 +85,6 @@ El flujo de autenticación funciona así:
 ### Para Probar:
 
 1. Limpiar caché del navegador (Ctrl+F5)
-2. Navegar a: `http://localhost/datawyrd/auth/login`
+2. Navegar a: `http://localhost/VeZetaeLeA/auth/login`
 3. Ingresar credenciales válidas
 4. Verificar que se cargue correctamente el dashboard según el rol del usuario

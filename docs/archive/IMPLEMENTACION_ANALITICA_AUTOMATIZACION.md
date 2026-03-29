@@ -1,6 +1,6 @@
 # 📊 Implementación: Inteligencia de Datos y Automatización (Feb 2026)
 
-Este documento detalla la implementación técnica del módulo de analítica visual, el motor de notificaciones y la exportación de documentos PDF en Data Wyrd OS.
+Este documento detalla la implementación técnica del módulo de analítica visual, el motor de notificaciones y la exportación de documentos PDF en VeZetaeLeA OS.
 
 ---
 

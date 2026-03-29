@@ -40,7 +40,7 @@ Se actualizaron los estilos base para asegurar coherencia en todos los dispositi
 - **Navegación Dinámica Global:**
     - El Header y Footer ahora generan automáticamente sus opciones de "Servicios" consultando los Pilares activos en la base de datos.
     - Se incluyó el acceso al Workspace en todos los menús de usuario.
-- **Marca Universal:** Se configuró el logo para que actúe como un enlace raíz (`/datawyrd/`) en todos los layouts del sistema.
+- **Marca Universal:** Se configuró el logo para que actúe como un enlace raíz (`/VeZetaeLeA/`) en todos los layouts del sistema.
 - **Gestión de Imágenes Transparente:** El CMS ahora soporta subida de archivos PNG para los Pilares con renombrado automático.
 
 ### Archivos Modificados:

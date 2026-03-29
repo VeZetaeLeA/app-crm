@@ -1,6 +1,6 @@
 <?php
 /**
- * Data Wyrd OS - Console Queue Worker
+ * VeZetaeLeA OS - Console Queue Worker
  * Run via CLI: php worker.php
  */
 

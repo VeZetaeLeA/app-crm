@@ -1,4 +1,4 @@
-# 🚀 Guía de Despliegue - Data Wyrd OS en Hostinger
+# 🚀 Guía de Despliegue - VeZetaeLeA OS en Hostinger
 
 **Versión:** 2.0.0  
 **Fecha:** 22 de Febrero, 2026  
@@ -81,7 +81,7 @@ VeZetaeLeA utiliza un sistema de gestión de entornos (SaaS Level) basado en el 
    ENVIRONMENT=production
 
    # Aplicación
-   APP_NAME="Data Wyrd OS"
+   APP_NAME="VeZetaeLeA OS"
 
    # Base de Datos
    DB_HOST=localhost
@@ -97,13 +97,13 @@ VeZetaeLeA utiliza un sistema de gestión de entornos (SaaS Level) basado en el 
    MAIL_USERNAME=contacto@vezetaelea.com
    MAIL_PASSWORD=TU_PASSWORD_ZOHO_AQUI
    MAIL_FROM_ADDRESS=contacto@vezetaelea.com
-   MAIL_FROM_NAME="Data Wyrd Support"
+   MAIL_FROM_NAME="VeZetaeLeA Support"
    ```
 
    **Para DEMO/PRUEBAS (`https://vezetaelea.com/demo/vezetaelea`):**
    ```env
    ENVIRONMENT=demo
-   APP_NAME="Data Wyrd OS - Demo"
+   APP_NAME="VeZetaeLeA OS - Demo"
    DB_DATABASE=vezetaelea_demo
    # ... resto de credenciales
    ```
@@ -607,4 +607,4 @@ post_max_size = 20M
 
 **¡Despliegue completado! 🎉**
 
-Tu aplicación Data Wyrd OS está ahora en producción y lista para recibir clientes.
+Tu aplicación VeZetaeLeA OS está ahora en producción y lista para recibir clientes.

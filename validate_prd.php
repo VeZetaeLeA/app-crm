@@ -1,7 +1,7 @@
 #!/usr/bin/env php
 <?php
 /**
- * Script de Validación PRD - DataWyrd
+ * Script de Validación PRD - VeZetaeLeA
  * Verifica que todos los requisitos del PRD estén implementados
  * 
  * Uso: php validate_prd.php
@@ -9,7 +9,7 @@
 
 echo "\n";
 echo "╔══════════════════════════════════════════════════════════╗\n";
-echo "║  VALIDADOR PRD TÉCNICO - DATA WYRD OS                    ║\n";
+echo "║  VALIDADOR PRD TÉCNICO - VeZetaeLeA OS                    ║\n";
 echo "║  Versión 1.3.0 - Certificación BOOTSTRAP                ║\n";
 echo "╚══════════════════════════════════════════════════════════╝\n";
 echo "\n";

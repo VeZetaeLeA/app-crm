@@ -21,7 +21,7 @@ try {
     \EnvLoader::load(BASE_PATH . '/.env');
     Config::load();
 
-    echo "\n=== Data Wyrd Environment Verification ===\n";
+    echo "\n=== VeZetaeLeA Environment Verification ===\n";
     echo "Environment: " . Config::get('ENVIRONMENT') . "\n";
     echo "Base URL: " . Config::get('base_url') . "\n";
     echo "DB Host: " . Config::get('db.host') . "\n";

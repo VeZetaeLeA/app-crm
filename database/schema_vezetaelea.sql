@@ -1,6 +1,6 @@
 -- ============================================================================
 -- VeZetaeLeA OS — ESQUEMA CANÓNICO DE BASE DE DATOS
--- Versión: 2.0.0 (Post-Rebranding desde DataWyrd)
+-- Versión: 2.0.0 (Post-Rebranding desde VeZetaeLeA)
 -- Fecha: 2026-03-18
 -- Engine: MySQL 8.0+ / MariaDB 10.6+
 -- Encoding: utf8mb4 / utf8mb4_unicode_ci
@@ -13,7 +13,7 @@
 -- v1.3.0 (2026-02-20) — Phase 4: RBAC, event sourcing, lead_score
 -- v1.4.0 (2026-03-10) — Sprint 1: Versiones de presupuesto (parent_budget_id,
 --                         service_reference, budget_number extendido a 30 chars)
--- v2.0.0 (2026-03-18) — Rebranding completo: DataWyrd → VeZetaeLeA.
+-- v2.0.0 (2026-03-18) — Rebranding completo: VeZetaeLeA → VeZetaeLeA.
 -- v2.1.0 (2026-03-18) — Sprint 2: Gestión de Proyectos Avanzada:
 --                         Añadida tabla project_deliverables con ciclo de vida.
 --                         Añadida tabla ticket_tasks (GAI actions).

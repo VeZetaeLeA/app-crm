@@ -7,7 +7,7 @@ use Core\Database;
 use Core\Config;
 
 /**
- * DataWyrd Test Base Class
+ * VeZetaeLeA Test Base Class
  * Sets up environment for testing without affecting production/demo data.
  */
 class TestCase extends BaseTestCase
@@ -34,7 +34,7 @@ class TestCase extends BaseTestCase
         return [
             'id' => 999,
             'name' => 'Test ' . ucfirst($role),
-            'email' => 'test@datawyrd.com',
+            'email' => 'test@VeZetaeLeA.com',
             'role' => $role
         ];
     }
