@@ -1,0 +1,24 @@
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+
+    # Redirect sitemap.xml to controller
+    RewriteRule ^sitemap.xml$ index.php?url=sitemap [L,QSA]
+
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteRule ^(.*)$ index.php?url=$1 [QSA,L]
+</IfModule>
+
+# Security Headers (Audit v2.2.0 Hardening)
+<IfModule mod_headers.c>
+    # clickjacking protection
+    Header set X-Frame-Options "SAMEORIGIN"
+    # mimetypes sniffing protection
+    Header set X-Content-Type-Options "nosniff"
+    # referrer policy
+    Header set Referrer-Policy "strict-origin-when-cross-origin"
+    # HSTS - 1 year (only works over HTTPS)
+    Header set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
+    # CSP - Basic whitelist for internal assets + Google Fonts/Icons
+    Header set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: *; frame-ancestors 'self';"
+</IfModule>

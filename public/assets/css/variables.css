@@ -1,0 +1,180 @@
+/**
+ * VeZetaeLeA OS — Unified Design Tokens
+ * Source of truth for all colors, typography, and spacing.
+ */
+
+:root {
+    /* Brand Colors (Evolución Corporativa — Unified) */
+    --vzl-cyan: #113a96;
+    /* De Azul Royal a Azul Profundo / Midnight Blue (Confianza/Autoridad Máxima) */
+    --vzl-magenta: #350513;
+    /* De Magenta a Vinotinto / Deep Crimson (Sofisticación/Exclusividad) */
+
+
+    /* Vinotinto / Deep Crimson (Original reference) */
+    --vzl-gold: #D4AF37;
+    /* Used only for premium accents or specific statuses */
+    --vzl-deep-black: #020617;
+    --vzl-midnight: #0B0E17;
+    --vzl-steel: #1e293b;
+    --vzl-white: #f8fafc;
+    --vzl-gray-muted: #94a3b8;
+
+    /* Gradients (Deep Blue → Vinotinto Nocturno — Corporate Shift) */
+    --vzl-gradient-primary: linear-gradient(135deg, var(--vzl-cyan) 0%, #081a42 50%, var(--vzl-magenta) 100%);
+    --vzl-gradient-tech: linear-gradient(135deg, var(--vzl-cyan) 0%, var(--vzl-magenta) 100%);
+    --vzl-gradient-dark: linear-gradient(to bottom right, var(--vzl-midnight), var(--vzl-deep-black));
+
+    /* Vibrant Physichromie Gradient (Updated for Ultra-Dark Palette) */
+    --vzl-gradient-physi: linear-gradient(to right,
+            #113a96 0%,
+            #0a2a6e 25%,
+            #350513 50%,
+            #1e030a 75%,
+            #113a96 100%);
+
+
+
+    /* Glassmorphism */
+    --vzl-glass-bg: rgba(11, 14, 23, 0.65);
+    --vzl-glass-border: rgba(0, 242, 255, 0.15);
+    --vzl-glass-border-magenta: rgba(225, 29, 72, 0.15);
+    --vzl-glass-blur: 20px;
+
+    /* Semantic Accents */
+    --vzl-success: #22c55e;
+    --vzl-warning: #facc15;
+    --vzl-danger: #ef4444;
+
+    /* Unified Button Tokens */
+    --vzl-btn-cyan-bg: var(--vzl-cyan);
+    --vzl-btn-cyan-shadow: 0 0 20px rgba(0, 242, 255, 0.4);
+    --vzl-btn-magenta-bg: var(--vzl-magenta);
+    --vzl-btn-magenta-shadow: 0 0 20px rgba(139, 26, 51, 0.5);
+
+    /* Typography Infrastructure (Design System Standard) */
+    --vzl-font-heading: 'Outfit', system-ui, sans-serif;
+    --vzl-font-body: 'Space Grotesk', system-ui, sans-serif;
+
+    /* Typography Scale (Premium Responsive) */
+    --vzl-fs-display: clamp(2.5rem, 8vw, 6rem);
+    --vzl-fs-h1: clamp(2.25rem, 5vw, 4rem);
+    --vzl-fs-h2: clamp(1.8rem, 4vw, 3rem);
+    --vzl-fs-h3: clamp(1.5rem, 3vw, 2.5rem);
+    --vzl-fs-h4: 1.5rem;
+    --vzl-fs-h5: 1.25rem;
+    --vzl-fs-h6: 1.1rem;
+    --vzl-fs-body: 1rem;
+    --vzl-fs-small: 0.875rem;
+    --vzl-fs-xs: 0.75rem;
+    --vzl-fs-xxs: 0.65rem;
+
+    /* Cinematic Spacing */
+    --vzl-lh-tight: 1.05;
+    --vzl-lh-base: 1.65;
+    --vzl-tracking-tighter: -0.05em;
+    --vzl-tracking-widest: 0.15em;
+
+    /* Spacing & Borders */
+    --vzl-radius-sm: 0.5rem;
+    --vzl-radius-md: 0.75rem;
+    --vzl-radius-lg: 1.25rem;
+    --vzl-radius-pill: 50rem;
+
+    /* Shadows */
+    --vzl-shadow-cyan: 0 0 25px rgba(0, 242, 255, 0.35);
+    --vzl-shadow-magenta: 0 0 25px rgba(225, 29, 72, 0.35);
+    --vzl-shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+}
+
+/* Kinetic Gradient Flow Effect (Unified Visual Highlight for VeZetaeLeA) */
+/* Unified Visual Highlight for VeZetaeLeA (Solid Color only as requested) */
+.text-gradient,
+.vzl-text-gradient,
+.vzl-text-gradient-vibrant {
+    background: none !important;
+    -webkit-background-clip: initial !important;
+    background-clip: initial !important;
+    -webkit-text-fill-color: initial !important;
+    color: #3b82f6 !important; /* Azul Royal sólido para resaltar sin degradado */
+    font-weight: 800;
+    display: inline-block;
+    animation: none !important; /* Apagar animación de flujo */
+}
+
+
+/* Section Header Patterns — Unified Strategy */
+.vzl-section-header {
+    margin-bottom: 3.5rem;
+    text-align: center;
+}
+
+.vzl-section-subtitle {
+    display: block;
+    color: var(--vzl-cyan);
+    font-size: var(--vzl-fs-xs);
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: var(--vzl-tracking-widest);
+    margin-bottom: 1rem;
+    font-family: var(--vzl-font-heading);
+    opacity: 0.8;
+}
+
+.vzl-section-title {
+    font-family: var(--vzl-font-heading);
+    font-size: var(--vzl-fs-h2);
+    font-weight: 900; /* Factor Premium solicitado por el cliente */
+    color: var(--vzl-white);
+    line-height: var(--vzl-lh-tight);
+    letter-spacing: var(--vzl-tracking-tighter);
+    margin-bottom: 1.5rem;
+}
+
+.vzl-btn-glow-cyan {
+    background: var(--vzl-btn-cyan-bg) !important;
+    color: var(--vzl-white) !important; /* Cambio a blanco para contraste sobre azul profundo */
+    box-shadow: var(--vzl-btn-cyan-shadow) !important;
+    transition: all 0.3s ease !important;
+}
+
+.vzl-btn-glow-cyan:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 0 30px rgba(0, 242, 255, 0.6) !important;
+}
+
+.vzl-btn-glow-magenta {
+    background: rgba(53, 5, 19, 0.4) !important; /* Glass-Vinotinto Translucent */
+    backdrop-filter: blur(12px);
+    color: var(--vzl-white) !important;
+    border: 1px solid rgba(139, 26, 51, 0.4) !important;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4) !important;
+    transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1) !important;
+    text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+}
+
+.vzl-btn-glow-magenta:hover {
+    transform: translateY(-2px);
+    background: rgba(53, 5, 19, 0.8) !important; /* Brighter and Solid on Hover */
+    border-color: rgba(225, 29, 72, 0.6) !important;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5) !important;
+}
+
+/* Light Mode Overrides (Executive) */
+[data-theme="light"] {
+    --vzl-deep-black: #F6F8FB;
+    --vzl-midnight: #FFFFFF;
+    --vzl-white: #0F172A;
+    --vzl-gray-muted: #475569;
+    --vzl-glass-bg: rgba(255, 255, 255, 0.8);
+    --vzl-glass-border: rgba(15, 23, 42, 0.08);
+}
+
+/* Typography Utilities */
+.xx-small {
+    font-size: 0.65rem;
+}
+
+.x-small {
+    font-size: 0.75rem;
+}

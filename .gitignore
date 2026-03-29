@@ -1,0 +1,56 @@
+# Archivos de configuración sensibles
+.env
+
+# Logs y caché
+storage/logs/*.log
+storage/logs/*.json
+storage/rates/*.json
+storage/cache/*
+!storage/cache/.gitkeep
+!storage/logs/.gitkeep
+
+# Archivos subidos por usuarios y cachés
+public/storage/uploads/*
+!public/storage/uploads/.gitkeep
+public/uploads/*
+!public/uploads/.gitkeep
+public/storage/projects/*
+!public/storage/projects/.gitkeep
+public/storage/blog/*
+!public/storage/blog/.gitkeep
+storage/cache/*
+!storage/cache/.gitkeep
+storage/rates/*
+!storage/rates/.gitkeep
+storage/audit_vault/*
+!storage/audit_vault/.gitkeep
+.phpunit.result.cache
+*.sqlite
+*.sqlite3
+
+# Prevención de Fugas Críticas (Data Leakage)
+OLD_VERSION/
+tmp/
+/*.sql
+/*.php.tmp
+
+# Dependencias (si se usan en el futuro)
+/vendor/
+node_modules/
+
+# IDEs
+.vscode/
+.idea/
+*.sublime-project
+*.sublime-workspace
+
+# Sistema operativo
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Temporales
+*.tmp
+*.bak
+*.swp
+*~

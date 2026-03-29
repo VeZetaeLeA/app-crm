@@ -1,0 +1,37 @@
+{
+    "name": "vezetaelea/platform",
+    "description": "Enterprise Data Platform",
+    "type": "project",
+    "license": "proprietary",
+    "autoload": {
+        "psr-4": {
+            "Core\\": "Core/",
+            "App\\": "App/"
+        }
+    },
+    "require": {
+        "php": ">=8.0",
+        "firebase/php-jwt": "^6.9",
+        "phpmailer/phpmailer": "^7.0",
+        "cboden/ratchet": "^0.4.4",
+        "predis/predis": "^3.4",
+        "clue/redis-react": "^2.8",
+        "dompdf/dompdf": "^3.1",
+        "endroid/qr-code": "^6.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.6"
+    },
+    "config": {
+        "audit": {
+            "ignore": [
+                "PKSA-y2cr-5h3j-g3ys"
+            ]
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tests\\": "tests/"
+        }
+    }
+}

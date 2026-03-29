@@ -1,0 +1,337 @@
+/**
+ * VeZetaeLeA — Public Homepage CSS
+ * Source of truth for all public-facing (non-admin) styles.
+ * This file is loaded AFTER Bootstrap and style.css, so it wins.
+ */
+
+/* ============================================================
+   1. CSS VARIABLES — Mapping to Global Tokens
+   ============================================================ */
+:root {
+    --gradient-public: var(--vzl-gradient-tech);
+    --glass-bg-op: rgba(15, 23, 42, 0.4);
+    --glass-border-op: rgba(255, 255, 255, 0.08);
+}
+
+/* ============================================================
+   2. CUSTOM COMPONENTS
+   ============================================================ */
+.user-access-icon {
+    width: 38px;
+    height: 38px;
+    border: 2px solid var(--vzl-cyan);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--vzl-cyan);
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.user-access-icon:hover {
+    background: rgba(0, 242, 255, 0.1);
+    box-shadow: 0 0 15px rgba(0, 242, 255, 0.4);
+    color: var(--vzl-cyan);
+}
+
+/* ============================================================
+   3. HERO SECTION
+   ============================================================ */
+.hero {
+    min-height: 100vh;
+    background: var(--vzl-deep-black);
+}
+
+.hero-video {
+    object-fit: cover;
+    transform-origin: center center;
+    will-change: transform;
+}
+
+.hero-title {
+    font-family: var(--vzl-font-heading);
+    font-size: clamp(2.5rem, 6vw, 5.5rem);
+    font-weight: 900;
+    letter-spacing: -0.04em;
+    line-height: 1;
+}
+
+.status-bar-center {
+    position: absolute;
+    bottom: 2.5rem;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    gap: 0.6rem;
+    background: rgba(0, 0, 0, 0.4);
+    padding: 6px 16px;
+    border-radius: 50px;
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+/* ============================================================
+   4. LAYOUT UTILITIES (public-specific)
+   ============================================================ */
+.max-w-800 {
+    max-width: 800px;
+}
+
+/* ============================================================
+   5. FEATURE CARDS — Dynamic Stack
+   ============================================================ */
+.vzl-feature-card {
+    background: var(--glass-bg-op);
+    backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border-op);
+    border-radius: 28px;
+    padding: 30px;
+    transition: all 0.5s cubic-bezier(0.19, 1, 0.22, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.vzl-feature-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    border-radius: 28px;
+    padding: 1px;
+    background: linear-gradient(135deg, rgba(255,255,255,0.1), transparent, rgba(255,255,255,0.05));
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    pointer-events: none;
+    transition: opacity 0.5s ease;
+}
+
+.vzl-feature-card:hover {
+    transform: translateY(-8px) scale(1.02);
+    background: rgba(15, 23, 42, 0.6);
+    border-color: rgba(59, 130, 246, 0.3);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.4), 0 0 20px rgba(17, 58, 150, 0.1);
+}
+
+.vzl-feature-card:hover::before {
+    background: linear-gradient(135deg, var(--vzl-cyan), transparent, var(--vzl-magenta));
+    opacity: 0.8;
+}
+
+.vzl-icon-container {
+    position: relative;
+    z-index: 1;
+}
+
+.vzl-icon-glow {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    filter: blur(20px);
+    opacity: 0;
+    transition: all 0.5s ease;
+    z-index: -1;
+}
+
+.vzl-feature-card:hover .vzl-icon-glow {
+    opacity: 0.4;
+    width: 80px;
+    height: 80px;
+}
+
+.vzl-icon-box {
+    width: 56px;
+    height: 56px;
+    background: rgba(255, 255, 255, 0.03);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    border-radius: 16px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.5s ease;
+}
+
+.vzl-feature-card:hover .vzl-icon-box {
+    background: rgba(255, 255, 255, 0.1);
+    transform: rotate(-5deg);
+}
+
+/* Indicators & Badges */
+.vzl-tech-badge {
+    padding: 10px 18px;
+    background: rgba(15, 23, 42, 0.8);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 50px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    transition: all 0.3s ease;
+    animation: vzl-badge-pulse 4s infinite ease-in-out;
+}
+
+@keyframes vzl-badge-pulse {
+    0%, 100% { transform: scale(1); box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3); }
+    50% { transform: scale(1.02); box-shadow: 0 15px 30px rgba(17, 58, 150, 0.2); }
+}
+
+.vzl-tech-badge:hover {
+    transform: scale(1.05);
+    border-color: var(--vzl-cyan);
+    background: rgba(15, 23, 42, 0.9);
+}
+
+/* ============================================================
+   6. FAQ — Modern Accordion Style
+   ============================================================ */
+.vzl-faq-item {
+    transition: all 0.3s ease;
+}
+
+.vzl-faq-active {
+    border-color: var(--vzl-cyan) !important;
+    background: rgba(0, 242, 255, 0.03) !important;
+    box-shadow: 0 10px 30px -10px rgba(0, 242, 255, 0.1);
+}
+
+/* ============================================================
+   7. TECH TICKER
+   ============================================================ */
+.tech-ticker-wrapper {
+    overflow: hidden;
+    position: relative;
+}
+
+.tech-ticker-content {
+    animation: tech-marquee 120s linear infinite;
+    flex-shrink: 0;
+    will-change: transform;
+}
+
+@keyframes tech-marquee {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(-100%);
+    }
+}
+
+/* ============================================================
+   8. FLOATING BUTTONS
+   ============================================================ */
+.floating-whatsapp {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 60px;
+    height: 60px;
+    background: var(--vzl-gradient-primary); /* Sincronización con nuevo gradiente corporativo */
+    color: white;
+    border-radius: 50%;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+    z-index: 1050;
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1.5px solid rgba(255, 255, 255, 0.6);
+}
+
+.floating-whatsapp svg {
+    width: 32px;
+    height: 32px;
+    fill: #ffffff; /* Icono blanco puro solicitado */
+}
+
+.floating-whatsapp:hover {
+    transform: scale(1.15) rotate(5deg);
+    box-shadow: 0 15px 35px rgba(53, 5, 19, 0.5); /* Resplandor Vinotinto */
+    color: white;
+}
+
+
+
+.scroll-to-top {
+    position: fixed;
+    bottom: 30px;
+    left: 30px;
+    width: 50px;
+    height: 50px;
+    background: rgba(15, 23, 42, 0.8);
+    border: 1px solid var(--vzl-cyan);
+    border-radius: 50%;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    color: var(--vzl-cyan);
+    z-index: 1050;
+    cursor: pointer;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s ease;
+}
+
+.scroll-to-top:hover {
+    background: var(--vzl-cyan);
+    color: var(--vzl-deep-black);
+    box-shadow: 0 0 25px rgba(0, 242, 255, 0.5);
+}
+
+/* ============================================================
+   9. FOOTER & NAVBAR DECOR
+   ============================================================ */
+.physichromie-divider,
+.navbar-chromatic-border {
+    height: 8px;
+    width: 100%;
+    background: linear-gradient(to right,
+            #113a96 0%,
+            #0a2a6e 20%,
+            #350513 50%,
+            #1e030a 80%,
+            #113a96 100%);
+    background-size: 200% 100%;
+    animation: physichromie-flow 6s linear infinite;
+}
+
+
+
+.navbar-chromatic-border {
+    height: 2px;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
+
+@keyframes physichromie-flow {
+    0% {
+        background-position: 0% 0%;
+    }
+
+    100% {
+        background-position: 200% 0%;
+    }
+}
+
+/* ============================================================
+   10. HOVER EFFECTS — General
+   ============================================================ */
+.hover-lift:hover {
+    transform: translateY(-8px);
+}
+
+.hover-opacity-1:hover {
+    filter: grayscale(0) opacity(1) !important;
+}
+
+.transition-all {
+    transition: all 0.3s ease;
+}
