@@ -83,10 +83,14 @@
     .form-control:focus {
         border-left: none;
     }
+</style>
 
-    <script>document.querySelector('form').addEventListener('submit', function (e) {
-            const btn=this.querySelector('button[type="submit"]');
+<script>
+    document.querySelector('form').addEventListener('submit', function (e) {
+        const btn = this.querySelector('button[type="submit"]');
+        if (btn) {
             btn.classList.add('is-loading');
-            btn.innerHTML='Validando Credenciales...';
-        });
-    </script>
+            btn.innerHTML = 'Validando Credenciales...';
+        }
+    });
+</script>
