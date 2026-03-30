@@ -16,4 +16,9 @@ interface InvoiceRepositoryInterface extends RepositoryInterface
     public function hasActiveServiceForInvoice(int $invoiceId): bool;
     public function createActiveService(array $data): int;
     public function findInvoiceById(int $invoiceId): ?array;
+    public function getAll(array $filters = []): array;
+    public function getById(int $id): ?array;
+    public function getReceiptByInvoice(int $invoiceId): ?array;
+    public function createReceipt(array $data): int;
+    public function updateStatus(int $id, string $status): bool;
 }

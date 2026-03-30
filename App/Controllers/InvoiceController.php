@@ -7,10 +7,15 @@ use Core\Auth;
 use Core\Session;
 use PDO;
 
+use App\Repositories\InvoiceRepository;
+
 class InvoiceController extends Controller
 {
+    private $invoiceRepo;
+
     public function __construct()
     {
+        $this->invoiceRepo = new InvoiceRepository(Database::getInstance()->getConnection());
         $this->middleware('auth');
         $this->middleware('2fa');
     }
@@ -20,26 +25,12 @@ class InvoiceController extends Controller
      */
     public function index()
     {
-        $db = Database::getInstance()->getConnection();
-        $user = Auth::user();
-
+        $filters = [];
         if (Auth::isClient()) {
-            $stmt = $db->prepare("SELECT i.*, b.budget_number 
-                                 FROM invoices i 
-                                 LEFT JOIN budgets b ON i.budget_id = b.id 
-                                 WHERE i.client_id = ? 
-                                 ORDER BY i.created_at DESC");
-            $stmt->execute([$user['id']]);
-        } else {
-            // Admin/Staff sees all
-            $stmt = $db->query("SELECT i.*, u.name as client_name, b.budget_number 
-                               FROM invoices i 
-                               JOIN users u ON i.client_id = u.id 
-                               LEFT JOIN budgets b ON i.budget_id = b.id 
-                               ORDER BY i.created_at DESC");
+            $filters['client_id'] = Auth::user()['id'];
         }
 
-        $invoices = $stmt->fetchAll();
+        $invoices = $this->invoiceRepo->getAll($filters);
 
         $view = Auth::isClient() ? 'client/invoices/index' : 'admin/invoices/index';
         $this->viewLayout($view, Auth::role(), [
@@ -73,24 +64,18 @@ class InvoiceController extends Controller
      */
     public function show($id)
     {
-        $db = Database::getInstance()->getConnection();
-
-        $sql = "SELECT i.*, u.name as client_name, u.email as client_email, u.company as client_company, u.phone as client_phone, b.budget_number 
-                FROM invoices i 
-                JOIN users u ON i.client_id = u.id 
-                LEFT JOIN budgets b ON i.budget_id = b.id 
-                WHERE i.id = ?";
-        $stmt = $db->prepare($sql);
-        $stmt->execute([$id]);
-        $invoice = $stmt->fetch();
+        $invoice = $this->invoiceRepo->getById($id);
 
         if (!$invoice)
             $this->redirect('/dashboard');
 
-        // Get payment receipt if exists
-        $stmt = $db->prepare("SELECT * FROM payment_receipts WHERE invoice_id = ? ORDER BY created_at DESC LIMIT 1");
-        $stmt->execute([$id]);
-        $receipt = $stmt->fetch();
+        // Security check for clients
+        if (Auth::isClient() && $invoice['client_id'] != Auth::user()['id']) {
+            $this->redirect('/dashboard');
+        }
+
+        // Get payment receipt via Repo
+        $receipt = $this->invoiceRepo->getReceiptByInvoice($id);
 
         $layout = Auth::role();
         $this->viewLayout($layout . '/invoices/view', $layout, [
@@ -209,14 +194,10 @@ class InvoiceController extends Controller
             $this->redirect('/invoice');
         }
 
-        $db = Database::getInstance()->getConnection();
-
         // Ensure invoice belongs to user
-        $stmt = $db->prepare("SELECT * FROM invoices WHERE id = ? AND client_id = ?");
-        $stmt->execute([$invoice_id, Auth::user()['id']]);
-        $invoice = $stmt->fetch();
+        $invoice = $this->invoiceRepo->getById($invoice_id);
 
-        if (!$invoice) {
+        if (!$invoice || $invoice['client_id'] != Auth::user()['id']) {
             Session::flash('error', 'Factura no encontrada.');
             $this->redirect('/invoice');
         }

@@ -29,23 +29,23 @@
         <div class="col-lg-6 p-5 d-flex align-items-center">
             <div class="error-content text-start">
                 <span
-                    class="badge bg-primary text-white px-3 py-2 rounded-pill fw-bold mb-3 small tracking-widest uppercase animate-slide-in" style="box-shadow: 0 0 15px rgba(0,242,255,0.3);">Error
+                    class="vzl-section-subtitle mb-3 d-inline-block animate-slide-in px-3 py-2 rounded-pill bg-white-5 border border-white-10">ERROR
                     404</span>
-                <h1 class="display-1 fw-black text-white mb-0 tracking-tighter">
-                    PÁGINA NO <span class="text-gradient-404">ENCONTRADA</span>
+                <h1 class="vzl-section-title animate-fade-in" style="font-size: clamp(2rem, 5vw, 3.5rem);">
+                    Página no <span class="vzl-text-gradient-vibrant">Encontrada</span>
                 </h1>
-                <p class="lead text-white-50 mt-4 mb-5 max-w-400 animate-fade-in">
+                <p class="text-white-50 mt-4 mb-5 max-w-400 animate-fade-in" style="font-size: 1.05rem; line-height: 1.6;">
                     La página que intentas acceder no existe, la ruta es incorrecta o fue desplazada de la arquitectura.
                 </p>
 
-                <div class="d-flex gap-3 flex-wrap animate-slide-up">
+                <div class="d-flex gap-3 flex-column flex-sm-row animate-slide-up">
                     <a href="<?php echo url('/'); ?>"
-                        class="btn btn-hero-cyan-outline px-5 py-3 rounded-pill fw-bold d-flex align-items-center gap-2">
+                        class="btn vzl-btn-glow-magenta px-4 py-3 fw-bold uppercase tracking-widest d-flex align-items-center justify-content-center gap-2 flex-grow-1">
                         <span class="material-symbols-outlined">home</span>
                         Volver al Inicio
                     </a>
                     <button onclick="window.history.back()"
-                        class="btn btn-hero-pink px-4 py-3 rounded-pill fw-bold d-flex align-items-center gap-2">
+                        class="btn btn-outline-white px-4 py-3 small fw-bold uppercase d-flex align-items-center justify-content-center gap-2 flex-grow-1">
                         <span class="material-symbols-outlined">arrow_back</span>
                         Regresar
                     </button>
@@ -66,55 +66,28 @@
         </div>
         </div> <!-- Closing glass-morphism -->
     </div>
-
 </div>
 
 <style>
-    .text-gradient-404 {
-        background: linear-gradient(to right, #00f2ff, #ec4899);
+    .vzl-section-subtitle {
+        color: var(--vzl-magenta);
+        font-weight: 800;
+        text-transform: uppercase;
+        letter-spacing: 0.15em;
+        font-size: 0.85rem;
+    }
+    .vzl-section-title {
+        font-size: 3.5rem;
+        font-weight: 900;
+        color: white;
+        line-height: 1.1;
+        letter-spacing: -1px;
+    }
+    .vzl-text-gradient-vibrant {
+        background: linear-gradient(135deg, var(--tech-blue) 0%, var(--vzl-magenta) 100%);
         -webkit-background-clip: text;
         background-clip: text;
         -webkit-text-fill-color: transparent;
-    }
-
-    .btn-hero-cyan-outline {
-        background: transparent;
-        color: #00f2ff;
-        font-weight: 700;
-        border-radius: 50rem;
-        padding: 0.9rem 2.5rem;
-        font-size: 0.75rem;
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
-        text-decoration: none;
-        border: 1px solid rgba(0, 242, 255, 0.4);
-        transition: all 0.3s ease;
-    }
-    .btn-hero-cyan-outline:hover {
-        background: rgba(0, 242, 255, 0.15);
-        transform: translateY(-3px);
-        box-shadow: 0 8px 25px rgba(0, 242, 255, 0.3);
-        color: #00f2ff;
-    }
-
-    .btn-hero-pink {
-        background: transparent;
-        color: #ec4899;
-        font-weight: 700;
-        border-radius: 50rem;
-        padding: 0.9rem 2.5rem;
-        font-size: 0.75rem;
-        letter-spacing: 0.12em;
-        text-transform: uppercase;
-        text-decoration: none;
-        border: 1px solid rgba(236, 72, 153, 0.4);
-        transition: all 0.3s ease;
-    }
-    .btn-hero-pink:hover {
-        background: rgba(236, 72, 153, 0.15);
-        transform: translateY(-3px);
-        box-shadow: 0 8px 25px rgba(236, 72, 153, 0.3);
-        color: #ec4899;
     }
 
     .cta-parallax-bg {

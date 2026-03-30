@@ -182,5 +182,74 @@
         "processing": "Procesando...",
         "ai_error": "Error al generar el resumen",
         "ai_connection_error": "No se pudo conectar con el servicio de IA."
+    },
+    "mail": {
+        "welcome": {
+            "subject": "¡Bienvenido a :company, :name!",
+            "greeting": "Hola :name,",
+            "intro": "Tu cuenta ha sido creada exitosamente para procesar tu solicitud de servicio.",
+            "credentials_title": "Tus credenciales de acceso:",
+            "user_label": "Usuario:",
+            "temp_pass_label": "Contraseña Temporal:",
+            "btn_change_pass": "Cambiar Contraseña",
+            "security_note": "Nota: Por seguridad, te recomendamos cambiar tu contraseña una vez que inicies sesión.",
+            "team_signature": "Equipo de Ingeniería - :company"
+        },
+        "ticket_update": {
+            "subject": "Actualización de Ticket: :ticketNumber",
+            "title": "Actualización de Estado",
+            "status_msg": "Tu ticket :ticketNumber ha cambiado su estado a: :status.",
+            "check_details": "Revisa los detalles en la plataforma.",
+            "btn_view_ticket": "Ver Ticket"
+        },
+        "request_confirmation": {
+            "subject": "Confirmación de Solicitud: :ticketNumber",
+            "title": "¡Solicitud Recibida!",
+            "greeting": "Hola :name,",
+            "received": "Hemos recibido correctamente tu solicitud: \":subject_text\".",
+            "whats_next": "¿Qué sigue ahora?",
+            "step_1_title": "Revisión Técnica:",
+            "step_1_desc": "Un especialista analizará tu requerimiento.",
+            "step_2_title": "Propuesta Comercial:",
+            "step_2_desc": "Recibirás un presupuesto en tu dashboard.",
+            "step_3_title": "Activación:",
+            "step_3_desc": "Una vez aprobado, iniciaremos la ejecución iterativa.",
+            "btn_dashboard": "Acceder a mi Dashboard",
+            "automated_msg": "Este es un correo automático, por favor no respondas directamente. Si tienes dudas, contáctanos a través del chat de la plataforma."
+        },
+        "budget_available": {
+            "subject": "Presupuesto Disponible: :budgetNumber",
+            "title": "Propuesta Comercial Lista",
+            "greeting": "Hola :name,",
+            "generated_msg": "Hemos generado el presupuesto :budgetNumber para tu solicitud.",
+            "details_msg": "Puedes revisar los detalles de inversión, alcances técnicos y aprobar la propuesta directamente en nuestra plataforma.",
+            "btn_view_proposal": "Ver Propuesta Comercial",
+            "automated_msg": "Este es un correo automático. Si tienes alguna observación sobre el presupuesto, usa el panel de discusión en el detalle de la propuesta."
+        },
+        "urgent_support": {
+            "subject": "[URGENTE] Soporte Prioritario: :clientName",
+            "title": "⚠️ ATENCIÓN INMEDIATA SOLICITADA",
+            "requested_msg": "El cliente :clientName (:clientEmail) ha solicitado soporte prioritario.",
+            "related_ticket": "Ticket Relacionado:",
+            "status_label": "Estado:",
+            "status_urgent": "Urgente",
+            "btn_attend": "Atender Requerimiento"
+        },
+        "deliverable_ready": {
+            "subject": "📦 Nuevo Entregable Disponible: :deliverableTitle",
+            "title": "Nuevo Entregable Listo",
+            "subtitle": "Tu equipo ha preparado un nuevo entregable para ti",
+            "greeting": "Hola :clientName,",
+            "uploaded_msg": "Te informamos que el equipo ha subido un nuevo entregable en tu proyecto :serviceName.",
+            "detail_title": "Detalle del Entregable",
+            "action_required": "ℹ️ Accion requerida",
+            "action_desc": "Puedes revisar el archivo y aprobarlo o rechazarlo directamente desde tu workspace de proyecto.",
+            "approve_label": "Aprobar:",
+            "approve_desc": "Confirma que el entregable cumple lo acordado.",
+            "reject_label": "Rechazar:",
+            "reject_desc": "Indica las correcciones necesarias con tus notas.",
+            "btn_workspace": "📁 Ver mi Workspace",
+            "automated_msg": "Este es un correo automatico generado por la plataforma :company."
+        }
     }
 }

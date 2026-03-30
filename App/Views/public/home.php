@@ -24,8 +24,8 @@
         </p>
 
         <div class="d-flex flex-column flex-sm-row justify-content-center gap-3">
-            <a href="#pilares" class="btn btn-outline-light btn-lg px-5 py-3 rounded-pill border-white-10 fw-bold transition-all"><?= __('home.hero.cta_primary') ?></a>
-            <a href="#contacto" class="btn btn-primary btn-lg px-5 py-3 rounded-pill fw-bold shadow-cyan transition-all"><?= __('home.hero.cta_secondary') ?></a>
+            <a href="#pilares" class="btn btn-outline-white px-5 py-3 small fw-bold uppercase rounded-pill transition-all"><?= __('home.hero.cta_primary') ?></a>
+            <a href="#contacto" class="btn vzl-btn-glow-magenta px-5 py-3 fw-bold uppercase tracking-widest rounded-pill transition-all"><?= __('home.hero.cta_secondary') ?></a>
         </div>
     </div>
 </header>
@@ -58,7 +58,7 @@
 </div>
 
 <!-- Diferenciación Estratégica (VeZetaeLeA Refined) -->
-<section id="por-que-nosotros" class="bg-midnight border-top border-white-5 py-5 overflow-hidden">
+<section id="por-que-nosotros" class="bg-midnight border-top border-white-5 py-5 overflow-hidden cta-parallax-bg" style="padding: 7rem 0 !important;">
     <div class="container py-5 position-relative" style="z-index: 2;">
         <!-- Cabecera de Sección a Ancho Completo -->
         <div class="row mb-5">
@@ -224,12 +224,49 @@
 </section>
 
 
+<!-- Tech Stack -->
+<?php
+$stackDir = 'assets/images/stack/';
+$stackItems = [];
+if (is_dir(public_path($stackDir))) {
+    $files = scandir(public_path($stackDir));
+    foreach ($files as $file) {
+        if ($file !== '.' && $file !== '..' && (strpos($file, '.png') !== false || strpos($file, '.jpg') !== false || strpos($file, '.svg') !== false)) {
+            $name = pathinfo($file, PATHINFO_FILENAME);
+            $stackItems[] = ['logo' => url($stackDir . $file), 'name' => $name];
+        }
+    }
+}
+?>
+
+<?php if (!empty($stackItems)): ?>
+<section class="tech-stack-section bg-deep-black border-top border-white-5 py-5 overflow-hidden">
+    <div class="vzl-section-header mb-5">
+        <h6 class="vzl-section-subtitle">Herramientas de nivel Enterprise</h6>
+        <h2 class="vzl-section-title">Nuestro stack <span class="vzl-text-gradient-vibrant">tecnológico</span></h2>
+    </div>
+    <div class="tech-ticker-wrapper overflow-hidden pb-4 d-flex">
+        <!-- Render 4 duplicate tracks to ensure enough width to smoothly loop without jumping -->
+        <?php for($loopTrack=0; $loopTrack<4; $loopTrack++): ?>
+            <div class="tech-ticker-content d-flex align-items-center gap-4 pe-4 ms-0">
+                <?php foreach ($stackItems as $item): ?>
+                    <div class="tech-item d-flex flex-column align-items-center gap-2" style="min-width: 90px;">
+                        <img src="<?= $item['logo'] ?>" alt="<?= $item['name'] ?>" style="height: 35px; width: auto; filter: grayscale(1) opacity(0.6);">
+                        <span class="text-white-50 xx-small fw-bold uppercase tracking-tighter d-block text-center"><?= $item['name'] ?></span>
+                    </div>
+                <?php endforeach; ?>
+            </div>
+        <?php endfor; ?>
+    </div>
+</section>
+<?php endif; ?>
+
 <!-- ============================================================
      🆕 VeZetaeLeA App-CRM — VERSIÓN EXPANDIDA (para comparar con la anterior)
      Para mantener esta versión: eliminar la sección anterior (#vzl-os-showcase)
      Para mantener la anterior: eliminar esta sección
      ============================================================ -->
-<section id="kspace_premium" class="bg-deep-black border-top border-white-5 py-5">
+<section id="kspace_premium" class="bg-deep-black border-top border-white-5 py-5 cta-parallax-bg" style="padding: 7rem 0 !important;">
     <div class="container py-5">
 
         <!-- Badge + Header -->
@@ -346,43 +383,6 @@
         </div>
     </div>
 </section>
-
-<!-- Tech Stack -->
-<?php
-$stackDir = 'assets/images/stack/';
-$stackItems = [];
-if (is_dir(public_path($stackDir))) {
-    $files = scandir(public_path($stackDir));
-    foreach ($files as $file) {
-        if ($file !== '.' && $file !== '..' && (strpos($file, '.png') !== false || strpos($file, '.jpg') !== false || strpos($file, '.svg') !== false)) {
-            $name = pathinfo($file, PATHINFO_FILENAME);
-            $stackItems[] = ['logo' => url($stackDir . $file), 'name' => $name];
-        }
-    }
-}
-?>
-
-<?php if (!empty($stackItems)): ?>
-<section class="tech-stack-section bg-deep-black border-top border-white-5 py-5 overflow-hidden">
-    <div class="vzl-section-header mb-5">
-        <h6 class="vzl-section-subtitle">Herramientas de nivel Enterprise</h6>
-        <h2 class="vzl-section-title">Nuestro stack <span class="vzl-text-gradient-vibrant">tecnológico</span></h2>
-    </div>
-    <div class="tech-ticker-wrapper overflow-hidden pb-4 d-flex">
-        <!-- Render 4 duplicate tracks to ensure enough width to smoothly loop without jumping -->
-        <?php for($loopTrack=0; $loopTrack<4; $loopTrack++): ?>
-            <div class="tech-ticker-content d-flex align-items-center gap-4 pe-4 ms-0">
-                <?php foreach ($stackItems as $item): ?>
-                    <div class="tech-item d-flex flex-column align-items-center gap-2" style="min-width: 90px;">
-                        <img src="<?= $item['logo'] ?>" alt="<?= $item['name'] ?>" style="height: 35px; width: auto; filter: grayscale(1) opacity(0.6);">
-                        <span class="text-white-50 xx-small fw-bold uppercase tracking-tighter d-block text-center"><?= $item['name'] ?></span>
-                    </div>
-                <?php endforeach; ?>
-            </div>
-        <?php endfor; ?>
-    </div>
-</section>
-<?php endif; ?>
 
 <!-- CTA Flow: ¿Listo para transformar tu visión? -->
 <section id="contacto" class="bg-midnight border-top border-white-5 py-5">
@@ -633,3 +633,13 @@ if (is_dir(public_path($partnersDir))) {
     });
 
 </script>
+
+<style>
+    /* Parallax global rule for home */
+    .cta-parallax-bg {
+        background: linear-gradient(rgba(10, 10, 14, 0.85), rgba(10, 10, 14, 0.85)), url('<?= url("assets/images/hero_background.png") ?>') !important;
+        background-size: cover !important;
+        background-position: center !important;
+        background-attachment: fixed !important;
+    }
+</style>

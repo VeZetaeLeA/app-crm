@@ -72,7 +72,7 @@ APP_KEY=[GENERAR_32_CARACTERES]
 
 ---
 
-### 3️⃣ En Producción (Futuro)
+### 3️⃣ En Producción 
 
 Mismo proceso que DEMO, pero con:
 ```bash
@@ -213,49 +213,6 @@ php -r "echo bin2hex(random_bytes(16));"
 ```
 
 ---
-
-## 📝 Ejemplo Completo
-
-### `.env.example` (se sube a Git)
-```bash
-ENVIRONMENT=local
-APP_NAME="VeZetaeLeA OS"
-APP_URL=
-DB_HOST=localhost
-DB_DATABASE=
-DB_USERNAME=
-DB_PASSWORD=
-MAIL_ENABLED=false
-MAIL_USERNAME=
-MAIL_PASSWORD=
-```
-
-### `.env` en LOCAL (NO se sube a Git)
-```bash
-ENVIRONMENT=local
-APP_NAME="VeZetaeLeA OS"
-APP_URL=http://localhost/VeZetaeLeA
-DB_HOST=localhost
-DB_DATABASE=VeZetaeLeA
-DB_USERNAME=root
-DB_PASSWORD=
-MAIL_ENABLED=false
-MAIL_USERNAME=contacto@vezetaelea.com
-MAIL_PASSWORD=
-```
-
-### `.env` en HOSTINGER (NO se sube a Git)
-```bash
-ENVIRONMENT=demo
-APP_NAME="VeZetaeLeA OS"
-APP_URL=https://vezetaelea.com/demo/VeZetaeLeA
-DB_HOST=localhost
-DB_DATABASE=vezetaelea
-DB_USERNAME=u123456789_admin
-DB_PASSWORD=SuperSecurePassword123!
-MAIL_ENABLED=true
-MAIL_USERNAME=contacto@vezetaelea.com
-MAIL_PASSWORD=ZohoAppPassword456!
 
 # Seguridad API & JWT (NUEVO)
 JWT_SECRET=tu_secreto_super_seguro_aqui

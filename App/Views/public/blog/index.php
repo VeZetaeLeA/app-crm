@@ -40,7 +40,7 @@
                 <h3 class="text-white">Aún no hay publicaciones</h3>
                 <p class="text-white-50">Pronto compartiremos contenido increíble en esta categoría.</p>
                 <a href="<?php echo url('blog'); ?>"
-                    class="btn btn-primary px-5 py-3 shadow-gold fw-bold uppercase tracking-widest mt-3">Seguir leyendo</a>
+                    class="btn vzl-btn-glow-magenta px-5 py-3 fw-bold uppercase tracking-widest mt-3">Seguir leyendo</a>
             </div>
         <?php else: ?>
             <div class="row g-4">

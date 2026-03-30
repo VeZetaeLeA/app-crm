@@ -54,7 +54,7 @@
                         </div>
 
                         <button type="submit"
-                            class="btn btn-primary w-100 p-2 small fw-black uppercase tracking-widest shadow-gold mb-4">
+                            class="btn vzl-btn-glow-magenta px-5 py-3 fw-bold uppercase tracking-widest w-100 mb-4">
                             Entrar al Sistema
                         </button>
 

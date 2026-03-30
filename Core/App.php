@@ -186,7 +186,7 @@ class App
     private function trigger404()
     {
         $controller = $this->container->get(\App\Controllers\ErrorController::class);
-        $this->container->call($controller, 'notFound');
+        $this->container->call($controller, 'index');
     }
 
     private function parseUrl()

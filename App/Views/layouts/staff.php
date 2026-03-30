@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" data-bs-theme="dark">
 
 <head>
     <meta charset="UTF-8">
@@ -12,7 +12,9 @@
         rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&display=swap"
         rel="stylesheet">
+    <link rel="stylesheet" href="<?php echo url('assets/css/variables.css'); ?>">
     <link rel="stylesheet" href="<?php echo url('assets/css/style.css'); ?>">
+    <link rel="stylesheet" href="<?php echo url('assets/css/animations.css'); ?>">
     <link rel="icon" type="image/x-icon" href="<?php echo url('assets/images/vezetaelea.ico'); ?>">
     <script>
         window.APP_URL = "<?php echo url(); ?>";

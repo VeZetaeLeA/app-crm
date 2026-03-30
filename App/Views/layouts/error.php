@@ -13,7 +13,9 @@
         rel="stylesheet">
     <link rel="stylesheet"
         href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <link rel="stylesheet" href="<?php echo url('assets/css/variables.css'); ?>">
     <link rel="stylesheet" href="<?php echo url('assets/css/style.css'); ?>">
+    <link rel="stylesheet" href="<?php echo url('assets/css/animations.css'); ?>">
     <link rel="icon" type="image/x-icon" href="<?php echo url('assets/images/vezetaelea.ico'); ?>">
 </head>
 

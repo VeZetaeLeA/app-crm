@@ -10,11 +10,15 @@ use Core\Mail;
 use App\Services\AIService;
 use App\Services\RealTimeService;
 use PDO;
+use App\Repositories\TicketRepository;
 
 class TicketController extends Controller
 {
+    private $ticketRepo;
+
     public function __construct()
     {
+        $this->ticketRepo = new TicketRepository(Database::getInstance()->getConnection());
         $this->middleware('auth', [], [], ['request', 'submit', 'received']);
         $this->middleware('2fa', [], [], ['request', 'submit', 'received']);
     }
@@ -24,30 +28,12 @@ class TicketController extends Controller
      */
     public function index()
     {
-
-        $db = Database::getInstance()->getConnection();
-        $user = Auth::user();
-
+        $filters = [];
         if (Auth::isClient()) {
-            $sql = "SELECT t.*, sp.name as plan_name 
-                    FROM tickets t 
-                    JOIN service_plans sp ON t.service_plan_id = sp.id 
-                    WHERE t.client_id = ? 
-                    ORDER BY t.created_at DESC";
-            $stmt = $db->prepare($sql);
-            $stmt->execute([$user['id']]);
-        } else {
-            // Admin or Staff sees all tickets
-            $sql = "SELECT t.*, u.name as client_name, sp.name as plan_name, s.name as service_name 
-                    FROM tickets t 
-                    JOIN users u ON t.client_id = u.id 
-                    JOIN service_plans sp ON t.service_plan_id = sp.id 
-                    JOIN services s ON sp.service_id = s.id 
-                    ORDER BY t.created_at DESC";
-            $stmt = $db->query($sql);
+            $filters['client_id'] = Auth::user()['id'];
         }
 
-        $tickets = $stmt->fetchAll();
+        $tickets = $this->ticketRepo->getAll($filters);
         $isClient = Auth::isClient();
 
         // 🧠 Intelligence Services Integration
@@ -82,14 +68,7 @@ class TicketController extends Controller
         if (Auth::isClient())
             $this->redirect('/ticket');
 
-        $db   = Database::getInstance()->getConnection();
-        $sql  = "SELECT t.*, u.name as client_name, sp.name as plan_name, s.name as service_name
-                FROM tickets t
-                JOIN users u ON t.client_id = u.id
-                JOIN service_plans sp ON t.service_plan_id = sp.id
-                JOIN services s ON sp.service_id = s.id
-                ORDER BY t.created_at DESC";
-        $tickets = $db->query($sql)->fetchAll();
+        $tickets = $this->ticketRepo->getAll();
 
         $intelligence = new \App\Services\CRM\IntelligenceService();
         $leadService  = new \App\Services\CRM\LeadService();
@@ -197,13 +176,18 @@ class TicketController extends Controller
         $slaDeadline = date('Y-m-d H:i:s', strtotime("+{$slaHours} hours"));
 
         $ticket_number = 'TKT-' . strtoupper(bin2hex(random_bytes(3)));
-        $sql = "INSERT INTO tickets (ticket_number, client_id, service_plan_id, subject, description, status, sla_deadline) 
-                VALUES (?, ?, ?, ?, ?, 'open', ?)";
-        $stmt = $db->prepare($sql);
-        $result = $stmt->execute([$ticket_number, $user['id'], $plan_id, $subject, $description, $slaDeadline]);
+        
+        $lastTicketId = $this->ticketRepo->createTicket([
+            'ticket_number' => $ticket_number,
+            'client_id' => $user['id'],
+            'service_plan_id' => $plan_id,
+            'subject' => $subject,
+            'description' => $description,
+            'status' => 'open',
+            'sla_deadline' => $slaDeadline
+        ]);
 
-        if ($result) {
-            $lastTicketId = $db->lastInsertId();
+        if ($lastTicketId) {
             
             // Notification: Ticket Received (PRD v1.0 - Use professional template)
             Mail::sendRequestConfirmation($email, $name, $ticket_number, $subject);
@@ -215,8 +199,7 @@ class TicketController extends Controller
             ]);
 
             // Notify Staff/Admin
-            $staffStmt = $db->query("SELECT id FROM users WHERE role IN ('admin', 'staff')");
-            $staff = $staffStmt->fetchAll();
+            $staff = \App\Models\User::getStaffAndAdmins();
             foreach ($staff as $s) {
                 \App\Models\Notification::send($s['id'], 'new_ticket', 'Nueva Solicitud', "Nueva solicitud recibida: $subject de $name.", '/ticket/detail/' . $lastTicketId);
             }
@@ -229,16 +212,11 @@ class TicketController extends Controller
                 // GAI-04: Sentimiento y Análisis Profundo
                 $analysis = $aiService->analyzeTicketContent($description);
                 if ($analysis) {
-                    $aiUpdate = "UPDATE tickets SET ai_sentiment = ?, ai_analysis = ? WHERE id = ?";
-                    $db->prepare($aiUpdate)->execute([
-                        $analysis['sentiment'] ?? 'neutral',
-                        json_encode($analysis),
-                        $lastTicketId
-                    ]);
+                    $this->ticketRepo->updateAiAnalysis($lastTicketId, $analysis['sentiment'] ?? 'neutral', $analysis);
 
                     // Si la IA sugiere prioridad diferente, actualizarla
                     if (isset($analysis['priority']) && in_array($analysis['priority'], ['low','normal','high','urgent'])) {
-                        $db->prepare("UPDATE tickets SET priority = ? WHERE id = ?")->execute([$analysis['priority'], $lastTicketId]);
+                        $this->ticketRepo->updatePriority($lastTicketId, $analysis['priority']);
                     }
                 }
 
@@ -246,21 +224,16 @@ class TicketController extends Controller
                 $tasks = $aiService->extractActionItems($description);
 
                 // IMPORTANTE: Insertamos la descripción inicial como primer mensaje del chat para contexto de IA
-                $db->prepare("INSERT INTO chat_messages (ticket_id, user_id, message, message_type) VALUES (?, ?, ?, 'client')")
-                   ->execute([$lastTicketId, $user['id'], $description]);
+                $this->ticketRepo->createMessage($lastTicketId, $user['id'], $description, 'client');
 
                 if ($tasks && is_array($tasks)) {
-                    $tenantId = \Core\Config::get('current_tenant_id', 1);
-                    $taskSql = "INSERT INTO ticket_tasks (ticket_id, tenant_id, description) VALUES (?, ?, ?)";
-                    $taskStmt = $db->prepare($taskSql);
                     foreach ($tasks as $task) {
-                        $taskStmt->execute([$lastTicketId, $tenantId, $task]);
+                        $this->ticketRepo->createTask($lastTicketId, $task);
                     }
                     
                     // Mensaje de sistema (Unificado)
                     $sysMsg = "🤖 Copilot GAI ha analizado tu requerimiento.\nSentimiento detectado: " . ($analysis['sentiment'] ?? 'neutral') . ".\nHe sugerido " . count($tasks) . " tareas iniciales.";
-                    $db->prepare("INSERT INTO chat_messages (ticket_id, user_id, message, message_type) VALUES (?, NULL, ?, 'system')")
-                      ->execute([$lastTicketId, $sysMsg]);
+                    $this->ticketRepo->createMessage($lastTicketId, null, $sysMsg, 'system');
                 }
             }
 
@@ -280,19 +253,8 @@ class TicketController extends Controller
      */
     public function detail($id)
     {
-
-        $db = Database::getInstance()->getConnection();
-
-        // Get ticket with related data
-        $sql = "SELECT t.*, u.name as client_name, u.email as client_email, u.company as client_company, sp.name as plan_name, s.name as service_name 
-                FROM tickets t 
-                JOIN users u ON t.client_id = u.id 
-                JOIN service_plans sp ON t.service_plan_id = sp.id 
-                JOIN services s ON sp.service_id = s.id 
-                WHERE t.id = ?";
-        $stmt = $db->prepare($sql);
-        $stmt->execute([$id]);
-        $ticket = $stmt->fetch();
+        $db = \Core\Database::getInstance()->getConnection();
+        $ticket = $this->ticketRepo->getById($id);
 
         if (!$ticket)
             $this->redirect('/dashboard');
@@ -302,13 +264,8 @@ class TicketController extends Controller
             $this->redirect('/dashboard');
         }
 
-        // Get chat messages
-        $stmt = $db->prepare("SELECT m.*, u.name as user_name, u.role as user_role 
-                             FROM chat_messages m 
-                             LEFT JOIN users u ON m.user_id = u.id 
-                             WHERE m.ticket_id = ? ORDER BY m.created_at ASC");
-        $stmt->execute([$id]);
-        $messages = $stmt->fetchAll();
+        // Get chat messages via Repo
+        $messages = $this->ticketRepo->getMessages($id);
 
         // Get budget if exists
         $stmt = $db->prepare("SELECT * FROM budgets WHERE ticket_id = ? ORDER BY created_at DESC LIMIT 1");
@@ -324,10 +281,7 @@ class TicketController extends Controller
         }
 
         // Get AI Action Items
-        $tenantId = \Core\Config::get('current_tenant_id', 1);
-        $stmt = $db->prepare("SELECT * FROM ticket_tasks WHERE ticket_id = ? AND tenant_id = ? ORDER BY id ASC");
-        $stmt->execute([$id, $tenantId]);
-        $tasks = $stmt->fetchAll();
+        $tasks = $this->ticketRepo->getTasks($id);
 
         $layout = Auth::role();
         $this->viewLayout(Auth::role() . '/tickets/detail', $layout, [
@@ -351,54 +305,39 @@ class TicketController extends Controller
         $id = $_POST['ticket_id'];
         $status = $_POST['status'];
 
-        $db = Database::getInstance()->getConnection();
+        // Get info via Repo
+        $info = $this->ticketRepo->getById($id);
+        if (!$info) return;
 
-        // Get ticket info before updating
-        $stmt = $db->prepare("SELECT u.email, t.ticket_number, t.assigned_to FROM tickets t JOIN users u ON t.client_id = u.id WHERE t.id = ?");
-        $stmt->execute([$id]);
-        $info = $stmt->fetch();
-
-        // Auto-assign to current user if not assigned
-        $assign_sql = "";
-        $params = [$status, $id];
+        // Auto-assign
         if (empty($info['assigned_to'])) {
-            $assign_sql = ", assigned_to = ?";
-            $params = [$status, Auth::user()['id'], $id];
+            $this->ticketRepo->assignTicket($id, Auth::user()['id']);
         }
 
-        $stmt = $db->prepare("UPDATE tickets SET status = ?, updated_at = NOW() {$assign_sql} WHERE id = ?");
-        $result = $stmt->execute($params);
+        $result = $this->ticketRepo->updateStatus($id, $status);
 
         if ($result) {
-            // Send Notification
-            if ($info) {
-                Mail::sendTicketUpdate($info['email'], $info['ticket_number'], $status);
-            }
+            // Send Notification (email client)
+            Mail::sendTicketUpdate($info['client_email'], $info['ticket_number'], $status);
+
             \Core\SecurityLogger::log('ticket_status_changed', [
                 'ticket_id'     => $id,
-                'ticket_number' => $info['ticket_number'] ?? 'unknown',
+                'ticket_number' => $info['ticket_number'],
                 'new_status'    => $status
             ]);
 
-            // Notify Client
-            $clientStmt = $db->prepare("SELECT client_id FROM tickets WHERE id = ?");
-            $clientStmt->execute([$id]);
-            $client_id = $clientStmt->fetchColumn();
-            if ($client_id) {
-                \App\Models\Notification::send($client_id, 'ticket_update', 'Actualizacion de Ticket', "Tu ticket " . ($info['ticket_number'] ?? '') . " ha cambiado a estado: " . translateStatus($status), '/ticket/detail/' . $id);
-            }
+            // Notify Client (internal)
+            \App\Models\Notification::send($info['client_id'], 'ticket_update', 'Actualizacion de Ticket', "Tu ticket " . $info['ticket_number'] . " ha cambiado a estado: " . translateStatus($status), '/ticket/detail/' . $id);
 
             // Real-Time Broadcast
-            RealTimeService::broadcast('ticket_status_update', [
+            \App\Services\RealTimeService::broadcast('ticket_status_update', [
                 'ticket_id'     => $id,
-                'ticket_number' => $info['ticket_number'] ?? 'unknown',
+                'ticket_number' => $info['ticket_number'],
                 'status'        => translateStatus($status)
             ]);
 
-            // SPRINT 2.3 — if AJAX (Kanban drag & drop), respond JSON
-            $isAjax = !empty($_SERVER['HTTP_X_REQUESTED_WITH'])
-                   && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest';
-            if ($isAjax) {
+            // AJAX support
+            if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) === 'xmlhttprequest') {
                 header('Content-Type: application/json');
                 echo json_encode(['success' => true, 'new_status' => $status]);
                 exit;
@@ -409,37 +348,34 @@ class TicketController extends Controller
     }
 
     /**
-     * Export tickets to CSV (Admin/Staff sees all, Client sees own)
+     * Export tickets to CSV
      */
     public function exportCsv()
     {
-
-        $db = Database::getInstance()->getConnection();
-        $user = Auth::user();
-
+        $filters = [];
         if (Auth::isClient()) {
-            $sql = "SELECT t.ticket_number, t.subject, t.status, t.priority, t.created_at, sp.name as plan_name 
-                    FROM tickets t 
-                    JOIN service_plans sp ON t.service_plan_id = sp.id 
-                    WHERE t.client_id = ? 
-                    ORDER BY t.created_at DESC";
-            $stmt = $db->prepare($sql);
-            $stmt->execute([$user['id']]);
-        } else {
-            $sql = "SELECT t.ticket_number, u.name as client_name, t.subject, t.status, t.priority, t.created_at, sp.name as plan_name 
-                    FROM tickets t 
-                    JOIN users u ON t.client_id = u.id 
-                    JOIN service_plans sp ON t.service_plan_id = sp.id 
-                    ORDER BY t.created_at DESC";
-            $stmt = $db->query($sql);
+            $filters['client_id'] = Auth::user()['id'];
         }
 
-        $tickets = $stmt->fetchAll(PDO::FETCH_ASSOC);
+        $tickets = $this->ticketRepo->getAll($filters);
 
-        $headers = Auth::isClient() 
-            ? ['Ticket #', 'Asunto', 'Estado', 'Prioridad', 'Fecha', 'Plan']
-            : ['Ticket #', 'Cliente', 'Asunto', 'Estado', 'Prioridad', 'Fecha', 'Plan'];
+        // Map for CSV
+        $reportData = array_map(function($t) {
+            $row = [
+                'Ticket #' => $t['ticket_number'],
+                'Asunto' => $t['subject'],
+                'Estado' => translateStatus($t['status']),
+                'Prioridad' => $t['priority'],
+                'Fecha' => $t['created_at'],
+                'Plan' => $t['plan_name']
+            ];
+            if (!Auth::isClient()) {
+                $row = array_merge(['Cliente' => $t['client_name']], $row);
+            }
+            return $row;
+        }, $tickets);
 
-        \App\Utils\CsvExporter::export('tickets_' . date('Ymd'), $headers, $tickets);
+        $headers = array_keys($reportData[0] ?? []);
+        \App\Utils\CsvExporter::export('tickets_' . date('Ymd'), $headers, $reportData);
     }
 }

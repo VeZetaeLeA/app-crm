@@ -63,10 +63,10 @@
                                 </div>
                                 <div class="mt-auto d-flex gap-2 flex-wrap">
                                     <a href="<?php echo url('service/detail/' . $service['slug']); ?>"
-                                        class="btn btn-outline-light btn-sm px-3 rounded-pill border-white-10 x-small fw-bold">Ver
+                                        class="btn btn-outline-white px-4 py-2 small fw-bold uppercase">Ver
                                         Planes</a>
                                     <a href="<?php echo url('ticket/request?service=' . $service['id']); ?>"
-                                        class="btn btn-primary btn-sm px-4 rounded-pill fw-bold shadow-gold x-small">Contratar</a>
+                                        class="btn vzl-btn-glow-magenta px-4 py-2 fw-bold uppercase">Contratar</a>
                                 </div>
                             </div>
                         </div>

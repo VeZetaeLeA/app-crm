@@ -12,9 +12,35 @@ abstract class BaseRepository implements RepositoryInterface
     protected $db;
     protected string $table;
 
-    public function __construct(PDO $db)
+    public function __construct(\PDO $db)
     {
         $this->db = $db;
+    }
+
+    /**
+     * Ejecuta una consulta preparada.
+     */
+    protected function execute(string $sql, array $params = [])
+    {
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute($params);
+        return $stmt;
+    }
+
+    /**
+     * Obtiene un solo registro.
+     */
+    protected function fetch(string $sql, array $params = [], int $fetchMode = \PDO::FETCH_ASSOC)
+    {
+        return $this->execute($sql, $params)->fetch($fetchMode);
+    }
+
+    /**
+     * Obtiene todos los registros.
+     */
+    protected function fetchAll(string $sql, array $params = [], int $fetchMode = \PDO::FETCH_ASSOC)
+    {
+        return $this->execute($sql, $params)->fetchAll($fetchMode);
     }
 
     /**

@@ -5,7 +5,7 @@ use Core\Controller;
 
 class ErrorController extends Controller
 {
-    public function notFound()
+    public function index()
     {
         http_response_code(404);
         $this->viewLayout('public/errors/404', 'error', [

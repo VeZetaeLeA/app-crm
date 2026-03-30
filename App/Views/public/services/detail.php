@@ -109,7 +109,7 @@
                         <div class="mt-auto pt-3">
                             <button
                                 onclick="orderPlan(<?php echo $plan['id']; ?>, '<?php echo $service['name'] . ' - ' . $plan['name']; ?>')"
-                                class="btn <?php echo $plan['is_featured'] ? 'btn-primary shadow-gold' : 'btn-muted-outline'; ?> w-100 py-3 fw-bold uppercase tracking-wider rounded-pill">
+                                class="btn <?php echo $plan['is_featured'] ? 'vzl-btn-glow-magenta fw-bold uppercase tracking-widest' : 'btn-outline-white small fw-bold uppercase'; ?> w-100 py-3 rounded-pill">
                                 <?php echo ($plan['price'] == 0) ? 'Cotizar' : 'Seleccionar Plan'; ?>
                             </button>
                         </div>
@@ -170,7 +170,7 @@
                                 </div>
                                 <div class="col-12 mt-4">
                                     <button type="submit"
-                                        class="btn btn-primary btn-lg w-100 py-3 fw-bold uppercase tracking-widest shadow-gold">
+                                        class="btn vzl-btn-glow-magenta w-100 py-3 fw-bold uppercase tracking-widest">
                                         Enviar Solicitud <span
                                             class="material-symbols-outlined ms-2 align-middle">send</span>
                                     </button>

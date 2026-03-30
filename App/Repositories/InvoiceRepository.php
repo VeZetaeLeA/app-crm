@@ -115,8 +115,73 @@ class InvoiceRepository extends BaseRepository implements InvoiceRepositoryInter
 
     public function findInvoiceById(int $invoiceId): ?array
     {
-        $stmt = $this->db->prepare("SELECT * FROM invoices WHERE id = ?");
-        $stmt->execute([$invoiceId]);
+        $tenantId = \Core\Config::get('current_tenant_id', 1);
+        $stmt = $this->db->prepare("SELECT * FROM invoices WHERE id = ? AND tenant_id = ?");
+        $stmt->execute([$invoiceId, $tenantId]);
         return $stmt->fetch() ?: null;
+    }
+
+    public function getAll(array $filters = []): array
+    {
+        $tenantId = \Core\Config::get('current_tenant_id', 1);
+        $where = ["i.tenant_id = ?"];
+        $params = [$tenantId];
+
+        if (!empty($filters['client_id'])) {
+            $where[] = "i.client_id = ?";
+            $params[] = $filters['client_id'];
+        }
+
+        $whereSql = implode(' AND ', $where);
+
+        $sql = "SELECT i.*, u.name as client_name, b.budget_number 
+                FROM invoices i 
+                JOIN users u ON i.client_id = u.id 
+                LEFT JOIN budgets b ON i.budget_id = b.id 
+                WHERE {$whereSql} 
+                ORDER BY i.created_at DESC";
+
+        return $this->fetchAll($sql, $params);
+    }
+
+    public function getById(int $id): ?array
+    {
+        $tenantId = \Core\Config::get('current_tenant_id', 1);
+        $sql = "SELECT i.*, u.name as client_name, u.email as client_email, u.company as client_company, u.phone as client_phone, b.budget_number 
+                FROM invoices i 
+                JOIN users u ON i.client_id = u.id 
+                LEFT JOIN budgets b ON i.budget_id = b.id 
+                WHERE i.id = ? AND i.tenant_id = ?";
+
+        $row = $this->fetch($sql, [$id, $tenantId]);
+        return $row ?: null;
+    }
+
+    public function getReceiptByInvoice(int $invoiceId): ?array
+    {
+        $sql = "SELECT * FROM payment_receipts WHERE invoice_id = ? ORDER BY created_at DESC LIMIT 1";
+        return $this->fetch($sql, [$invoiceId]);
+    }
+
+    public function createReceipt(array $data): int
+    {
+        $sql = "INSERT INTO payment_receipts (invoice_id, uploaded_by, filename, filepath, amount, payment_date, status) 
+                VALUES (?, ?, ?, ?, ?, CURDATE(), 'pending')";
+        $stmt = $this->db->prepare($sql);
+        $stmt->execute([
+            $data['invoice_id'],
+            $data['uploaded_by'],
+            $data['filename'],
+            $data['filepath'],
+            $data['amount']
+        ]);
+        return (int) $this->db->lastInsertId();
+    }
+
+    public function updateStatus(int $id, string $status): bool
+    {
+        $sql = "UPDATE invoices SET status = ?, updated_at = NOW() WHERE id = ?";
+        $stmt = $this->db->prepare($sql);
+        return $stmt->execute([$status, $id]);
     }
 }
