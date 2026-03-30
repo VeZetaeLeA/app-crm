@@ -47,6 +47,11 @@ $navCategories = $db->query("SELECT name, slug FROM service_categories WHERE is_
 ?>
 
 <body>
+    <!-- VeZetaeLeA OS - Kinetic Preloader -->
+    <div id="vzl-loader" class="vzl-preloader d-none">
+        <img src="<?php echo url('assets/images/vezetaelea.ico'); ?>" alt="Loading..." class="pulse-ico">
+    </div>
+
     <header class="fixed-top w-100 py-3 glass-morphism border-bottom border-white-10">
         <!-- Chromatic animated border at bottom of navbar -->
         <div class="navbar-chromatic-border"></div>
@@ -313,6 +318,18 @@ $navCategories = $db->query("SELECT name, slug FROM service_categories WHERE is_
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+             // Preloader Session Sense (VeZetaeLeA OS)
+             const loader = document.getElementById('vzl-loader');
+             if (!sessionStorage.getItem('vzl_home_preloader')) {
+                 loader.classList.remove('d-none');
+                 window.addEventListener('load', () => {
+                     setTimeout(() => {
+                         loader.classList.add('fade-out');
+                         sessionStorage.setItem('vzl_home_preloader', 'true');
+                     }, 1200);
+                 });
+             }
+
              // Scroll Button
             const scrollBtn = document.getElementById('scroll-to-top');
             window.addEventListener('scroll', () => {

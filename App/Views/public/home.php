@@ -64,8 +64,8 @@
         <div class="row mb-5">
             <div class="col-12">
                 <div class="vzl-section-header text-start">
-                    <h6 class="vzl-section-subtitle">El Factor Tech-Estratégico</h6>
-                    <h2 class="vzl-section-title">¿Por qué confiar en <span class="vzl-text-gradient-vibrant"><?= mb_strtoupper(\Core\Config::get('business.company_name')) ?></span>?</h2>
+                    <h6 class="vzl-section-subtitle">Nuestro Factor Tech-Estratégico</h6>
+                    <h2 class="vzl-section-title"><span class="vzl-text-gradient-vibrant"><?= mb_strtoupper(\Core\Config::get('business.company_name'))?></span> construye sistemas que hacen crecer tu empresa</h2>
                 </div>
             </div>
         </div>
@@ -137,7 +137,7 @@
                                 </div>
                                 <div class="vzl-tech-badge">
                                     <span class="material-symbols-outlined text-warning fs-5">stars</span>
-                                    <span class="text-white fw-bold xx-small uppercase tracking-widest">10+ Años de Expertise</span>
+                                    <span class="text-white fw-bold xx-small uppercase tracking-widest">Satisfacción en cada Sprint</span>
                                 </div>
                             </div>
                         </div>
@@ -273,7 +273,7 @@ if (is_dir(public_path($stackDir))) {
         <div class="vzl-section-header text-center mb-5">
             <div class="d-inline-flex align-items-center gap-2 mb-3 px-4 py-2 rounded-pill border border-warning bg-warning-subtle">
                 <span class="material-symbols-outlined text-warning fs-6">workspace_premium</span>
-                <span class="x-small text-warning fw-bold uppercase tracking-widest">Producto Estrella de <?= \Core\Config::get('business.company_name') ?></span>
+                <span class="x-small text-warning fw-bold uppercase tracking-widest">Producto Exclusivo de <?= \Core\Config::get('business.company_name') ?></span>
             </div>
             <h6 class="vzl-section-subtitle">Control Maestro</h6>
             <h2 class="vzl-section-title">Tu Empresa Merece su <span class="vzl-text-gradient-vibrant">Sistema Operativo Propio</span></h2>

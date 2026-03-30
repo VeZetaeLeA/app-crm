@@ -1,8 +1,8 @@
 {
     "home": {
         "hero": {
-            "title": "Automatiza, controla y escala<br><span class=\"vzl-text-gradient-vibrant\">tu empresa desde un solo sistema</span>",
-            "subtitle": "Integramos datos, procesos y aplicaciones para que tu negocio crezca sin fricción.",
+            "title": "Convierte tu empresa<br><span class=\"vzl-text-gradient-vibrant\">en un sistema inteligente</span>",
+            "subtitle": "Aplicaciones, datos, procesos y automatización trabajando juntos para hacer crecer tu negocio.",
             "cta_primary": "Explorar Servicios",
             "cta_secondary": "Iniciar Proyecto"
         },
@@ -10,7 +10,7 @@
             "years": "Años de<br>Experiencia",
             "projects": "Proyectos<br>Entregados",
             "verticals": "Verticales<br>Tecnológicas",
-            "product": "Producto<br>Propio (CRM)"
+            "product": "Producto<br>Exclusivo (CRM)"
         }
     },
     "sidebar": {
@@ -120,11 +120,27 @@
         "in_progress": "En curso"
     },
     "months": {
-        "jan": "Ene", "feb": "Feb", "mar": "Mar", "apr": "Abr", "may": "May", "jun": "Jun",
-        "jul": "Jul", "aug": "Ago", "sep": "Sep", "oct": "Oct", "nov": "Nov", "dec": "Dic"
+        "jan": "Ene",
+        "feb": "Feb",
+        "mar": "Mar",
+        "apr": "Abr",
+        "may": "May",
+        "jun": "Jun",
+        "jul": "Jul",
+        "aug": "Ago",
+        "sep": "Sep",
+        "oct": "Oct",
+        "nov": "Nov",
+        "dec": "Dic"
     },
     "days": {
-        "sun": "Dom", "mon": "Lun", "tue": "Mar", "wed": "Mie", "thu": "Jue", "fri": "Vie", "sat": "Sab"
+        "sun": "Dom",
+        "mon": "Lun",
+        "tue": "Mar",
+        "wed": "Mie",
+        "thu": "Jue",
+        "fri": "Vie",
+        "sat": "Sab"
     },
     "tickets": {
         "management_center": "Centro de Gestión de Tickets 🎫",
