@@ -47,10 +47,29 @@ $navCategories = $db->query("SELECT name, slug FROM service_categories WHERE is_
 ?>
 
 <body>
-    <!-- VeZetaeLeA OS - Kinetic Preloader -->
-    <div id="vzl-loader" class="vzl-preloader d-none">
-        <img src="<?php echo url('assets/images/vezetaelea.ico'); ?>" alt="Loading..." class="pulse-ico">
+    <!-- Legacy Preloader (Restored) -->
+    <div id="vzl-loader" class="vzl-preloader">
+        <div class="vzl-preloader-content">
+            <div class="vzl-preloader-logo">
+                <img src="<?php echo url('assets/images/logo.png'); ?>" alt="VeZetaeLeA"
+                    style="height: 60px; width: auto; margin-bottom: 10px;">
+            </div>
+            <div class="vzl-preloader-spinner"></div>
+        </div>
     </div>
+
+    <script>
+        (function () {
+            // Comportamiento Legacy: Ocultar si venimos de navegación interna
+            const ref = document.referrer;
+            const isFromOutside = !ref || ref.includes('login') || ref.includes('home') || ref.split('/').pop() === 'app-crm' || ref.split('/').pop() === '';
+
+            if (!isFromOutside) {
+                const preloader = document.getElementById('vzl-loader');
+                if (preloader) preloader.style.display = 'none';
+            }
+        })();
+    </script>
 
     <header class="fixed-top w-100 py-3 glass-morphism border-bottom border-white-10">
         <!-- Chromatic animated border at bottom of navbar -->
@@ -318,16 +337,21 @@ $navCategories = $db->query("SELECT name, slug FROM service_categories WHERE is_
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
-             // Preloader Session Sense (VeZetaeLeA OS)
-             const loader = document.getElementById('vzl-loader');
-             if (!sessionStorage.getItem('vzl_home_preloader')) {
-                 loader.classList.remove('d-none');
-                 window.addEventListener('load', () => {
+             // Legacy Preloader Removal Logic
+             const removePreloader = () => {
+                 const loader = document.getElementById('vzl-loader');
+                 if (loader && loader.style.display !== 'none') {
                      setTimeout(() => {
                          loader.classList.add('fade-out');
-                         sessionStorage.setItem('vzl_home_preloader', 'true');
-                     }, 1200);
-                 });
+                         setTimeout(() => loader.remove(), 500);
+                     }, 800);
+                 }
+             };
+             
+             if (document.readyState === 'complete') {
+                 removePreloader();
+             } else {
+                 window.addEventListener('load', removePreloader);
              }
 
              // Scroll Button

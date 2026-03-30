@@ -1105,19 +1105,18 @@ body::before {
 .side-logo-img:hover { transform: scale(1.05); filter: brightness(1.1); }
 
 /* ============================================================
-   PRELOADER GLOBAL ENGINE (Vzl-OS Ready)
+   GLOBAL PRELOADER (Legacy Restored)
    ============================================================ */
 .vzl-preloader {
     position: fixed;
     top: 0; left: 0;
     width: 100%; height: 100%;
     background-color: var(--vzl-deep-black);
-    backdrop-filter: blur(25px);
-    z-index: 10000;
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: opacity 0.8s cubic-bezier(0.165, 0.84, 0.44, 1), visibility 0.8s ease;
+    z-index: 10000;
+    transition: opacity 0.5s ease-in-out, visibility 0.5s;
 }
 
 .vzl-preloader.fade-out {
@@ -1125,15 +1124,33 @@ body::before {
     visibility: hidden;
 }
 
-.pulse-ico {
-    width: 64px;
-    height: 64px;
-    animation: vzl-pulse 1.5s infinite alternate cubic-bezier(0.4, 0, 0.2, 1);
-    filter: drop-shadow(0 0 15px rgba(0, 242, 255, 0.4));
+.vzl-preloader-content {
+    text-align: center;
+    animation: vzl-fadeInScale 0.8s ease-out;
 }
 
-@keyframes vzl-pulse {
-    0% { transform: scale(0.95); opacity: 0.7; }
-    100% { transform: scale(1.1); opacity: 1; filter: drop-shadow(0 0 30px rgba(0, 242, 255, 0.8)); }
+.vzl-preloader-logo {
+    margin-bottom: 24px;
+    animation: vzl-fadeInScale 1s ease-out;
+}
+
+.vzl-preloader-spinner {
+    width: 50px;
+    height: 50px;
+    border: 3px solid rgba(0, 242, 255, 0.1);
+    border-top: 3px solid var(--vzl-cyan);
+    border-radius: 50%;
+    animation: vzl-spin 1s linear infinite;
+    margin: 0 auto;
+    box-shadow: 0 0 15px rgba(0, 242, 255, 0.2);
+}
+
+@keyframes vzl-spin {
+    to { transform: rotate(360deg); }
+}
+
+@keyframes vzl-fadeInScale {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
 }
 
