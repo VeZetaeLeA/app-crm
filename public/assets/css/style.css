@@ -1045,7 +1045,8 @@ button:disabled {
     border-radius: 20px;
 }
 
-/* Wyrd Branding Pattern */
+/* Wyrd Branding Pattern (Removido por UX cleanliness) */
+/*
 body::before {
     content: "";
     position: fixed;
@@ -1057,6 +1058,7 @@ body::before {
     pointer-events: none;
     z-index: -1;
 }
+*/
 /* --- Kinetic Art: Physichromie Footer Element --- */
 .physichromie-divider {
     height: 3px;

@@ -13,7 +13,11 @@ VeZetaeLeA OS ha alcanzado la **Evolución 20.1.0**. En esta fase se ha completa
 - [x] **Typography Standardization**: Implementación de **Outfit** (Encabezados), **Inter** (Cuerpo) y **JetBrains Mono** (Datos) gestionados centralizadamente.
 - [x] **Global Preloader Refined**: El preloader heredado ahora consume dinámicamente el color primario y el radio definido en la configuración global.
 
----
+## 🐛 Core Logic & Bugfixes (Sprint 20.1.1)
+- [x] **Email Queue Bypass**: Desacoplamiento de la configuración de correos para entornos `demo`, permitiendo envíos sincrónicos mediante `MAIL_QUEUE=false` y previniendo el silenciamiento por colas huérfanas o por namespace inválido (`mail.enabled`).
+- [x] **Ticket Guided Flow (Frontend/Backend Sync)**: Corrección de inyección dinámica `service_plan_id` en el formulario para asegurar compatibilidad estricta con orquestador PHP.
+- [x] **Admin Notification System**: Solucionado el Fatal Error al procesar notificaciones directas (`User::getStaffAndAdmins`) tras crear un nuevo ticket comercial.
+
 
 ---
 

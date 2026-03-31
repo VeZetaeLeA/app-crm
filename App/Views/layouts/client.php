@@ -40,6 +40,9 @@
             --vzl-ui-radius-md:   <?= \Core\Config::get('ui.radius_md') ?>;
             --vzl-ui-radius-lg:   <?= \Core\Config::get('ui.radius_lg') ?>;
             --vzl-ui-radius-pill: <?= \Core\Config::get('ui.radius_pill') ?>;
+            --vzl-font-heading:   <?= \Core\Config::get('typography.font_heading') ?>;
+            --vzl-font-body:      <?= \Core\Config::get('typography.font_body') ?>;
+            --vzl-font-mono:      <?= \Core\Config::get('typography.font_mono') ?>;
         }
     </style>
     <script>window.APP_URL = "<?php echo url(); ?>";</script>

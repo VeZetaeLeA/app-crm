@@ -78,7 +78,7 @@
                     <h4 class="text-white fw-black mb-4 uppercase tracking-widest text-center small">Cuentanos sobre tu Requerimiento</h4>
                     <form action="<?php echo url('ticket/submit'); ?>" method="POST">
                         <?php echo csrf_field(); ?>
-                        <input type="hidden" name="plan_id" id="selected-plan-id">
+                        <input type="hidden" name="service_plan_id" id="selected-plan-id">
                         
                         <div class="row g-4">
                             <div class="col-md-6">

@@ -13,11 +13,11 @@ class Mail
      */
     public static function send($to, $subject, $body)
     {
-        if (!\Core\Config::get('mail_enabled', false)) {
+        if (!\Core\Config::get('mail.enabled', false)) {
             return true; // Mail disabled globally, silently skip
         }
 
-        $useQueue = getenv('MAIL_QUEUE') !== 'false';
+        $useQueue = getenv('MAIL_QUEUE') === 'true';
 
         if ($useQueue) {
             // Async mode: push to DB queue (needs worker.php running)

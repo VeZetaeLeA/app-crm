@@ -58,4 +58,14 @@ class User extends Model
         $stmt = $this->db->prepare($sql);
         return $stmt->execute($data);
     }
+
+    /**
+     * Get staff and admins (Static for notifications)
+     */
+    public static function getStaffAndAdmins()
+    {
+        $db = \Core\Database::getInstance()->getConnection();
+        $stmt = $db->query("SELECT * FROM users WHERE role IN ('admin', 'staff') AND is_active = 1");
+        return $stmt->fetchAll();
+    }
 }
