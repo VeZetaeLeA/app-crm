@@ -1,7 +1,7 @@
 <div class="container-fluid min-vh-100 d-flex align-items-center justify-content-center p-0 overflow-hidden position-relative cta-parallax-bg">
     <!-- Abstract Background Ambient Light -->
     <div class="position-absolute top-0 start-0 w-100 h-100 opacity-20"
-        style="background: radial-gradient(circle at 50% 50%, rgba(0,242,255,0.15) 0%, transparent 70%);"></div>
+        style="background: radial-gradient(circle at 50% 50%, color-mix(in srgb, var(--vzl-primary) 15%, transparent) 0%, transparent 70%);"></div>
 
     <div class="row g-0 w-100 align-items-center justify-content-center position-relative" style="z-index: 2;">
         <div class="col-11 col-xl-10 glass-morphism rounded-5 border-white-10 shadow-2xl p-0 d-flex flex-wrap overflow-hidden">
@@ -16,7 +16,7 @@
 
                 <!-- Relocated 404 Number -->
                 <div class="position-absolute bottom-0 end-0 opacity-25 select-none pe-none p-4 text-end"
-                    style="color: var(--tech-blue); z-index: 4; transform: translateY(-10px) translateX(-10px);">
+                    style="color: var(--vzl-primary); z-index: 4; transform: translateY(-10px) translateX(-10px);">
                     <div style="font-size: 8rem; font-weight: 900; line-height: 0.7;">404</div>
                     <div
                         style="font-size: 2rem; font-weight: 700; letter-spacing: 0.5rem; text-transform: uppercase; margin-top: -0.5rem;">
@@ -70,7 +70,7 @@
 
 <style>
     .vzl-section-subtitle {
-        color: var(--vzl-magenta);
+        color: var(--vzl-secondary);
         font-weight: 800;
         text-transform: uppercase;
         letter-spacing: 0.15em;
@@ -84,7 +84,7 @@
         letter-spacing: -1px;
     }
     .vzl-text-gradient-vibrant {
-        background: linear-gradient(135deg, var(--tech-blue) 0%, var(--vzl-magenta) 100%);
+        background: linear-gradient(135deg, var(--vzl-primary) 0%, var(--vzl-secondary) 100%);
         -webkit-background-clip: text;
         background-clip: text;
         -webkit-text-fill-color: transparent;
@@ -98,8 +98,8 @@
     }
 
     .border-cyan-glow {
-        border: 1px solid rgba(0, 242, 255, 0.2);
-        box-shadow: 0 0 50px rgba(0, 0, 0, 0.5), 0 0 30px rgba(0, 242, 255, 0.15);
+        border: 1px solid color-mix(in srgb, var(--vzl-primary) 20%, transparent);
+        box-shadow: 0 0 50px rgba(0, 0, 0, 0.5), 0 0 30px color-mix(in srgb, var(--vzl-primary) 15%, transparent);
     }
 
     .animate-float {

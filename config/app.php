@@ -63,9 +63,36 @@ return [
         'max_upload_size' => getenv('MAX_UPLOAD_SIZE') ?: 10485760, // 10MB
     ],
     'typography' => [
-        'font_heading' => getenv('FONT_HEADING') ?: "'Space Grotesk', sans-serif",
-        'font_body' => getenv('FONT_BODY') ?: "'Outfit', sans-serif",
+        'font_url'    => getenv('FONT_URL') ?: 'https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=JetBrains+Mono:wght@400;500;600&family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap',
+        'font_heading' => getenv('FONT_HEADING') ?: "'Outfit', system-ui, sans-serif",
+        'font_body'   => getenv('FONT_BODY') ?: "'Inter', system-ui, sans-serif",
+        'font_mono'   => getenv('FONT_MONO') ?: "'JetBrains Mono', 'Courier New', monospace",
         'scale_ratio' => getenv('TYPO_SCALE_RATIO') ?: 1.25,
+    ],
+    'ui' => [
+        // Dark Mode Backgrounds
+        'color_bg_dark'        => getenv('UI_COLOR_BG_DARK') ?: '#09090B',
+        'color_surface_dark'   => getenv('UI_COLOR_SURFACE_DARK') ?: '#18181B',
+        'color_surface_elev'   => getenv('UI_COLOR_SURFACE_ELEVATED') ?: '#27272A',
+        'color_border_dark'    => getenv('UI_COLOR_BORDER_DARK') ?: 'rgba(255,255,255,0.08)',
+        // Light Mode Backgrounds
+        'color_bg_light'       => getenv('UI_COLOR_BG_LIGHT') ?: '#FAFAFA',
+        'color_surface_light'  => getenv('UI_COLOR_SURFACE_LIGHT') ?: '#FFFFFF',
+        'color_border_light'   => getenv('UI_COLOR_BORDER_LIGHT') ?: 'rgba(0,0,0,0.08)',
+        // Brand Accents
+        'primary_color'        => getenv('UI_PRIMARY_COLOR') ?: '#0ea5e9',
+        'secondary_color'      => getenv('UI_SECONDARY_COLOR') ?: '#c026d3',
+        'gold_color'           => getenv('UI_GOLD_COLOR') ?: '#D4AF37',
+        // Semantic / State Colors (CRM critical)
+        'color_success'        => getenv('UI_COLOR_SUCCESS') ?: '#10B981',
+        'color_warning'        => getenv('UI_COLOR_WARNING') ?: '#F59E0B',
+        'color_danger'         => getenv('UI_COLOR_DANGER') ?: '#EF4444',
+        'color_info'           => getenv('UI_COLOR_INFO') ?: '#3B82F6',
+        // Border Radius
+        'radius_sm'            => getenv('UI_RADIUS_SM') ?: '6px',
+        'radius_md'            => getenv('UI_RADIUS_MD') ?: '12px',
+        'radius_lg'            => getenv('UI_RADIUS_LG') ?: '20px',
+        'radius_pill'          => getenv('UI_RADIUS_PILL') ?: '50rem',
     ],
     'payment' => [
         'mp_access_token' => getenv('MP_ACCESS_TOKEN') ?: '',

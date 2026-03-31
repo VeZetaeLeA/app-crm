@@ -214,10 +214,38 @@ php -r "echo bin2hex(random_bytes(16));"
 
 ---
 
-# Seguridad API & JWT (NUEVO)
+# Seguridad API & JWT
 JWT_SECRET=tu_secreto_super_seguro_aqui
 JWT_EXPIRE=3600
 JWT_ALGO=HS256
+
+# ===========================================
+# 🎨 UI & DESIGN SYSTEM (Sprint 20+)
+# ===========================================
+# Estos tokens se inyectan como variables CSS (--vzl-*)
+# Puedes usar Hex, RGBA o nombres de colores CSS.
+
+# Tipografía
+FONT_URL="url_de_google_fonts"
+FONT_HEADING="'Outfit', sans-serif"
+FONT_BODY="'Inter', sans-serif"
+FONT_MONO="'JetBrains Mono', monospace"
+
+# Paleta Tech-Premium (Scale Zinc)
+UI_PRIMARY_COLOR="#0ea5e9"
+UI_SECONDARY_COLOR="#c026d3"
+UI_GOLD_COLOR="#D4AF37"
+
+# Superficies (Dark Mode)
+UI_COLOR_BG_DARK="#09090B"
+UI_COLOR_SURFACE_DARK="#18181B"
+UI_COLOR_BORDER_DARK="rgba(255,255,255,0.08)"
+
+# Radios de Borde (Design System)
+UI_RADIUS_SM="6px"
+UI_RADIUS_MD="12px"
+UI_RADIUS_LG="20px"
+UI_RADIUS_PILL="50rem"
 ```
 
 ---

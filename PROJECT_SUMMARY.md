@@ -1,16 +1,17 @@
-**Estado al:** 30 de Marzo, 2026 (Sprint 18.2.3 — Legacy Preloader Restoration)  
-**Versión:** 18.2.3 (Legacy Preloader Restoration & UI Stability)  
-**Estado:** ✅ **VeZetaeLeA OS: Zero-Hardcode Nivel 5 & SaaS Compliance**
+**Estado al:** 31 de Marzo, 2026 (Sprint 20.1.0 — Enterprise Design Tokens & UX Standard)  
+**Versión:** 20.1.0 (Enterprise Design Tokens & UX Standard)  
+**Estado:** ✅ **VeZetaeLeA OS: Tech-Premium Standard & Config-Driven UI**
 
-VeZetaeLeA OS se encuentra en la **Evolución 18.2.3**. Se ha restaurado el **Legacy Preloader** de la versión anterior a petición del usuario, manteniendo el comportamiento dinámico (ocultación basada en `referrer`) y la estética clásica con el logo centralizado y spinner neón.
+VeZetaeLeA OS ha alcanzado la **Evolución 20.1.0**. En esta fase se ha completado la transición hacia un sistema de diseño de nivel empresarial, donde la identidad visual está totalmente desacoplada del código fuente y centralizada en variables de entorno (`.env`). Se ha migrado de una estética "Cyber-Neon" a un estilo **"Tech-Premium Enterprise"** basado en la escala Zinc y acentos técnicos refinados.
 
 ---
 
-## 🎨 Visual Excellence & Legacy Restoration (Sprint 18.2.3)
-- [x] **Cyber-Neon Buttons**: Estandarización de botones con bordes de neón flotantes (`Cyan` para primarios, `Magenta` para secundarios) en todos los módulos de usuario.
-- [x] **Legacy Preloader Restored**: Reincorporación del preloader clásico con spinner neón y lógica de ocultación inteligente.
-- [x] **Footer Evolution**: Refinamiento de iconos sociales con efectos de hover neón y alineación de marca superior.
-- [x] **Home UI Polishing**: Ajustes de contraste y jerarquía visual en la landing page principal.
+## 🎨 Visual Excellence & Design Tokens (Sprint 20.1.0)
+- [x] **Enterprise Design Tokens**: Desacoplamiento total de colores, fuentes y radios de borde. Consumo dinámico vía `var(--vzl-*)` inyectados desde PHP.
+- [x] **Tech-Premium UI Standard**: Transición a paleta Zinc (`#09090B`), con acentos `Sky-500` y `Fuchsia-600` para una estética corporativa de alto rendimiento.
+- [x] **Functional Glassmorphism**: Refinamiento de efectos de cristal con desenfoques de 16px y bordes sutiles (0.08 opacity) para mejorar la legibilidad.
+- [x] **Typography Standardization**: Implementación de **Outfit** (Encabezados), **Inter** (Cuerpo) y **JetBrains Mono** (Datos) gestionados centralizadamente.
+- [x] **Global Preloader Refined**: El preloader heredado ahora consume dinámicamente el color primario y el radio definido en la configuración global.
 
 ---
 
@@ -89,10 +90,10 @@ El sistema ahora opera bajo un modelo de **Arquitectura de Capas** refinada y re
     - [x] Generador dinámico de `sitemap.xml` para indexación profesional en motores de búsqueda.
 
 ### 8. Visual Excellence & Homepage Restructuring (Sprint 7)
-- [x] **VeZetaeLeA Unified Design System**:
-    - [x] Centralización de tokens en `variables.css` como única fuente de verdad.
-    - [x] Paleta final: **Teal** (`#399297`) + **Acento Púrpura** (`#b10da9`) + Gradiente Physichromie.
-    - [x] Refabricación de `style.css` para eliminar deuda técnica.
+- [x] **VeZetaeLeA Unified Design System (Sprint 20)**:
+    - [x] Centralización de tokens en `variables.css` como única fuente de verdad (Config-Driven).
+    - [x] Paleta Tech-Premium: **Zinc 950** (`#09090B`) + **Sky 500** (`#0ea5e9`) + **Fuchsia 600** (`#c026d3`).
+    - [x] Refabricación total de `style.css` y `vezetaelea.css` para eliminar deuda técnica (Zero Hardcode).
 - [x] **Homepage Content Optimization** (home.php):
     - [x] Hero reescrito en formato minimalista (H1 + Tagline Pills + 2 CTAs) para reducir saturación visual.
     - [x] Nueva sección **Social Proof Strip** entre Hero y Diferenciación para métricas de confianza.
@@ -153,13 +154,13 @@ Se ha ejecutado el **Hardening de Seguridad Crítico** según el nuevo PRD de Ev
 
 ---
 
-| Color | Hex Final | Uso Principal (VeZetaeLeA OS) |
+| Color | Hex (Default) | Uso Principal (VeZetaeLeA OS) |
 | :--- | :--- | :--- |
-| **Deep Black** | `#020617` | Fondo inmersivo del sistema operativo. |
-| **Azul Profundo** | `#113a96` | Confianza, Autoridad Máxima, CTAs. |
-| **Vinotinto Nocturno** | `#350513` | Sofisticación extrema, Acentos oscuros. |
-| **Physichromie** | `Ultra-Dark Kinetic` | Gradiente solemne y ejecutivo. |
-| **Primary Text** | `#f8fafc` | Máxima legibilidad y contraste. |
+| **Zinc Black** | `#09090B` | Fondo inmersivo del sistema operativo (Configurable). |
+| **Sky 500** | `#0ea5e9` | Color Primario, Enlaces, Acciones Principales. |
+| **Fuchsia 600** | `#c026d3` | Color Secundario, Notificaciones, Acentos Creativos. |
+| **Tech Gold** | `#D4AF37` | Premium Badges, SLA Alerts, CRM Gold Status. |
+| **Glass Border** | `rgba(255,255,255,0.08)` | Separación sutil de superficies y jerarquía visual. |
 
 
 

@@ -4,35 +4,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>
-        <?php echo $title; ?>
-    </title>
+    <title><?php echo $title; ?></title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link
-        href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap"
-        rel="stylesheet">
-    <link rel="stylesheet"
-        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=block" />
+    <!-- Fuentes: URL configurable desde .env vía FONT_URL -->
+    <link href="<?php echo \Core\Config::get('typography.font_url'); ?>" rel="stylesheet">
+    <!-- Design System CSS -->
     <link rel="stylesheet" href="<?php echo url('assets/css/variables.css'); ?>">
     <link rel="stylesheet" href="<?php echo url('assets/css/style.css'); ?>">
     <link rel="stylesheet" href="<?php echo url('assets/css/animations.css'); ?>">
-
     <link rel="icon" type="image/x-icon" href="<?php echo url('assets/images/vezetaelea.ico'); ?>">
-    <script>window.APP_URL = "<?php echo url(); ?>";
-        window.SESSION_CONFIG = {
-            lifetime: <?php echo \Core\Config::get('security.session_lifetime'); ?>,
-            heartbeat: <?php echo \Core\Config::get('security.session_heartbeat'); ?>,
-            warning: <?php echo \Core\Config::get('security.session_warning'); ?>
-        };
-    </script>
+    <!-- ✦ Dynamic Design Tokens — injected from .env via Config (Zero Hardcode) -->
+    <?php $ui = \Core\Config::get('ui'); $typo = \Core\Config::get('typography'); ?>
     <style>
+        :root {
+            --vzl-font-heading: <?= htmlspecialchars($typo['font_heading']) ?>;
+            --vzl-font-body:    <?= htmlspecialchars($typo['font_body']) ?>;
+            --vzl-font-mono:    <?= htmlspecialchars($typo['font_mono']) ?>;
+            --vzl-color-bg-dark:       <?= htmlspecialchars($ui['color_bg_dark']) ?>;
+            --vzl-color-surface-dark:  <?= htmlspecialchars($ui['color_surface_dark']) ?>;
+            --vzl-color-surface-elev:  <?= htmlspecialchars($ui['color_surface_elev']) ?>;
+            --vzl-color-border-dark:   <?= htmlspecialchars($ui['color_border_dark']) ?>;
+            --vzl-color-bg-light:      <?= htmlspecialchars($ui['color_bg_light']) ?>;
+            --vzl-color-surface-light: <?= htmlspecialchars($ui['color_surface_light']) ?>;
+            --vzl-color-border-light:  <?= htmlspecialchars($ui['color_border_light']) ?>;
+            --vzl-primary:    <?= htmlspecialchars($ui['primary_color']) ?>;
+            --vzl-secondary:  <?= htmlspecialchars($ui['secondary_color']) ?>;
+            --vzl-color-gold: <?= htmlspecialchars($ui['gold_color']) ?>;
+            --vzl-color-success: <?= htmlspecialchars($ui['color_success']) ?>;
+            --vzl-color-warning: <?= htmlspecialchars($ui['color_warning']) ?>;
+            --vzl-color-danger:  <?= htmlspecialchars($ui['color_danger']) ?>;
+            --vzl-color-info:    <?= htmlspecialchars($ui['color_info']) ?>;
+            --vzl-ui-radius-sm:   <?= htmlspecialchars($ui['radius_sm']) ?>;
+            --vzl-ui-radius-md:   <?= htmlspecialchars($ui['radius_md']) ?>;
+            --vzl-ui-radius-lg:   <?= htmlspecialchars($ui['radius_lg']) ?>;
+            --vzl-ui-radius-pill: <?= htmlspecialchars($ui['radius_pill']) ?>;
+        }
         body { padding-top: 0 !important; }
         .sticky-top { top: 0 !important; }
     </style>
+    <script>
+        window.APP_URL = "<?php echo url(); ?>";
+        window.SESSION_CONFIG = {
+            lifetime: <?php echo \Core\Config::get('security.session_lifetime'); ?>,
+            heartbeat: <?php echo \Core\Config::get('security.session_heartbeat'); ?>,
+            warning:  <?php echo \Core\Config::get('security.session_warning'); ?>
+        };
+    </script>
 </head>
+
 
 <body class="bg-deep-black">
     <div class="d-flex min-vh-100">

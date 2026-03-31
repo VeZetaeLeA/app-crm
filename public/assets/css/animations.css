@@ -4,9 +4,9 @@
  */
 
 @keyframes vzl-success-pulse {
-    0% { transform: scale(1); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4); }
-    70% { transform: scale(1.02); box-shadow: 0 0 0 15px rgba(34, 197, 94, 0); }
-    100% { transform: scale(1); box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+    0% { transform: scale(1); box-shadow: 0 0 0 0 color-mix(in srgb, var(--vzl-color-success, #10B981) 40%, transparent); }
+    70% { transform: scale(1.02); box-shadow: 0 0 0 15px color-mix(in srgb, var(--vzl-color-success, #10B981) 0%, transparent); }
+    100% { transform: scale(1); box-shadow: 0 0 0 0 color-mix(in srgb, var(--vzl-color-success, #10B981) 0%, transparent); }
 }
 
 @keyframes vzl-float {
@@ -36,8 +36,8 @@
 
 .vzl-card-delight:hover {
     transform: translateY(-8px) scale(1.02);
-    border-color: var(--vzl-cyan) !important;
-    box-shadow: 0 20px 40px rgba(0, 242, 255, 0.15) !important;
+    border-color: var(--vzl-primary) !important;
+    box-shadow: 0 20px 40px color-mix(in srgb, var(--vzl-primary) 15%, transparent) !important;
 }
 
 /* Success Checkmark Animation */
@@ -46,7 +46,7 @@
     stroke-dashoffset: 166;
     stroke-width: 2;
     stroke-miterlimit: 10;
-    stroke: #22c55e;
+    stroke: var(--vzl-color-success, #10B981);
     fill: none;
     animation: vzl-stroke 0.6s cubic-bezier(0.65, 0, 0.45, 1) forwards;
 }
@@ -59,7 +59,7 @@
 .vzl-loading-bar {
     height: 3px;
     width: 100%;
-    background: linear-gradient(90deg, var(--vzl-cyan), var(--vzl-magenta), var(--vzl-cyan));
+    background: linear-gradient(90deg, var(--vzl-primary), var(--vzl-secondary), var(--vzl-primary));
     background-size: 200% auto;
     animation: vzl-border-flow 2s linear infinite;
 }

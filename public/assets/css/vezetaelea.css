@@ -2,53 +2,41 @@
    VeZetaeLeA CRM – Base CSS
    ========================= */
 
-/* Google Font */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
-
 /* =========================
    Variables
    ========================= */
 :root {
-    --bg-main: #020617;
-    /* Deep Navy/Black */
-    --bg-card: #0f172a;
-    /* Slightly lighter navy */
+    --bg-main:      var(--vzl-color-bg-dark, #09090B);
+    --bg-card:      var(--vzl-color-surface-dark, #18181B);
+    --text-main:    var(--vzl-text, #f4f4f5);
+    --text-muted:   var(--vzl-text-muted, #a1a1aa);
 
-    --text-main: #f8fafc;
-    --text-muted: #94a3b8;
-
-    --primary: #00f2ff;
-    /* Neon Cyan */
-    --primary-hover: #3b82f6;
-    /* Electric Blue */
-    --secondary: #ec4899;
-    /* Neon Pink */
-    --accent: #8b5cf6;
-    /* Violet */
+    --primary:       var(--vzl-primary, #0ea5e9);
+    --primary-hover: var(--vzl-secondary, #c026d3);
+    --secondary:     var(--vzl-secondary, #c026d3);
+    --accent:        var(--vzl-color-gold, #D4AF37);
 
     /* Glassmorphism Variables */
-    --glass-bg: rgba(15, 23, 42, 0.6);
-    --glass-border: rgba(59, 130, 246, 0.2);
-    /* Subtle Blue Border */
-    --glass-blur: blur(20px);
-    --glass-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.37);
+    --glass-bg:     var(--vzl-glass-bg, rgba(24, 24, 27, 0.7));
+    --glass-border: var(--vzl-glass-border, rgba(255, 255, 255, 0.08));
+    --glass-blur:   var(--vzl-glass-blur, 16px);
+    --glass-shadow: var(--vzl-shadow-lg);
 
-    --success: #22c55e;
-    --warning: #facc15;
-    --danger: #ef4444;
+    --success: var(--vzl-color-success, #10B981);
+    --warning: var(--vzl-color-warning, #F59E0B);
+    --danger:  var(--vzl-color-danger, #EF4444);
 
-    --sidebar-bg: rgba(2, 6, 23, 0.95);
-    --sidebar-text: #94a3b8;
+    --sidebar-bg:    var(--vzl-color-bg-dark, #09090B);
+    --sidebar-text:  var(--vzl-text-muted, #a1a1aa);
     --sidebar-width: 230px;
-    /* Further reduced from 250px */
 
-    --radius-sm: 8px;
-    --radius-md: 16px;
-    --radius-lg: 24px;
+    --radius-sm: var(--vzl-ui-radius-sm, 6px);
+    --radius-md: var(--vzl-ui-radius-md, 12px);
+    --radius-lg: var(--vzl-ui-radius-lg, 20px);
 
-    --shadow-sm: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-    --shadow-md: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-    --shadow-glow: 0 0 20px rgba(0, 242, 255, 0.15);
+    --shadow-sm: var(--vzl-shadow-sm);
+    --shadow-md: var(--vzl-shadow-md);
+    --shadow-glow: 0 0 20px color-mix(in srgb, var(--vzl-primary, #0ea5e9) 15%, transparent);
 }
 
 /* =========================
@@ -61,9 +49,9 @@
 }
 
 body {
-    font-family: 'Inter', system-ui, sans-serif;
-    background-color: var(--bg-main);
-    color: var(--text-main);
+    font-family: var(--vzl-font-body, 'Inter', system-ui, sans-serif);
+    background-color: var(--vzl-bg);
+    color: var(--vzl-text);
     font-size: 15px;
     line-height: 1.6;
 }
@@ -179,10 +167,10 @@ h4 {
 
 .menu-item:hover,
 .menu-item.active {
-    background: rgba(0, 242, 255, 0.05);
+    background: color-mix(in srgb, var(--vzl-primary) 5%, transparent);
     color: var(--primary);
-    border-color: rgba(0, 242, 255, 0.2);
-    box-shadow: 0 0 15px rgba(0, 242, 255, 0.1);
+    border-color: color-mix(in srgb, var(--vzl-primary) 20%, transparent);
+    box-shadow: 0 0 15px color-mix(in srgb, var(--vzl-primary) 10%, transparent);
 }
 
 .menu-item.logout {
@@ -662,7 +650,7 @@ button,
 .badge.active {
     background: var(--primary);
     color: #000;
-    box-shadow: 0 0 10px rgba(0, 242, 255, 0.3);
+    box-shadow: 0 0 10px color-mix(in srgb, var(--vzl-primary) 30%, transparent);
 }
 
 /* Estados */
@@ -871,7 +859,7 @@ button,
     font-size: 14px;
     font-weight: 600;
     padding: 12px 24px;
-    box-shadow: 0 0 15px rgba(0, 242, 255, 0.15);
+    box-shadow: 0 0 15px color-mix(in srgb, var(--vzl-primary) 15%, transparent);
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
     cursor: pointer;
@@ -886,7 +874,7 @@ button,
 .btn-neon:hover {
     background: var(--primary);
     color: #000;
-    box-shadow: 0 0 30px rgba(0, 242, 255, 0.5);
+    box-shadow: 0 0 30px color-mix(in srgb, var(--vzl-primary) 50%, transparent);
 }
 
 .btn-neon-secondary {
@@ -972,16 +960,16 @@ button,
 }
 
 .pillar-select-card:hover {
-    background: rgba(0, 242, 255, 0.05);
+    background: color-mix(in srgb, var(--vzl-primary) 5%, transparent);
     border-color: var(--primary);
     transform: translateY(-5px);
-    box-shadow: 0 10px 30px rgba(0, 242, 255, 0.1);
+    box-shadow: 0 10px 30px color-mix(in srgb, var(--vzl-primary) 10%, transparent);
 }
 
 .pillar-select-card.selected {
-    background: rgba(0, 242, 255, 0.1);
+    background: color-mix(in srgb, var(--vzl-primary) 10%, transparent);
     border-color: var(--primary);
-    box-shadow: 0 0 20px rgba(0, 242, 255, 0.2);
+    box-shadow: 0 0 20px color-mix(in srgb, var(--vzl-primary) 20%, transparent);
     transform: scale(1.02);
 }
 
@@ -1700,7 +1688,7 @@ button,
     align-items: center;
     justify-content: center;
     color: var(--primary);
-    box-shadow: 0 0 15px rgba(0, 242, 255, 0.2);
+    box-shadow: 0 0 15px color-mix(in srgb, var(--vzl-primary) 20%, transparent);
     z-index: 1000;
     transition: all 0.3s ease;
     backdrop-filter: blur(10px);
@@ -1719,7 +1707,7 @@ button,
     background: var(--primary);
     color: #000;
     transform: translateY(-5px);
-    box-shadow: 0 0 25px rgba(0, 242, 255, 0.6);
+    box-shadow: 0 0 25px color-mix(in srgb, var(--vzl-primary) 60%, transparent);
 }
 
 /* =========================
@@ -2067,7 +2055,7 @@ button,
 
 @keyframes pulse {
     0% {
-        box-shadow: 0 0 0 0 rgba(0, 242, 255, 0.4);
+        box-shadow: 0 0 0 0 color-mix(in srgb, var(--vzl-primary) 40%, transparent);
     }
 
     70% {
@@ -2092,9 +2080,9 @@ button,
 
 .badge-nuevo,
 .badge-abierto {
-    background: rgba(0, 242, 255, 0.1);
+    background: color-mix(in srgb, var(--vzl-primary) 10%, transparent);
     color: var(--primary);
-    border-color: rgba(0, 242, 255, 0.3);
+    border-color: color-mix(in srgb, var(--vzl-primary) 30%, transparent);
 }
 
 .badge-contactado,
@@ -2156,12 +2144,12 @@ button,
 .preloader-spinner {
     width: 50px;
     height: 50px;
-    border: 3px solid rgba(0, 242, 255, 0.1);
+    border: 3px solid color-mix(in srgb, var(--vzl-primary) 10%, transparent);
     border-top: 3px solid var(--primary);
     border-radius: 50%;
     animation: spin 1s linear infinite;
     margin: 0 auto;
-    box-shadow: 0 0 15px rgba(0, 242, 255, 0.2);
+    box-shadow: 0 0 15px color-mix(in srgb, var(--vzl-primary) 20%, transparent);
 }
 
 @keyframes spin {
@@ -2324,7 +2312,7 @@ button:focus-visible,
 
 /* Hover glow effect for primary buttons */
 .btn-primary:hover {
-    box-shadow: 0 0 20px rgba(0, 242, 255, 0.3);
+    box-shadow: 0 0 20px color-mix(in srgb, var(--vzl-primary) 30%, transparent);
 }
 
 /* 6. Mobile Accordion for Footers/Navigation */
@@ -2661,9 +2649,9 @@ button:focus-visible,
 }
 
 .tech-item:hover .tech-icon-container {
-    background: rgba(0, 242, 255, 0.05);
-    border-color: rgba(0, 242, 255, 0.2);
-    box-shadow: 0 0 20px rgba(0, 242, 255, 0.1);
+    background: color-mix(in srgb, var(--vzl-primary) 5%, transparent);
+    border-color: color-mix(in srgb, var(--vzl-primary) 20%, transparent);
+    box-shadow: 0 0 20px color-mix(in srgb, var(--vzl-primary) 10%, transparent);
 }
 
 .tech-name {
@@ -2827,7 +2815,7 @@ button:focus-visible,
 }
 
 .tag-pillar {
-    background: rgba(0, 242, 255, 0.1);
+    background: color-mix(in srgb, var(--vzl-primary) 10%, transparent);
     color: var(--primary);
 }
 

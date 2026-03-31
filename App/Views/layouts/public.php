@@ -29,14 +29,46 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
-    <link rel="icon" type="image/x-icon" href="<?php echo url('assets/images/vezetaelea.ico'); ?>">
-    <script>window.APP_URL = "<?php echo url(); ?>";</script>
+    <!-- Fuentes: URL configurable desde .env vía FONT_URL -->
+    <link href="<?php echo htmlspecialchars(\Core\Config::get('typography.font_url')); ?>" rel="stylesheet">
+    <!-- Design System CSS -->
     <link rel="stylesheet" href="<?php echo url('assets/css/variables.css'); ?>">
     <link rel="stylesheet" href="<?php echo url('assets/css/style.css'); ?>">
     <link rel="stylesheet" href="<?php echo url('assets/css/home.css'); ?>">
     <link rel="stylesheet" href="<?php echo url('assets/css/animations.css'); ?>">
+    <link rel="icon" type="image/x-icon" href="<?php echo url('assets/images/vezetaelea.ico'); ?>">
+    <!-- ✦ Dynamic Design Tokens — injected from .env via Config (Zero Hardcode) -->
+    <style>
+        :root {
+            /* Typography — Config::get('typography.*') */
+            --vzl-font-heading: <?= \Core\Config::get('typography.font_heading') ?>;
+            --vzl-font-body:    <?= \Core\Config::get('typography.font_body') ?>;
+            --vzl-font-mono:    <?= \Core\Config::get('typography.font_mono') ?>;
+            /* Color Backgrounds */
+            --vzl-color-bg-dark:       <?= \Core\Config::get('ui.color_bg_dark') ?>;
+            --vzl-color-surface-dark:  <?= \Core\Config::get('ui.color_surface_dark') ?>;
+            --vzl-color-surface-elev:  <?= \Core\Config::get('ui.color_surface_elev') ?>;
+            --vzl-color-border-dark:   <?= \Core\Config::get('ui.color_border_dark') ?>;
+            --vzl-color-bg-light:      <?= \Core\Config::get('ui.color_bg_light') ?>;
+            --vzl-color-surface-light: <?= \Core\Config::get('ui.color_surface_light') ?>;
+            --vzl-color-border-light:  <?= \Core\Config::get('ui.color_border_light') ?>;
+            /* Brand Accents */
+            --vzl-primary:    <?= \Core\Config::get('ui.primary_color') ?>;
+            --vzl-secondary:  <?= \Core\Config::get('ui.secondary_color') ?>;
+            --vzl-color-gold: <?= \Core\Config::get('ui.gold_color') ?>;
+            /* Semantic State Colors */
+            --vzl-color-success: <?= \Core\Config::get('ui.color_success') ?>;
+            --vzl-color-warning: <?= \Core\Config::get('ui.color_warning') ?>;
+            --vzl-color-danger:  <?= \Core\Config::get('ui.color_danger') ?>;
+            --vzl-color-info:    <?= \Core\Config::get('ui.color_info') ?>;
+            /* Border Radius */
+            --vzl-ui-radius-sm:   <?= \Core\Config::get('ui.radius_sm') ?>;
+            --vzl-ui-radius-md:   <?= \Core\Config::get('ui.radius_md') ?>;
+            --vzl-ui-radius-lg:   <?= \Core\Config::get('ui.radius_lg') ?>;
+            --vzl-ui-radius-pill: <?= \Core\Config::get('ui.radius_pill') ?>;
+        }
+    </style>
+
 
 </head>
 
