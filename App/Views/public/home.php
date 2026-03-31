@@ -276,7 +276,7 @@ if (is_dir(public_path($stackDir))) {
                 <span class="x-small text-warning fw-bold uppercase tracking-widest">Producto Exclusivo de <?= \Core\Config::get('business.company_name') ?></span>
             </div>
             <h6 class="vzl-section-subtitle">Control Maestro</h6>
-            <h2 class="vzl-section-title">Tu Empresa Merece su <span class="vzl-text-gradient-vibrant">Sistema Operativo Propio</span></h2>
+            <h2 class="vzl-section-title">Te ofrecemos un <span class="vzl-text-gradient-vibrant">Sistema Operativo Propio</span></h2>
             <p class="text-white-50 mx-auto mt-3" style="max-width: 680px;">
                 App-CRM es nuestra plataforma enterprise construida en producción real. La misma herramienta que usamos para gestionar nuestros clientes, ahora disponible para tu empresa.
             </p>

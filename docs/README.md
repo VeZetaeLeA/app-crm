@@ -1,7 +1,7 @@
 # 📚 Índice de Documentación - VeZetaeLeA OS
 
-**Versión:** 18.2.2  
-**Última actualización:** 30 de Marzo, 2026 (Cyber-Neon & Kinetic Flow)  
+**Versión:** 18.2.3  
+**Última actualización:** 30 de Marzo, 2026 (Legacy Preloader Restoration)  
 
 ---
 
@@ -205,6 +205,7 @@ Para preguntas sobre la documentación:
 | 15.0.0 | 19/03/2026 | Sprint 5: Security Hardening & SLA - Implementación de 2FA (TOTP) y monitoreo proactivo de métricas de servicio. |
 | 16.0.0 | 19/03/2026 | Sprint 6: Administration & SEO - Configuración dinámica vía UI, importación masiva CSV y optimización integral para buscadores. |
 | 18.2.2 | 30/03/2026 | Evolución 18.2.2: Cyber-Neon & Kinetic Flow - Estandarización de botones neón, Kinetic Preloader y polimento de UX pública. |
+| 18.2.3 | 30/03/2026 | Evolución 18.2.3: Legacy Preloader Restoration - Restauración del preloader clásico con spinner neón clásico y lógica inteligente. |
 
 ---
 
