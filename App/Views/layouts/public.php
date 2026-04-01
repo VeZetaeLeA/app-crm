@@ -191,12 +191,13 @@ $navCategories = $db->query("SELECT name, slug FROM service_categories WHERE is_
                 </a>
                 
                 <div class="list-group-item bg-transparent text-white border-white-5 p-0">
-                    <a class="d-flex align-items-center justify-content-between py-3 px-4 text-decoration-none text-white w-100" data-bs-toggle="collapse" href="#mobileServices" role="button" aria-expanded="false">
+                    <button class="btn d-flex align-items-center justify-content-between py-3 px-4 text-decoration-none text-white w-100 border-0" 
+                            data-bs-toggle="collapse" data-bs-target="#mobileServices" aria-expanded="false" aria-controls="mobileServices">
                         <div class="d-flex align-items-center gap-3">
                             <span class="material-symbols-outlined text-primary">hub</span> Servicios
                         </div>
                         <span class="material-symbols-outlined x-small transition-transform">expand_more</span>
-                    </a>
+                    </button>
                     <div class="collapse bg-white-5" id="mobileServices">
                         <?php foreach ($navCategories as $navCat): ?>
                             <a href="<?php echo url('service/category/' . $navCat['slug']); ?>" class="d-block py-2 px-5 text-white-50 text-decoration-none small hover-gold">
@@ -406,5 +407,11 @@ $navCategories = $db->query("SELECT name, slug FROM service_categories WHERE is_
             scrollBtn.addEventListener('click', () => window.scrollTo({top:0, behavior:'smooth'}));
         });
     </script>
+    <style>
+        /* Mobile Dropdown Icon Rotation */
+        [aria-expanded="true"] .transition-transform {
+            transform: rotate(180deg);
+        }
+    </style>
 </body>
 </html>

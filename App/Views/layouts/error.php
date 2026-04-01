@@ -7,6 +7,7 @@
     <title>
         <?php echo $title ?? 'Error | ' . \Core\Config::get('business.company_name'); ?>
     </title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="<?php echo htmlspecialchars(\Core\Config::get('typography.font_url')); ?>" rel="stylesheet">
 
     <link rel="stylesheet" href="<?php echo url('assets/css/variables.css'); ?>">
