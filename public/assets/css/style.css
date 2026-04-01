@@ -290,7 +290,10 @@ body {
     font-size: var(--vzl-fs-body);
     line-height: var(--vzl-lh-base);
     -webkit-font-smoothing: antialiased;
-    padding-top: 80px; /* Space for fixed-top navbar */
+}
+
+.has-fixed-navbar {
+    padding-top: 80px; /* Space for fixed-top navbar on public landing */
 }
 
 .text-primary {
@@ -591,6 +594,12 @@ h2.display-5 {
     text-transform: uppercase;
     letter-spacing: var(--vzl-tracking-wide, 0.05em);
     font-size: var(--vzl-fs-xs, 0.75rem);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    line-height: 1.2 !important; /* Slightly more breathe room for flex centering */
+    vertical-align: middle;
 }
 
 .icon-container {
@@ -638,7 +647,9 @@ h2.display-5 {
     line-height: 1;
     letter-spacing: normal;
     text-transform: none;
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
     white-space: nowrap;
     word-wrap: normal;
     direction: ltr;
@@ -1160,3 +1171,49 @@ body::before {
     to { opacity: 1; transform: scale(1); }
 }
 
+/* ============================================================
+   MOBILE ACCORDION (Footer & Menus)
+   ============================================================ */
+.mobile-accordion-section .accordion-content {
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@media (max-width: 767.98px) {
+    .mobile-accordion-section .accordion-content {
+        display: none;
+        padding-top: 15px;
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    
+    .mobile-accordion-section.active .accordion-content {
+        display: block !important;
+        opacity: 1;
+        transform: translateY(0);
+    }
+    
+    .accordion-trigger {
+        cursor: pointer;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        padding: 10px 0;
+        border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    
+    .mobile-accordion-section.active .faq-icon svg {
+        transform: rotate(90deg);
+    }
+    
+    .faq-icon svg {
+        transition: transform 0.3s ease;
+    }
+
+    .hide-mobile { display: none !important; }
+    .show-mobile { display: flex !important; }
+}
+
+@media (min-width: 768px) {
+    .accordion-trigger.show-mobile { display: none !important; }
+    .accordion-content { display: block !important; opacity: 1 !important; transform: none !important; }
+}

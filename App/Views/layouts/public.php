@@ -32,11 +32,11 @@
     <!-- Fuentes: URL configurable desde .env vía FONT_URL -->
     <link href="<?php echo htmlspecialchars(\Core\Config::get('typography.font_url')); ?>" rel="stylesheet">
     <!-- Design System CSS -->
-    <link rel="stylesheet" href="<?php echo url('assets/css/variables.css'); ?>">
-    <link rel="stylesheet" href="<?php echo url('assets/css/style.css'); ?>">
-    <link rel="stylesheet" href="<?php echo url('assets/css/home.css'); ?>">
-    <link rel="stylesheet" href="<?php echo url('assets/css/animations.css'); ?>">
-    <link rel="icon" type="image/x-icon" href="<?php echo url('assets/images/vezetaelea.ico'); ?>">
+    <link rel="stylesheet" href="<?php echo url('assets/css/variables.css?v=1.0.8'); ?>">
+    <link rel="stylesheet" href="<?php echo url('assets/css/style.css?v=1.0.8'); ?>">
+    <link rel="stylesheet" href="<?php echo url('assets/css/home.css?v=1.0.8'); ?>">
+    <link rel="stylesheet" href="<?php echo url('assets/css/animations.css?v=1.0.8'); ?>">
+    <link rel="icon" type="image/x-icon" href="<?php echo url('assets/images/VeZetaeLeA.ico'); ?>">
     <!-- ✦ Dynamic Design Tokens — injected from .env via Config (Zero Hardcode) -->
     <style>
         :root {
@@ -89,12 +89,13 @@ $db = \Core\Database::getInstance()->getConnection();
 $navCategories = $db->query("SELECT name, slug FROM service_categories WHERE is_active = 1 ORDER BY order_position ASC")->fetchAll();
 ?>
 
-<body>
+<body class="has-fixed-navbar">
     <!-- Legacy Preloader (Restored) -->
     <div id="vzl-loader" class="vzl-preloader">
         <div class="vzl-preloader-content">
             <div class="vzl-preloader-logo">
                 <img src="<?php echo url('assets/images/logo.png'); ?>" alt="VeZetaeLeA"
+                    class="vzl-logo-tech"
                     style="height: 60px; width: auto; margin-bottom: 10px;">
             </div>
             <div class="vzl-preloader-spinner"></div>
@@ -121,6 +122,7 @@ $navCategories = $db->query("SELECT name, slug FROM service_categories WHERE is_
             <div class="d-flex align-items-center gap-3">
                 <a href="<?php echo url(); ?>" class="text-decoration-none d-flex align-items-center">
                     <img src="<?php echo url('assets/images/logo.png'); ?>" alt="VeZetaeLeA Logo"
+                        class="vzl-logo-tech"
                         style="height: 50px; width: auto;">
                 </a>
             </div>
@@ -179,7 +181,7 @@ $navCategories = $db->query("SELECT name, slug FROM service_categories WHERE is_
     <div class="offcanvas offcanvas-end glass-morphism border-start border-white-10 text-white" tabindex="-1" id="mobileMenu" aria-labelledby="mobileMenuLabel">
         <div class="offcanvas-header border-bottom border-white-10 py-4">
             <div class="d-flex align-items-center gap-3">
-                <img src="<?php echo url('assets/images/logo.png'); ?>" alt="Logo" style="height: 35px; width: auto;">
+                <img src="<?php echo url('assets/images/logo.png'); ?>" alt="Logo" class="vzl-logo-tech" style="height: 35px; width: auto;">
                 <h5 class="offcanvas-title fw-bold vzl-text-gradient" id="mobileMenuLabel">Menú</h5>
             </div>
             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -277,6 +279,7 @@ $navCategories = $db->query("SELECT name, slug FROM service_categories WHERE is_
                 <div class="col-md-4">
                     <div class="d-flex align-items-center gap-3 mb-4">
                         <img src="<?php echo url('assets/images/logo.png'); ?>" alt="Logo"
+                             class="vzl-logo-tech"
                              style="height: 40px; width: auto;">
                         <h3 class="h5 mb-0 fw-bold"><span class="vzl-text-gradient"><?php echo mb_strtoupper(\Core\Config::get('business.company_name')); ?></span></h3>
                     </div>

@@ -14,10 +14,10 @@
     <!-- Fuentes: URL configurable desde .env vía FONT_URL -->
     <link href="<?php echo \Core\Config::get('typography.font_url'); ?>" rel="stylesheet">
     <!-- Design System CSS -->
-    <link rel="stylesheet" href="<?php echo url('assets/css/variables.css'); ?>">
-    <link rel="stylesheet" href="<?php echo url('assets/css/style.css'); ?>">
-    <link rel="stylesheet" href="<?php echo url('assets/css/animations.css'); ?>">
-    <link rel="icon" type="image/x-icon" href="<?php echo url('assets/images/vezetaelea.ico'); ?>">
+    <link rel="stylesheet" href="<?php echo url('assets/css/variables.css?v=1.0.8'); ?>">
+    <link rel="stylesheet" href="<?php echo url('assets/css/style.css?v=1.0.8'); ?>">
+    <link rel="stylesheet" href="<?php echo url('assets/css/animations.css?v=1.0.8'); ?>">
+    <link rel="icon" type="image/x-icon" href="<?php echo url('assets/images/VeZetaeLeA.ico'); ?>">
     <!-- ✦ Dynamic Design Tokens — injected from .env via Config (Zero Hardcode) -->
     <?php $ui = \Core\Config::get('ui'); $typo = \Core\Config::get('typography'); ?>
     <style>
@@ -228,7 +228,7 @@
                 </div>
             </header>
 
-            <div class="p-3 p-md-4 p-lg-5 mb-5 mb-lg-0">
+            <div class="p-3 pt-lg-1 p-lg-5 mb-5 mb-lg-0">
                 <?php echo $content; ?>
             </div>
 

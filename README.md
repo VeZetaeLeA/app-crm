@@ -2,7 +2,7 @@
 
 <div align="center">
 
-![Version](https://img.shields.io/badge/version-20.1.1-blue.svg)
+![Version](https://img.shields.io/badge/version-20.2.0-blue.svg)
 ![PHP](https://img.shields.io/badge/PHP-8.0+-purple.svg)
 ![MySQL](https://img.shields.io/badge/MySQL-8.0+-orange.svg)
 ![License](https://img.shields.io/badge/license-Proprietary-red.svg)
@@ -538,8 +538,7 @@ Para más soluciones, consulta la Sección 10 de [docs/DEPLOYMENT_GUIDE.md](docs
 
 - [x] Evolución 2.0 a 2.6.0: Premium Admin UI, Executive Design & FinOps integration.
 - [x] Estandarización de Identidad Corporativa (Branding Dinámico vía `.env`).
-- [x] Implementación de Referencia de Servicio (Pilar-Servicio) en flujo comercial.
-- [x] Auditoría visual de grillas y armonía UX en vistas de Budget/Invoice.
+- [x] Evolución 20.2.0 (Visual Vanguard): Implementación de paleta **Indigo/Zinc** y tipografía **Sora/Inter** centralizada.
 - [x] Hardening de Seguridad: CSP, HSTS, Rate Limiting y Zero-Hardcode Certified.
 
 ### 📊 Versión 3.0 (Desplegada)

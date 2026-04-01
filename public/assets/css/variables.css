@@ -90,13 +90,13 @@
     /* Zinc 600 */
 
     /* Interactive */
-    --vzl-focus-ring: rgba(14, 165, 233, 0.4);
-    /* Sky Blue focused ring */
+    --vzl-focus-ring: rgba(99, 102, 241, 0.4);
+    /* Indigo focused ring */
 
-    /* Glassmorphism 2.0 - Liquid Glass */
-    --vzl-glass-bg: rgba(15, 23, 42, 0.70);
-    /* Atmospheric surface @ 70% */
-    --vzl-glass-border: rgba(255, 255, 255, 0.06);
+    /* Glassmorphism 2.0 - Liquid Glass (Deep Zinc) */
+    --vzl-glass-bg: rgba(9, 9, 11, 0.80);
+    /* Deep Zinc surface @ 80% */
+    --vzl-glass-border: rgba(255, 255, 255, 0.08);
     --vzl-glass-blur: 24px;
 
     /* Shadows */
@@ -106,8 +106,8 @@
     --vzl-shadow-xl: 0 20px 60px rgba(0, 0, 0, 0.6);
 
     /* Hover glow (activated only on :hover / :focus — never static) */
-    --vzl-glow-primary: 0 0 20px rgba(14, 165, 233, 0.30);
-    --vzl-glow-secondary: 0 0 20px rgba(192, 38, 211, 0.25);
+    --vzl-glow-primary: 0 0 20px rgba(99, 102, 241, 0.30);
+    --vzl-glow-secondary: 0 0 20px rgba(219, 39, 119, 0.25);
     --vzl-glow-gold: 0 0 20px rgba(212, 175, 55, 0.25);
 
     /* Legacy compatibility: keep existing classes functional */
@@ -125,7 +125,7 @@
 
     /* Old CSS custom props used in admin/staff inlined styles */
     --elegant-gold: var(--vzl-color-gold, #D4AF37);
-    --tech-blue: var(--vzl-primary, #0ea5e9);
+    --tech-blue: var(--vzl-primary, #6366F1);
     --deep-black: var(--vzl-color-bg-dark, #09090B);
     --font-body: var(--vzl-font-body);
 
@@ -233,8 +233,8 @@ td.id-cell,
 .vzl-text-gradient,
 .vzl-text-gradient-vibrant {
     background: linear-gradient(135deg,
-            var(--vzl-primary, #0ea5e9) 0%,
-            var(--vzl-secondary, #c026d3) 100%);
+            var(--vzl-primary, #6366F1) 0%,
+            var(--vzl-secondary, #DB2777) 100%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -307,11 +307,11 @@ td.id-cell,
     outline: none;
 }
 
-/* Ghost Primary — Neon on Interaction Only */
-.vzl-btnvzl-font-body-glow-cyan {
+/* Ghost Primary — Indigo on Interaction Only */
+.vzl-btn-glow-cyan {
     background: transparent !important;
-    border: 1px solid rgba(14, 165, 233, 0.35) !important;
-    color: var(--vzl-primary, #0ea5e9) !important;
+    border: 1px solid rgba(99, 102, 241, 0.35) !important;
+    color: var(--vzl-primary, #6366F1) !important;
     font-family: var(--vzl-font-body);
     font-size: var(--vzl-fs-sm);
     font-weight: 600;
@@ -327,20 +327,20 @@ td.id-cell,
 
 .vzl-btn-glow-cyan:hover,
 .vzl-btn-glow-cyan:focus-visible {
-    background: rgba(14, 165, 233, 0.08) !important;
-    border-color: var(--vzl-primary, #0ea5e9) !important;
+    background: rgba(99, 102, 241, 0.08) !important;
+    border-color: var(--vzl-primary, #6366F1) !important;
     color: #fff !important;
-    box-shadow: 0 0 20px rgba(14, 165, 233, 0.30),
-        inset 0 0 12px rgba(14, 165, 233, 0.06) !important;
+    box-shadow: 0 0 20px rgba(99, 102, 241, 0.30),
+        inset 0 0 12px rgba(99, 102, 241, 0.06) !important;
     transform: translateY(-2px);
     outline: none;
 }
 
-/* Ghost Secondary — Neon Magenta on Interaction Only */
+/* Ghost Secondary — Pink on Interaction Only */
 .vzl-btn-glow-magenta {
     background: transparent !important;
-    border: 1px solid rgba(192, 38, 211, 0.35) !important;
-    color: var(--vzl-secondary, #c026d3) !important;
+    border: 1px solid rgba(219, 39, 119, 0.35) !important;
+    color: var(--vzl-secondary, #DB2777) !important;
     font-family: var(--vzl-font-body);
     font-size: var(--vzl-fs-sm);
     font-weight: 600;
@@ -356,11 +356,11 @@ td.id-cell,
 
 .vzl-btn-glow-magenta:hover,
 .vzl-btn-glow-magenta:focus-visible {
-    background: rgba(192, 38, 211, 0.08) !important;
-    border-color: var(--vzl-secondary, #c026d3) !important;
+    background: rgba(219, 39, 119, 0.08) !important;
+    border-color: var(--vzl-secondary, #DB2777) !important;
     color: #fff !important;
-    box-shadow: 0 0 20px rgba(192, 38, 211, 0.25),
-        inset 0 0 12px rgba(192, 38, 211, 0.05) !important;
+    box-shadow: 0 0 20px rgba(219, 39, 119, 0.25),
+        inset 0 0 12px rgba(219, 39, 119, 0.05) !important;
     transform: translateY(-2px);
     outline: none;
 }
@@ -386,7 +386,7 @@ td.id-cell,
 .vzl-input:focus,
 .form-control:focus,
 .form-select:focus {
-    border-color: var(--vzl-primary, #0ea5e9) !important;
+    border-color: var(--vzl-primary, #6366F1) !important;
     box-shadow: 0 0 0 3px var(--vzl-focus-ring) !important;
     outline: none !important;
     background: var(--vzl-surface, #18181B) !important;
@@ -436,7 +436,7 @@ td.id-cell,
 
 .vzl-card:hover {
     box-shadow: var(--vzl-shadow-md);
-    border-color: rgba(14, 165, 233, 0.20);
+    border-color: rgba(99, 102, 241, 0.20);
 }
 
 .vzl-card-glass {
@@ -520,7 +520,7 @@ td.id-cell,
 }
 
 [data-theme="light"] .table-hover tbody tr:hover>td {
-    background: rgba(14, 165, 233, 0.04) !important;
+    background: rgba(99, 102, 241, 0.04) !important;
 }
 
 /* ==========================================================================
@@ -688,8 +688,18 @@ td.id-cell,
 }
 
 /* ==========================================================================
-   16. USER ACCESS ICON (Navbar)
+   16. LOGO & BRAND ASSETS TREATMENT
    ========================================================================== */
+.vzl-logo-tech {
+    filter: brightness(0) invert(1) opacity(0.9);
+    /* Transforms multi-color logo into pure executive white */
+    transition: filter 0.3s ease, opacity 0.3s ease;
+}
+
+[data-theme="light"] .vzl-logo-tech {
+    filter: brightness(0) opacity(0.85); /* Pure black for light mode */
+}
+
 .user-access-icon {
     display: flex;
     align-items: center;
@@ -706,9 +716,9 @@ td.id-cell,
 
 .user-access-icon:hover {
     color: var(--vzl-primary);
-    border-color: rgba(14, 165, 233, 0.40);
+    border-color: rgba(99, 102, 241, 0.40);
     box-shadow: var(--vzl-glow-primary);
-    background: rgba(14, 165, 233, 0.06);
+    background: rgba(99, 102, 241, 0.06);
 }
 
 /* ==========================================================================
@@ -718,9 +728,9 @@ td.id-cell,
 .physichromie-divider {
     height: 2px;
     background: linear-gradient(90deg,
-            var(--vzl-primary, #0ea5e9) 0%,
+            var(--vzl-primary, #6366F1) 0%,
             #7c3aed 33%,
-            var(--vzl-secondary, #c026d3) 66%,
+            var(--vzl-secondary, #DB2777) 66%,
             var(--vzl-color-gold, #D4AF37) 100%);
     background-size: 200% auto;
     animation: vzl-physi-flow 6s linear infinite;
@@ -805,7 +815,7 @@ td.id-cell,
     width: 44px;
     height: 44px;
     border: 2px solid var(--vzl-border);
-    border-top-color: var(--vzl-primary, #0ea5e9);
+    border-top-color: var(--vzl-primary, #6366F1);
     border-radius: 50%;
     animation: vzl-spin 0.8s linear infinite;
 }
@@ -839,7 +849,7 @@ td.id-cell,
 
 .scroll-to-top:hover {
     color: var(--vzl-primary);
-    border-color: rgba(14, 165, 233, 0.4);
+    border-color: rgba(99, 102, 241, 0.4);
     box-shadow: var(--vzl-glow-primary);
 }
 

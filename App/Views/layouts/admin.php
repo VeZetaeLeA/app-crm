@@ -12,10 +12,10 @@
     <!-- Fuentes: URL configurable desde .env vía FONT_URL -->
     <link href="<?php echo \Core\Config::get('typography.font_url'); ?>" rel="stylesheet">
     <!-- Design System CSS -->
-    <link rel="stylesheet" href="<?php echo url('assets/css/variables.css'); ?>">
-    <link rel="stylesheet" href="<?php echo url('assets/css/style.css'); ?>">
-    <link rel="stylesheet" href="<?php echo url('assets/css/animations.css'); ?>">
-    <link rel="icon" type="image/x-icon" href="<?php echo url('assets/images/vezetaelea.ico'); ?>">
+    <link rel="stylesheet" href="<?php echo url('assets/css/variables.css?v=1.0.8'); ?>">
+    <link rel="stylesheet" href="<?php echo url('assets/css/style.css?v=1.0.8'); ?>">
+    <link rel="stylesheet" href="<?php echo url('assets/css/animations.css?v=1.0.8'); ?>">
+    <link rel="icon" type="image/x-icon" href="<?php echo url('assets/images/VeZetaeLeA.ico'); ?>">
     <!-- ✦ Dynamic Design Tokens — injected from .env via Config (Zero Hardcode) -->
     <?php $ui = \Core\Config::get('ui'); $typo = \Core\Config::get('typography'); ?>
     <style>
@@ -71,7 +71,7 @@
                 <a href="<?php echo url(); ?>"
                     class="text-decoration-none d-flex align-items-center gap-3 side-logo-link">
                     <img src="<?php echo url('assets/images/logo.png'); ?>" alt="Logo"
-                        class="side-logo-img"
+                        class="side-logo-img vzl-logo-tech"
                         style="width: 38px; height: 38px; object-fit: contain;">
 
                     <h2 class="text-white h5 mb-0 fw-bold side-logo-text" style="font-family: var(--vzl-font-body); font-size: 1.1rem; letter-spacing: -0.02em;">
@@ -260,7 +260,7 @@
                 </div>
             </header>
 
-            <div class="p-4 p-lg-4 mb-5 mb-lg-0">
+            <div class="p-4 pt-lg-1 p-lg-5 mb-5 mb-lg-0">
                 <?php echo $content; ?>
             </div>
 
@@ -497,8 +497,8 @@
         });
     </script>
     <script src="<?php echo url('assets/js/session_monitor.js'); ?>"></script>
-    <script src="<?php echo url('assets/js/notifications.js'); ?>"></script>
-    <script src="<?php echo url('assets/js/realtime.js'); ?>"></script>
+    <script src="<?php echo url('assets/js/notifications.js?v=1.0.8'); ?>"></script>
+    <script src="<?php echo url('assets/js/realtime.js?v=1.0.8'); ?>"></script>
 </body>
 
 </html>
