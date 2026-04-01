@@ -190,7 +190,7 @@ html {
 }
 
 body {
-    font-family: var(--vzl-font-body, 'Inter', system-ui, sans-serif);
+    font-family: var(--vzl-font-body, 'Google Sans', 'Outfit', system-ui, sans-serif);
     font-size: var(--vzl-fs-body);
     line-height: var(--vzl-lh-body);
     color: var(--vzl-text);

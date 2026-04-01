@@ -538,7 +538,7 @@ Para más soluciones, consulta la Sección 10 de [docs/DEPLOYMENT_GUIDE.md](docs
 
 - [x] Evolución 2.0 a 2.6.0: Premium Admin UI, Executive Design & FinOps integration.
 - [x] Estandarización de Identidad Corporativa (Branding Dinámico vía `.env`).
-- [x] Evolución 20.2.0 (Visual Vanguard): Implementación de paleta **Indigo/Zinc** y tipografía **Sora/Inter** centralizada.
+- [x] Evolución 20.2.0 (Visual Vanguard): Implementación de paleta **Indigo/Zinc** y tipografía **Sora/Google Sans** centralizada.
 - [x] Hardening de Seguridad: CSP, HSTS, Rate Limiting y Zero-Hardcode Certified.
 
 ### 📊 Versión 3.0 (Desplegada)
