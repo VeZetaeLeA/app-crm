@@ -21,22 +21,22 @@ $is_admin = $is_admin ?? (strpos($_SERVER['REQUEST_URI'], 'dashboard') !== false
                 <div class="accordion-content">
                     <div style="margin-bottom: 25px;">
                         <h5
-                            style="color: var(--primary); font-size: 14px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+                            style="color: var(--vzl-primary); font-size: var(--vzl-fs-sm); text-transform: uppercase; letter-spacing: var(--vzl-tracking-wide); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
                             <span>📞</span> Contacto
                         </h5>
-                        <p style="font-size: 14px; color: var(--text-muted); margin-bottom: 5px;">
+                        <p style="font-size: var(--vzl-fs-sm); color: var(--vzl-text-muted); margin-bottom: 5px;">
                             <a href="mailto:<?php echo \Core\Config::get('business.company_mail'); ?>"
-                                style="color: var(--text-muted);"><?php echo \Core\Config::get('business.company_mail'); ?></a>
+                                style="color: var(--vzl-text-muted);"><?php echo \Core\Config::get('business.company_mail'); ?></a>
                         </p>
-                        <p style="font-size: 14px; color: var(--text-muted);"><?php echo \Core\Config::get('business.company_phone'); ?></p>
+                        <p style="font-size: var(--vzl-fs-sm); color: var(--vzl-text-muted);"><?php echo \Core\Config::get('business.company_phone'); ?></p>
                     </div>
 
                     <div>
                         <h5
-                            style="color: var(--primary); font-size: 14px; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
+                            style="color: var(--vzl-primary); font-size: var(--vzl-fs-sm); text-transform: uppercase; letter-spacing: var(--vzl-tracking-wide); margin-bottom: 12px; display: flex; align-items: center; gap: 8px;">
                             <span>📍</span> Dirección
                         </h5>
-                        <p style="font-size: 14px; color: var(--text-muted); line-height: 1.5;">
+                        <p style="font-size: var(--vzl-fs-sm); color: var(--vzl-text-muted); line-height: var(--vzl-lh-body);">
                             <?php echo \Core\Config::get('business.company_address'); ?>
                         </p>
                     </div>
@@ -92,7 +92,7 @@ $is_admin = $is_admin ?? (strpos($_SERVER['REQUEST_URI'], 'dashboard') !== false
 <div style="background: var(--bg-main); border-top: 1px solid rgba(255,255,255,0.05); padding: 15px 20px;">
     <div
         style="max-width: 1200px; margin: 0 auto; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
-        <p style="color:var(--text-muted); font-size:13px;">Diseño y desarrollo Full Stack por <?php echo \Core\Config::get('business.company_name'); ?> <br>©
+        <p style="color:var(--vzl-text-muted); font-size: var(--vzl-fs-xs);">Diseño y desarrollo Full Stack por <?php echo \Core\Config::get('business.company_name'); ?> <br>©
             since <?php echo \Core\Config::get('business.company_est_year'); ?>. All Rights Reserved</p>
         <div style="display: flex; gap: 20px; align-items: center;">
             <!-- Instagram -->

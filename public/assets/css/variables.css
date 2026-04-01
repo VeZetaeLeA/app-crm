@@ -458,6 +458,14 @@ td.id-cell,
     box-shadow: var(--vzl-shadow-md);
 }
 
+.vzl-counter-display {
+    font-family: var(--vzl-font-heading);
+    font-size: var(--vzl-fs-h2);
+    font-weight: 900;
+    letter-spacing: var(--vzl-tracking-tighter);
+    line-height: 1;
+}
+
 .vzl-metric-value {
     font-family: var(--vzl-font-mono);
     font-size: var(--vzl-fs-h3);
@@ -584,23 +592,23 @@ td.id-cell,
 .vzl-section-subtitle {
     display: block;
     color: var(--vzl-primary);
-    font-size: var(--vzl-fs-xs);
+    font-size: var(--vzl-fs-sm); /* Increased from xs for better harmony */
     font-weight: 700;
     text-transform: uppercase;
-    letter-spacing: var(--vzl-tracking-widest);
-    margin-bottom: 0.75rem;
+    letter-spacing: var(--vzl-tracking-wide);
+    margin-bottom: 1rem;
     font-family: var(--vzl-font-body);
-    opacity: 0.85;
+    opacity: 0.9;
 }
 
 .vzl-section-title {
     font-family: var(--vzl-font-heading);
-    font-size: var(--vzl-fs-h2);
-    font-weight: 900;
+    font-size: var(--vzl-fs-h2); /* Standardized fluid H2 */
+    font-weight: 800;
     color: var(--vzl-text);
-    line-height: var(--vzl-lh-heading);
+    line-height: 1.1;
     letter-spacing: var(--vzl-tracking-tight);
-    margin-bottom: 1.25rem;
+    margin-bottom: 1.5rem;
 }
 
 /* ==========================================================================

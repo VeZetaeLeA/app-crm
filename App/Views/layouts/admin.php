@@ -74,7 +74,7 @@
                         class="side-logo-img"
                         style="width: 38px; height: 38px; object-fit: contain;">
 
-                    <h2 class="text-white h5 mb-0 fw-bold side-logo-text" style="font-family: var(--vzl-font-body); font-size: 1.1rem; letter-spacing: -0.02em;">
+                    <h2 class="text-white h5 mb-0 fw-bold side-logo-text" style="font-family: var(--vzl-font-body); font-size: var(--vzl-fs-h6); letter-spacing: var(--vzl-tracking-tight);">
                         <span class="vzl-text-gradient fw-black"><?php echo mb_strtoupper(\Core\Config::get('business.company_name', 'Tu Empresa')); ?></span>
                     </h2>
                 </a>

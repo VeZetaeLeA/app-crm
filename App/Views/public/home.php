@@ -36,22 +36,22 @@
         <div class="d-flex flex-wrap justify-content-center align-items-center gap-4 gap-md-5">
             <div class="d-flex align-items-center gap-3">
                 <span class="vzl-text-gradient-vibrant vzl-counter-display"><?php echo \Core\Config::get('business.years_exp', '10'); ?>+</span>
-                <span class="text-white-50 x-small fw-bold uppercase tracking-widest"><?= __('home.stats.years') ?></span>
+                <span class="text-white-50 small fw-bold uppercase tracking-widest"><?= __('home.stats.years') ?></span>
             </div>
             <div class="d-none d-md-block" style="width: 1px; height: 40px; background: rgba(255,255,255,0.08);"></div>
             <div class="d-flex align-items-center gap-3">
                 <span class="vzl-text-gradient-vibrant vzl-counter-display"><?php echo \Core\Config::get('business.projects_delivered', '45'); ?>+</span>
-                <span class="text-white-50 x-small fw-bold uppercase tracking-widest"><?= __('home.stats.projects') ?></span>
+                <span class="text-white-50 small fw-bold uppercase tracking-widest"><?= __('home.stats.projects') ?></span>
             </div>
             <div class="d-none d-md-block" style="width: 1px; height: 40px; background: rgba(255,255,255,0.08);"></div>
             <div class="d-flex align-items-center gap-3">
                 <span class="vzl-text-gradient-vibrant vzl-counter-display">4</span>
-                <span class="text-white-50 x-small fw-bold uppercase tracking-widest"><?= __('home.stats.verticals') ?></span>
+                <span class="text-white-50 small fw-bold uppercase tracking-widest"><?= __('home.stats.verticals') ?></span>
             </div>
             <div class="d-none d-md-block" style="width: 1px; height: 40px; background: rgba(255,255,255,0.08);"></div>
             <div class="d-flex align-items-center gap-3">
                 <span class="vzl-text-gradient-vibrant vzl-counter-display">1</span>
-                <span class="text-white-50 x-small fw-bold uppercase tracking-widest"><?= __('home.stats.product') ?></span>
+                <span class="text-white-50 small fw-bold uppercase tracking-widest"><?= __('home.stats.product') ?></span>
             </div>
         </div>
     </div>
