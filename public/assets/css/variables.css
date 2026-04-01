@@ -14,21 +14,18 @@
    1. SCALE TOKENS — Typography & Spacing (Static, layout-agnostic)
    ========================================================================== */
 :root {
-    /* Typographic Scale — clamp() = responsive without media queries (Perfect Fourth 1.333) */
-    --vzl-fs-display: clamp(3rem, 8vw, 7.47rem);
-    --vzl-fs-h1: clamp(2.5rem, 6vw, 5.61rem);
-    --vzl-fs-h2: clamp(2rem, 5vw, 4.21rem);
-    --vzl-fs-h3: clamp(1.5rem, 4vw, 3.16rem);
-    --vzl-fs-h4: clamp(1.25rem, 3vw, 2.37rem);
-    --vzl-fs-h5: clamp(1.1rem, 2.5vw, 1.77rem);
-    --vzl-fs-h6: clamp(1rem, 2vw, 1.33rem);
-    --vzl-fs-body: 1rem;
-    --vzl-fs-sm: 0.875rem;
-    /* 14px — table cells, labels */
-    --vzl-fs-xs: 0.75rem;
-    /* 12px — badges, captions */
-    --vzl-fs-xxs: 0.65rem;
-    /* 10px — meta info */
+    /* Typographic Scale — Centralized Major Third (1.25) Fluid System */
+    --vzl-fs-hero:    clamp(2.5rem, 8vw, 4.768rem);   /* 76px max */
+    --vzl-fs-h1:      clamp(2.25rem, 6vw, 3.815rem);  /* 61px max */
+    --vzl-fs-h2:      clamp(1.85rem, 5vw, 3.052rem);  /* 49px max */
+    --vzl-fs-h3:      clamp(1.55rem, 4vw, 2.441rem);  /* 39px max */
+    --vzl-fs-h4:      clamp(1.35rem, 3vw, 1.953rem);  /* 31px max */
+    --vzl-fs-h5:      clamp(1.15rem, 2.5vw, 1.563rem);/* 25px max */
+    --vzl-fs-h6:      clamp(1rem, 2vw, 1.25rem);      /* 20px max */
+    --vzl-fs-body:    1rem;                           /* 16px */
+    --vzl-fs-sm:      0.875rem;                       /* 14px */
+    --vzl-fs-xs:      0.75rem;                        /* 12px */
+    --vzl-fs-xxs:     0.625rem;                       /* 10px */
 
     /* Line Heights */
     --vzl-lh-display: 1.05;

@@ -54,7 +54,7 @@
 
 .hero-title {
     font-family: var(--vzl-font-heading);
-    font-size: clamp(2.5rem, 6vw, 5.5rem);
+    font-size: var(--vzl-fs-hero);
     font-weight: 900;
     letter-spacing: -0.04em;
     line-height: 1;

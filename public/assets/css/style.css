@@ -5,16 +5,17 @@
     --glass-bg:      var(--vzl-glass-bg);
     --glass-border:  var(--vzl-glass-border);
 
-    /* Internal typographic scale (static px/rem — not from .env) */
-    --text-xs:   0.75rem;
-    --text-sm:   0.875rem;
-    --text-base: 1rem;
-    --text-lg:   1.25rem;
-    --text-xl:   1.563rem;
-    --text-2xl:  1.953rem;
-    --text-3xl:  2.441rem;
-    --text-4xl:  3.052rem;
-    --text-5xl:  3.815rem;
+    /* Typographic Aliases — mapped to central Design System tokens */
+    --text-hero: var(--vzl-fs-hero);
+    --text-h1:   var(--vzl-fs-h1);
+    --text-h2:   var(--vzl-fs-h2);
+    --text-h3:   var(--vzl-fs-h3);
+    --text-h4:   var(--vzl-fs-h4);
+    --text-h5:   var(--vzl-fs-h5);
+    --text-h6:   var(--vzl-fs-h6);
+    --text-xs:   var(--vzl-fs-xs);
+    --text-sm:   var(--vzl-fs-sm);
+    --text-base: var(--vzl-fs-body);
 
     --font-heading:  var(--vzl-font-heading);
     --font-body:     var(--vzl-font-body);
@@ -479,52 +480,36 @@ h6 {
 .vzl-h1-premium,
 .hero-title {
     font-family: var(--vzl-font-heading);
+    font-size: var(--vzl-fs-hero);
     font-weight: 900 !important;
     letter-spacing: var(--vzl-tracking-tighter) !important;
     line-height: 1 !important;
 }
 
-h1 {
-    font-size: var(--text-4xl);
-}
-
-h2 {
-    font-size: var(--text-3xl);
-}
-
-h3 {
-    font-size: var(--text-2xl);
-}
-
-h4 {
-    font-size: var(--text-xl);
-}
-
-h5 {
-    font-size: var(--text-lg);
-}
-
-h6 {
-    font-size: var(--text-base);
-}
+h1 { font-size: var(--vzl-fs-h1); }
+h2 { font-size: var(--vzl-fs-h2); }
+h3 { font-size: var(--vzl-fs-h3); }
+h4 { font-size: var(--vzl-fs-h4); }
+h5 { font-size: var(--vzl-fs-h5); }
+h6 { font-size: var(--vzl-fs-h6); }
 
 h1.display-1 {
-    font-size: clamp(3rem, 8vw, 6rem);
+    font-size: var(--vzl-fs-hero);
     font-weight: 900;
     line-height: 1;
     letter-spacing: -0.04em;
 }
 
 h1.display-2 {
-    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-size: var(--vzl-fs-h1);
     font-weight: 900;
     line-height: 1.05;
     letter-spacing: -0.035em;
 }
 
 h1.display-3 {
-    font-size: clamp(2rem, 5vw, 3.5rem);
-    font-weight: 900;
+    font-size: var(--vzl-fs-h2);
+    font-weight: 800;
     line-height: 1.1;
     letter-spacing: -0.03em;
 }
