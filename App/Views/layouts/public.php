@@ -95,7 +95,6 @@ $navCategories = $db->query("SELECT name, slug FROM service_categories WHERE is_
         <div class="vzl-preloader-content">
             <div class="vzl-preloader-logo">
                 <img src="<?php echo url('assets/images/logo.png'); ?>" alt="VeZetaeLeA"
-                    class="vzl-logo-tech"
                     style="height: 60px; width: auto; margin-bottom: 10px;">
             </div>
             <div class="vzl-preloader-spinner"></div>
@@ -122,7 +121,6 @@ $navCategories = $db->query("SELECT name, slug FROM service_categories WHERE is_
             <div class="d-flex align-items-center gap-3">
                 <a href="<?php echo url(); ?>" class="text-decoration-none d-flex align-items-center">
                     <img src="<?php echo url('assets/images/logo.png'); ?>" alt="VeZetaeLeA Logo"
-                        class="vzl-logo-tech"
                         style="height: 50px; width: auto;">
                 </a>
             </div>
@@ -181,7 +179,7 @@ $navCategories = $db->query("SELECT name, slug FROM service_categories WHERE is_
     <div class="offcanvas offcanvas-end glass-morphism border-start border-white-10 text-white" tabindex="-1" id="mobileMenu" aria-labelledby="mobileMenuLabel">
         <div class="offcanvas-header border-bottom border-white-10 py-4">
             <div class="d-flex align-items-center gap-3">
-                <img src="<?php echo url('assets/images/logo.png'); ?>" alt="Logo" class="vzl-logo-tech" style="height: 35px; width: auto;">
+                <img src="<?php echo url('assets/images/logo.png'); ?>" alt="Logo" style="height: 35px; width: auto;">
                 <h5 class="offcanvas-title fw-bold vzl-text-gradient" id="mobileMenuLabel">Menú</h5>
             </div>
             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="offcanvas" aria-label="Close"></button>
@@ -279,7 +277,6 @@ $navCategories = $db->query("SELECT name, slug FROM service_categories WHERE is_
                 <div class="col-md-4">
                     <div class="d-flex align-items-center gap-3 mb-4">
                         <img src="<?php echo url('assets/images/logo.png'); ?>" alt="Logo"
-                             class="vzl-logo-tech"
                              style="height: 40px; width: auto;">
                         <h3 class="h5 mb-0 fw-bold"><span class="vzl-text-gradient"><?php echo mb_strtoupper(\Core\Config::get('business.company_name')); ?></span></h3>
                     </div>

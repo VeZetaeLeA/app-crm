@@ -687,19 +687,6 @@ td.id-cell,
     font-size: var(--vzl-fs-xs) !important;
 }
 
-/* ==========================================================================
-   16. LOGO & BRAND ASSETS TREATMENT
-   ========================================================================== */
-.vzl-logo-tech {
-    filter: brightness(0) invert(1) opacity(0.9);
-    /* Transforms multi-color logo into pure executive white */
-    transition: filter 0.3s ease, opacity 0.3s ease;
-}
-
-[data-theme="light"] .vzl-logo-tech {
-    filter: brightness(0) opacity(0.85); /* Pure black for light mode */
-}
-
 .user-access-icon {
     display: flex;
     align-items: center;

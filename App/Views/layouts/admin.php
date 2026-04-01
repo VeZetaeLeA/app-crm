@@ -71,7 +71,7 @@
                 <a href="<?php echo url(); ?>"
                     class="text-decoration-none d-flex align-items-center gap-3 side-logo-link">
                     <img src="<?php echo url('assets/images/logo.png'); ?>" alt="Logo"
-                        class="side-logo-img vzl-logo-tech"
+                        class="side-logo-img"
                         style="width: 38px; height: 38px; object-fit: contain;">
 
                     <h2 class="text-white h5 mb-0 fw-bold side-logo-text" style="font-family: var(--vzl-font-body); font-size: 1.1rem; letter-spacing: -0.02em;">
