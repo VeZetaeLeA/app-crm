@@ -64,12 +64,13 @@
         <!-- Sidebar -->
         <aside id="main-sidebar"
             class="bg-midnight border-end border-white-10 flex-shrink-0 d-flex flex-column sidebar-responsive">
-            <div class="p-4 border-bottom border-white-10 bg-deep-black bg-opacity-50 side-header">
+            <div class="p-4 border-bottom border-white-10 bg-deep-black bg-opacity-50 side-header d-flex align-items-center justify-content-between">
                 <a href="<?php echo url(); ?>"
                     class="text-decoration-none d-flex align-items-center gap-3 side-logo-link">
                     <img src="<?php echo url('assets/images/logo.png'); ?>" alt="Logo"
-                        class="rounded-circle shadow-gold side-logo-img"
-                        style="width: 38px; height: 38px; object-fit: cover; border: 1px solid var(--elegant-gold);">
+                        class="side-logo-img"
+                        style="width: 38px; height: 38px; object-fit: contain;">
+
                     <h2 class="text-white h5 mb-0 fw-bold side-logo-text" style="font-family: var(--vzl-font-body); font-size: 1.1rem; letter-spacing: -0.02em;">
                         <span class="vzl-text-gradient fw-black"><?php echo mb_strtoupper(\Core\Config::get('business.company_name', 'Tu Empresa')); ?></span>
                     </h2>

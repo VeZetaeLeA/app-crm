@@ -67,7 +67,7 @@
             class="bg-midnight border-end border-white-10 flex-shrink-0 d-flex flex-column sidebar-responsive position-relative overflow-hidden">
             <!-- Chromatic animated border at top of sidebar -->
             <div class="navbar-chromatic-border"></div>
-            <div class="p-4 border-bottom border-white-10 bg-deep-black bg-opacity-50 side-header">
+            <div class="p-4 border-bottom border-white-10 bg-deep-black bg-opacity-50 side-header d-flex align-items-center justify-content-between">
                 <a href="<?php echo url(); ?>"
                     class="text-decoration-none d-flex align-items-center gap-3 side-logo-link">
                     <img src="<?php echo url('assets/images/logo.png'); ?>" alt="Logo"

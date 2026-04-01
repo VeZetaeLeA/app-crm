@@ -20,8 +20,8 @@
     --vzl-fs-h2: clamp(2rem, 5vw, 4.21rem);
     --vzl-fs-h3: clamp(1.5rem, 4vw, 3.16rem);
     --vzl-fs-h4: clamp(1.25rem, 3vw, 2.37rem);
-    --vzl-fs-h5: 1.77rem;
-    --vzl-fs-h6: 1.33rem;
+    --vzl-fs-h5: clamp(1.1rem, 2.5vw, 1.77rem);
+    --vzl-fs-h6: clamp(1rem, 2vw, 1.33rem);
     --vzl-fs-body: 1rem;
     --vzl-fs-sm: 0.875rem;
     /* 14px — table cells, labels */
@@ -731,6 +731,48 @@ td.id-cell,
     position: absolute;
     bottom: 0;
     left: 0;
+}
+
+/* ==========================================================================
+   17.1 INTERACTIVE LIFT & SHADOWS (Standardized)
+   ========================================================================== */
+.hover-lift {
+    transition: transform 0.25s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.25s ease !important;
+}
+
+.hover-lift:hover {
+    transform: translateY(-5px) !important;
+    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4), var(--vzl-glow-primary) !important;
+}
+
+.hover-lift-sm {
+    transition: transform 0.2s ease, box-shadow 0.2s ease !important;
+}
+
+.hover-lift-sm:hover {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3) !important;
+}
+
+.shadow-gold {
+    box-shadow: 0 0 15px rgba(212, 175, 55, 0.15) !important;
+    transition: box-shadow 0.3s ease !important;
+}
+
+.shadow-gold:hover {
+    box-shadow: var(--vzl-glow-gold) !important;
+}
+
+.glass-morphism-premium {
+    background: var(--vzl-glass-bg);
+    backdrop-filter: blur(25px);
+    -webkit-backdrop-filter: blur(25px);
+    border: 1px solid rgba(212, 175, 55, 0.15) !important;
+}
+
+.glass-morphism-premium:hover {
+    border-color: rgba(212, 175, 55, 0.4) !important;
+    box-shadow: var(--vzl-glow-gold) !important;
 }
 
 /* ==========================================================================

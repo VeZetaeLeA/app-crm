@@ -54,7 +54,7 @@
                     class="material-symbols-outlined position-absolute top-50 start-0 translate-middle-y ps-3 text-white-50 fs-5">search</span>
                 <input type="text" id="ticketSearch"
                     class="form-control form-control-sm ps-5 bg-white-5 border-white-10 text-white rounded-pill"
-                    placeholder="Buscar ticket o cliente..." style="width: 280px;">
+                    placeholder="Buscar ticket o cliente..." style="max-width: 280px; width: 100%;">
             </div>
             <select id="priorityFilter"
                 class="form-select form-select-sm bg-white-5 border-white-10 text-white rounded-pill"
@@ -195,6 +195,7 @@ foreach ($tickets as $t) {
         display: -webkit-box;
         -webkit-line-clamp: 2;
         -webkit-box-orient: vertical;
+        line-clamp: 2;
         overflow: hidden;
     }
 

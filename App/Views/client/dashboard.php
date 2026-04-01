@@ -37,7 +37,7 @@
                         <span class="text-white x-small fw-bold"><?= __('dashboard.step_registration') ?></span>
                     </div>
 
-                    <div class="flex-grow-1 bg-white-10" style="height: 2px; margin: 0 5px; margin-top: -15px;">
+                    <div class="flex-grow-1 bg-white-10" style="height: 2px; margin: 0 5px; transform: translateY(-10px);">
                         <?php if ($step_analisis_done || $step_analisis_active): ?>
                             <div class="bg-success h-100" style="width: 100%;"></div><?php endif; ?>
                     </div>
@@ -53,7 +53,7 @@
                         <span class="text-white x-small fw-bold"><?= __('dashboard.step_analysis') ?></span>
                     </div>
 
-                    <div class="flex-grow-1 bg-white-10" style="height: 2px; margin: 0 5px; margin-top: -15px;">
+                    <div class="flex-grow-1 bg-white-10" style="height: 2px; margin: 0 5px; transform: translateY(-10px);">
                         <?php if ($step_propuesta_done || $step_propuesta_active): ?>
                             <div class="bg-success h-100" style="width: 100%;"></div><?php endif; ?>
                     </div>
@@ -267,7 +267,7 @@
 
     <!-- Sidebar Info -->
     <div class="col-lg-4">
-        <div class="glass-morphism-premium p-4 rounded-5 mb-4 text-center py-5 transition-all hover-lift">
+        <div class="glass-morphism-premium p-4 py-md-5 rounded-5 mb-4 text-center transition-all hover-lift">
             <div class="rounded-circle shadow-gold mx-auto d-flex align-items-center justify-content-center text-white mb-4"
                 style="width: 80px; height: 80px; background: linear-gradient(135deg, #25D366 0%, #128C7E 100%);">
                 <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 448 512" fill="white">
@@ -286,10 +286,6 @@
 <?php /* Chart script removed */ ?>
 
 <style>
-    .hover-lift-sm:hover {
-        transform: translateY(-2px);
-        border-bottom-color: var(--tech-blue) !important;
-    }
 
     .table-dark {
         --bs-table-bg: transparent;
