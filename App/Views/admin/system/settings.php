@@ -94,7 +94,7 @@
     }
 
     .elegant-input:focus {
-        border-color: #D4AF37 !important;
+        border-color: var(--vzl-color-gold) !important;
         box-shadow: 0 0 15px rgba(212, 175, 55, 0.15) !important;
         background: rgba(255, 255, 255, 0.05) !important;
     }
@@ -110,7 +110,7 @@
     }
 
     .nav-pills .nav-link.active {
-        background: #D4AF37 !important;
+        background: var(--vzl-color-gold) !important;
         color: #0A0A0A !important;
         box-shadow: 0 4px 15px rgba(212, 175, 55, 0.4);
     }

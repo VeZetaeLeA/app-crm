@@ -208,7 +208,7 @@
     }
 
     .blog-content strong {
-        color: var(--elegant-gold, #D4AF37);
+        color: var(--vzl-color-gold, #D4AF37);
     }
 
     .breadcrumb-item+.breadcrumb-item::before {

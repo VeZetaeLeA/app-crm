@@ -3,6 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Presupuesto <?= $budget['budget_number'] ?></title>
+    <?php
+        // PDF Color Tokens — resolved from .env via Config (Dompdf cannot load Google Fonts)
+        $pdfPrimary = \Core\Config::get('ui.primary_color',    '#0ea5e9');
+        $pdfGold    = \Core\Config::get('ui.gold_color',       '#D4AF37');
+        $pdfBgDark  = \Core\Config::get('ui.color_bg_dark',    '#020617');
+    ?>
     <style>
         @page { margin: 0; }
         body {
@@ -14,7 +20,7 @@
             background-color: #fff;
         }
         .header {
-            background-color: #020617;
+            background-color: <?= $pdfBgDark ?>;
             color: #fff;
             padding: 40px;
             text-align: left;
@@ -36,7 +42,7 @@
         .company-info p {
             margin: 0;
             font-size: 10px;
-            color: #00f2ff;
+            color: <?= $pdfPrimary ?>;
             text-transform: uppercase;
             letter-spacing: 2px;
         }
@@ -66,7 +72,7 @@
         .section-title {
             font-size: 10px;
             font-weight: bold;
-            color: #00f2ff;
+            color: <?= $pdfPrimary ?>;
             text-transform: uppercase;
             letter-spacing: 1px;
             margin-bottom: 10px;
@@ -126,13 +132,13 @@
             font-size: 14px;
         }
         .grand-total {
-            background-color: #020617;
+            background-color: <?= $pdfBgDark ?>;
             color: #fff;
             padding: 15px;
             border-radius: 8px;
             margin-top: 10px;
         }
-        .grand-total .total-label { color: #00f2ff; font-weight: bold; }
+        .grand-total .total-label { color: <?= $pdfPrimary ?>; font-weight: bold; }
         .grand-total .total-value { color: #fff; font-size: 20px; }
         .footer {
             position: fixed;
@@ -155,8 +161,8 @@
                     <img src="<?= $logo_base64 ?>" class="logo">
                 </td>
                 <td class="company-info">
-                    <h1><?= getenv('COMPANY_NAME') ?: 'Tu Empresa' ?></h1>
-                    <p><?= getenv('COMPANY_SLOGAN') ?: 'Arquitectos de tu Vanguardia Digital' ?></p>
+                    <h1><?= \Core\Config::get('business.company_name') ?: 'Tu Empresa' ?></h1>
+                    <p><?= \Core\Config::get('business.company_slogan') ?: 'Arquitectos de tu Vanguardia Digital' ?></p>
                 </td>
                 <td class="document-title">
                     <h2>PRESUPUESTO</h2>
@@ -236,8 +242,8 @@
     </div>
 
     <div class="footer">
-        Este documento es una propuesta comercial de <?= getenv('COMPANY_NAME') ?>. 
-        Válido por los términos especificados. Documento generado por el sistema de gestión <?= getenv('COMPANY_NAME') ?: 'Tu Empresa' ?>.
+        Este documento es una propuesta comercial de <?= \Core\Config::get('business.company_name') ?>. 
+        Válido por los términos especificados. Documento generado por el sistema de gestión <?= \Core\Config::get('business.company_name') ?: 'Tu Empresa' ?>.
     </div>
 </body>
 </html>

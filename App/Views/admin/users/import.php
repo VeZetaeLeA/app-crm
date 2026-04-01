@@ -96,6 +96,6 @@
     .bg-white-10 { background: rgba(255,255,255,0.1); }
     .bg-black-20 { background: rgba(0,0,0,0.2); }
     .border-white-20 { border-color: rgba(255,255,255,0.2) !important; }
-    .hover-border-gold:hover { border-color: #D4AF37 !important; cursor: pointer; }
-    #drop-zone.border-gold { border-color: #D4AF37 !important; }
+    .hover-border-gold:hover { border-color: var(--vzl-color-gold) !important; cursor: pointer; }
+    #drop-zone.border-gold { border-color: var(--vzl-color-gold) !important; }
 </style>

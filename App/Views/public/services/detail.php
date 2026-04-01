@@ -269,7 +269,7 @@
     }
 
     .text-gold {
-        color: #D4AF37;
+        color: var(--vzl-color-gold);
     }
 
     /* Action Buttons in Selection */
@@ -281,8 +281,8 @@
     }
 
     .card:hover .btn-muted-outline {
-        background: var(--tech-blue) !important;
-        border-color: var(--tech-blue) !important;
+        background: var(--vzl-color-info) !important;
+        border-color: var(--vzl-color-info) !important;
         color: white !important;
         box-shadow: 0 0 15px rgba(48, 197, 255, 0.4);
     }
@@ -294,7 +294,7 @@
     .card:hover {
         transform: translateY(-8px);
         background: rgba(255, 255, 255, 0.05);
-        border-color: var(--elegant-gold) !important;
+        border-color: var(--vzl-color-gold) !important;
         box-shadow: 0 15px 35px -10px rgba(212, 175, 55, 0.3) !important;
     }
 </style>

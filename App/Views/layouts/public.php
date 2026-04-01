@@ -68,6 +68,17 @@
             --vzl-ui-radius-pill: <?= \Core\Config::get('ui.radius_pill') ?>;
         }
     </style>
+    <!-- ✦ Global JS Config — injected from PHP Config (Zero Hardcode) -->
+    <script>
+        window.APP_URL = '<?= rtrim(\Core\Config::get('base_url'), '/') ?>';
+        window.APP_CONFIG = {
+            baseUrl: window.APP_URL,
+            endpoints: {
+                services: window.APP_URL + '/service/getByCategory',
+                plans:    window.APP_URL + '/service/getPlans'
+            }
+        };
+    </script>
 
 
 </head>
@@ -148,7 +159,7 @@ $navCategories = $db->query("SELECT name, slug FROM service_categories WHERE is_
                         <a href="<?php echo url('dashboard'); ?>"
                             class="user-access-icon"
                             title="Ir al Dashboard">
-                            <span class="material-symbols-outlined">dashboard</span>
+                            <span class="material-symbols-outlined">emoji_people</span>
                         </a>
                     </div>
                 <?php else: ?>

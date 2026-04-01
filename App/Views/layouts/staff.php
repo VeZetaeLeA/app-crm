@@ -70,7 +70,7 @@
                     <img src="<?php echo url('assets/images/logo.png'); ?>" alt="Logo"
                         class="rounded-circle shadow-gold side-logo-img"
                         style="width: 38px; height: 38px; object-fit: cover; border: 1px solid var(--elegant-gold);">
-                    <h2 class="text-white h5 mb-0 fw-bold side-logo-text" style="font-family: var(--font-body); font-size: 1.1rem; letter-spacing: -0.02em;">
+                    <h2 class="text-white h5 mb-0 fw-bold side-logo-text" style="font-family: var(--vzl-font-body); font-size: 1.1rem; letter-spacing: -0.02em;">
                         <span class="vzl-text-gradient fw-black"><?php echo mb_strtoupper(\Core\Config::get('business.company_name', 'Tu Empresa')); ?></span>
                     </h2>
                 </a>
@@ -80,26 +80,26 @@
             </div>
 
             <nav class="flex-grow-1 p-3 mt-2 overflow-y-auto">
-                <p class="text-white-50 x-small fw-bold uppercase px-3 mb-2 tracking-widest">Menú Principal</p>
+                <p class="text-white-50 x-small fw-bold uppercase px-3 mb-2 tracking-widest"><?php echo __('sidebar.main_menu'); ?></p>
 
                 <a href="<?php echo url('dashboard'); ?>"
                     class="nav-link-custom mb-1 <?php echo ($_SERVER['REQUEST_URI'] == '/dashboard' || $_SERVER['REQUEST_URI'] == '/' || strpos($_SERVER['REQUEST_URI'], 'dashboard') !== false) ? 'active' : ''; ?>">
                     <span class="material-symbols-outlined">dashboard</span>
-                    Dashboard
+                    <?php echo __('sidebar.dashboard'); ?>
                 </a>
 
                 <?php if (\Core\Auth::isClient()): ?>
                     <a href="<?php echo url('dashboard'); ?>" class="nav-link-custom mb-1 active">
                         <span class="material-symbols-outlined">confirmation_number</span>
-                        Mis Tickets
+                        <?php echo __('sidebar.my_tickets'); ?>
                     </a>
                     <a href="#" class="nav-link-custom mb-1">
                         <span class="material-symbols-outlined">inventory_2</span>
-                        Servicios Activos
+                        <?php echo __('sidebar.active_services'); ?>
                     </a>
                     <a href="#" class="nav-link-custom mb-1">
                         <span class="material-symbols-outlined">receipt_long</span>
-                        Mis Facturas
+                        <?php echo __('sidebar.my_invoices'); ?>
                     </a>
                 <?php endif; ?>
 
@@ -107,26 +107,26 @@
                     <a href="<?php echo url('ticket'); ?>"
                         class="nav-link-custom mb-1 <?php echo (strpos($_SERVER['REQUEST_URI'], '/ticket') !== false && strpos($_SERVER['REQUEST_URI'], '/ticket/request') === false) ? 'active' : ''; ?>">
                         <span class="material-symbols-outlined">support_agent</span>
-                        Gestión de Tickets
+                        <?php echo __('sidebar.ticket_management'); ?>
                     </a>
                     <a href="<?php echo url('project/workspace'); ?>"
                         class="nav-link-custom mb-1 <?php echo strpos($_SERVER['REQUEST_URI'], '/project/workspace') !== false ? 'active' : ''; ?>">
                         <span class="material-symbols-outlined">folder_shared</span>
-                        Workspace de Proyecto
+                        <?php echo __('sidebar.project_workspace'); ?>
                     </a>
                     <a href="<?php echo url('invoice'); ?>"
                         class="nav-link-custom mb-1 <?php echo strpos($_SERVER['REQUEST_URI'], '/invoice') !== false ? 'active' : ''; ?>">
                         <span class="material-symbols-outlined">receipt_long</span>
-                        Ver Facturas
+                        <?php echo __('sidebar.view_invoices'); ?>
                     </a>
                 <?php endif; ?>
 
                 <?php if (\Core\Auth::isAdmin()): ?>
-                    <p class="text-white-50 x-small fw-bold uppercase px-3 mt-4 mb-2 tracking-widest">Administración</p>
+                    <p class="text-white-50 x-small fw-bold uppercase px-3 mt-4 mb-2 tracking-widest"><?php echo __('sidebar.administration'); ?></p>
                     <a href="<?php echo url('admin/services'); ?>"
                         class="nav-link-custom mb-1 <?php echo strpos($_SERVER['REQUEST_URI'], 'admin/services') !== false ? 'active' : ''; ?>">
                         <span class="material-symbols-outlined">settings_suggest</span>
-                        CMS de Servicios
+                        <?php echo __('sidebar.services_cms'); ?>
                     </a>
                     <a href="<?php echo url('admin/blog'); ?>"
                         class="nav-link-custom mb-1 <?php echo strpos($_SERVER['REQUEST_URI'], 'admin/blog') !== false ? 'active' : ''; ?>">
@@ -309,46 +309,10 @@
             }
         }
 
-        .nav-link-custom {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px 16px;
-            border-radius: 12px;
-            color: rgba(255, 255, 255, 0.6);
-            text-decoration: none;
-            font-size: 0.9rem;
-            font-weight: 500;
-            transition: all 0.2s ease;
-        }
-
-        .nav-link-custom:hover {
-            background: rgba(255, 255, 255, 0.05);
-            color: var(--elegant-gold);
-        }
-
-        .nav-link-custom.active {
-            background: rgba(212, 175, 55, 0.1);
-            color: var(--elegant-gold);
-            border: 1px solid rgba(212, 175, 55, 0.2);
-        }
-
-        .nav-link-custom .material-symbols-outlined {
-            font-size: 1.25rem;
-        }
-
-        .backdrop-blur {
-            backdrop-filter: blur(15px);
-        }
-
-        .text-accent {
-            color: var(--tech-blue) !important;
-        }
-
         /* Responsive Table adjustments */
         .table-responsive {
             scrollbar-width: thin;
-            scrollbar-color: var(--elegant-gold) var(--deep-black);
+            scrollbar-color: var(--vzl-color-gold) var(--vzl-color-bg-dark);
         }
     </style>
 

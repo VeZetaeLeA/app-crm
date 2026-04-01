@@ -132,7 +132,13 @@ foreach ($tickets as $t) {
                 labels: <?php echo json_encode(array_map('translateStatus', array_keys($statusCounts))); ?>,
                 datasets: [{
                     data: Object.values(statusData),
-                    backgroundColor: ['#D4AF37', '#33658A', '#30C5FF', '#5C4D7D', '#1B1F3B'],
+                    backgroundColor: [
+                        getComputedStyle(document.documentElement).getPropertyValue('--vzl-color-gold').trim() || '#D4AF37',
+                        getComputedStyle(document.documentElement).getPropertyValue('--vzl-primary').trim() || '#33658A',
+                        getComputedStyle(document.documentElement).getPropertyValue('--vzl-color-info').trim() || '#30C5FF',
+                        getComputedStyle(document.documentElement).getPropertyValue('--vzl-secondary').trim() || '#5C4D7D',
+                        getComputedStyle(document.documentElement).getPropertyValue('--vzl-color-bg-dark').trim() || '#1B1F3B'
+                    ],
                     borderWidth: 0,
                     hoverOffset: 4
                 }]

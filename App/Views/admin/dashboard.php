@@ -210,8 +210,8 @@
                 datasets: [{
                     label: 'Ingresos Netos ($)',
                     data: revValues,
-                    backgroundColor: 'rgba(212, 175, 55, 0.2)',
-                    borderColor: '#D4AF37',
+                    backgroundColor: 'rgba(212, 175, 55, 0.2)', // We can improve this with getComputedStyle if needed but keeping it consistent with the elegant gold
+                    borderColor: getComputedStyle(document.documentElement).getPropertyValue('--vzl-color-gold').trim() || '#D4AF37',
                     borderWidth: 2,
                     borderRadius: 8,
                     barThickness: 30
@@ -286,7 +286,7 @@
                     datasets: [{
                         label: 'Tickets',
                         data: dataset1,
-                        borderColor: '#D4AF37',
+                        borderColor: getComputedStyle(document.documentElement).getPropertyValue('--vzl-color-gold').trim() || '#D4AF37',
                         backgroundColor: 'rgba(212, 175, 55, 0.1)',
                         fill: true,
                         tension: 0.4,
@@ -294,14 +294,14 @@
                     }, {
                         label: 'Usuarios',
                         data: dataset2,
-                        borderColor: '#30C5FF',
+                        borderColor: getComputedStyle(document.documentElement).getPropertyValue('--vzl-color-info').trim() || '#30C5FF',
                         fill: false,
                         tension: 0.4,
                         pointRadius: 4,
                     }, {
                         label: 'Clientes',
                         data: dataset3,
-                        borderColor: '#5C4D7D',
+                        borderColor: getComputedStyle(document.documentElement).getPropertyValue('--vzl-secondary').trim() || '#5C4D7D',
                         fill: false,
                         tension: 0.4,
                         pointRadius: 4,
@@ -341,17 +341,17 @@
 
             const categories = Object.keys(resourceStats);
             const statusMap = {
-                'open': { label: 'Abierto', color: '#30C5FF' },          // Tech Blue
-                'in_analysis': { label: 'En Análisis', color: '#5C4D7D' }, // Accent Purple
-                'budget_sent': { label: 'P. Enviado', color: '#9d8437' },   // Dark Gold
-                'budget_approved': { label: 'P. Aprobado', color: '#D4AF37' }, // Elegant Gold
-                'budget_rejected': { label: 'P. Rechazado', color: '#dc3545' }, // Danger (Keep for semantics)
-                'invoiced': { label: 'Facturado', color: '#1B1F3B' },       // Main Surface Dark
-                'payment_pending': { label: 'P. Pendiente', color: '#e6c86e' }, // Light Gold
-                'active': { label: 'Activo', color: '#10b981' },           // Emerald Branding
-                'resolved': { label: 'Resuelto', color: '#059669' },       // Emerald Dark
-                'closed': { label: 'Cerrado', color: '#0A0A0A' },          // Deep Black
-                'void': { label: 'Anulado', color: '#4b5563' }             // Gray
+                'open': { label: 'Abierto', color: getComputedStyle(document.documentElement).getPropertyValue('--vzl-color-info').trim() },
+                'in_analysis': { label: 'En Análisis', color: getComputedStyle(document.documentElement).getPropertyValue('--vzl-secondary').trim() },
+                'budget_sent': { label: 'P. Enviado', color: 'rgba(212, 175, 55, 0.6)' },
+                'budget_approved': { label: 'P. Aprobado', color: getComputedStyle(document.documentElement).getPropertyValue('--vzl-color-gold').trim() },
+                'budget_rejected': { label: 'P. Rechazado', color: getComputedStyle(document.documentElement).getPropertyValue('--vzl-color-danger').trim() },
+                'invoiced': { label: 'Facturado', color: getComputedStyle(document.documentElement).getPropertyValue('--vzl-color-bg-dark').trim() },
+                'payment_pending': { label: 'P. Pendiente', color: 'rgba(212,175,55,0.4)' },
+                'active': { label: 'Activo', color: getComputedStyle(document.documentElement).getPropertyValue('--vzl-color-success').trim() },
+                'resolved': { label: 'Resuelto', color: 'rgba(16, 185, 129, 0.8)' },
+                'closed': { label: 'Cerrado', color: '#0A0A0A' },
+                'void': { label: 'Anulado', color: '#4b5563' }
             };
 
             const allStatusesFound = new Set();
@@ -406,7 +406,12 @@
                     datasets: [{
                         label: 'Conversión %',
                         data: [100, convData.leads_to_tickets, convData.tickets_to_budgets, convData.budgets_to_invoices],
-                        backgroundColor: ['#30C5FF', '#5C4D7D', '#9d8437', '#D4AF37'],
+                        backgroundColor: [
+                            getComputedStyle(document.documentElement).getPropertyValue('--vzl-color-info').trim(),
+                            getComputedStyle(document.documentElement).getPropertyValue('--vzl-secondary').trim(),
+                            'rgba(212, 175, 55, 0.6)',
+                            getComputedStyle(document.documentElement).getPropertyValue('--vzl-color-gold').trim()
+                        ],
                         borderRadius: 10,
                         barThickness: 20
                     }]
@@ -462,7 +467,7 @@
     .glass-morphism-ghost {
         opacity: 0.4;
         background: rgba(212, 175, 55, 0.05) !important;
-        border: 2px dashed rgba(212, 175, 55, 0.3) !important;
+        border: 2px dashed var(--vzl-color-gold) !important;
     }
 
     .widget-wrapper {
@@ -475,32 +480,6 @@
 
     .widget-drag-handle:active {
         cursor: grabbing !important;
-    }
-
-    /* Clean styles, removed all print complexity */
-    .nav-link-custom {
-        display: flex;
-        align-items: center;
-        gap: 0.75rem;
-        padding: 0.75rem 1rem;
-        color: rgba(255, 255, 255, 0.7);
-        text-decoration: none;
-        border-radius: 0.75rem;
-        transition: all 0.3s ease;
-        font-weight: 500;
-        margin-bottom: 0.25rem;
-    }
-
-    .nav-link-custom:hover {
-        background: rgba(212, 175, 55, 0.1);
-        color: var(--elegant-gold);
-    }
-
-    .nav-link-custom.active {
-        background: var(--elegant-gold);
-        color: var(--deep-black);
-        font-weight: 700;
-        box-shadow: 0 4px 15px rgba(212, 175, 55, 0.3);
     }
 
     /* Dashboard Mobile Refinements */

@@ -63,7 +63,7 @@
                     <img src="<?php echo url('assets/images/logo.png'); ?>" alt="Logo"
                         class="rounded-circle shadow-gold side-logo-img"
                         style="width: 38px; height: 38px; object-fit: cover; border: 1px solid var(--elegant-gold);">
-                    <h2 class="text-white h5 mb-0 fw-bold side-logo-text" style="font-family: var(--font-body); font-size: 1.1rem; letter-spacing: -0.02em;">
+                    <h2 class="text-white h5 mb-0 fw-bold side-logo-text" style="font-family: var(--vzl-font-body); font-size: 1.1rem; letter-spacing: -0.02em;">
                         <span class="vzl-text-gradient fw-black"><?php echo mb_strtoupper(\Core\Config::get('business.company_name', 'Tu Empresa')); ?></span>
                     </h2>
                 </a>
@@ -315,46 +315,10 @@
             }
         }
 
-        .nav-link-custom {
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            padding: 12px 16px;
-            border-radius: 12px;
-            color: rgba(255, 255, 255, 0.6);
-            text-decoration: none;
-            font-size: 0.9rem;
-            font-weight: 500;
-            transition: all 0.2s ease;
-        }
-
-        .nav-link-custom:hover {
-            background: rgba(255, 255, 255, 0.05);
-            color: var(--elegant-gold);
-        }
-
-        .nav-link-custom.active {
-            background: rgba(212, 175, 55, 0.1);
-            color: var(--elegant-gold);
-            border: 1px solid rgba(212, 175, 55, 0.2);
-        }
-
-        .nav-link-custom .material-symbols-outlined {
-            font-size: 1.25rem;
-        }
-
-        .backdrop-blur {
-            backdrop-filter: blur(15px);
-        }
-
-        .text-accent {
-            color: var(--tech-blue) !important;
-        }
-
         /* Responsive Table adjustments */
         .table-responsive {
             scrollbar-width: thin;
-            scrollbar-color: var(--elegant-gold) var(--deep-black);
+            scrollbar-color: var(--vzl-color-gold) var(--vzl-color-bg-dark);
         }
     </style>
 

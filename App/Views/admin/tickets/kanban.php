@@ -26,9 +26,9 @@
         <div class="row g-3">
             <?php
             $columns = [
-                'open'         => ['label' => 'Abiertos',   'color' => '#ef4444', 'icon' => 'inbox'],
-                'in_progress'  => ['label' => 'En Proceso', 'color' => '#3b82f6', 'icon' => 'autorenew'],
-                'resolved'     => ['label' => 'Resueltos',  'color' => '#22c55e', 'icon' => 'check_circle'],
+                'open'         => ['label' => 'Abiertos',   'color' => \Core\Config::get('ui.danger_color', '#ef4444'), 'icon' => 'inbox'],
+                'in_progress'  => ['label' => 'En Proceso', 'color' => \Core\Config::get('ui.info_color', '#30C5FF'), 'icon' => 'autorenew'],
+                'resolved'     => ['label' => 'Resueltos',  'color' => \Core\Config::get('ui.success_color', '#10b981'), 'icon' => 'check_circle'],
                 'closed'       => ['label' => 'Cerrados',   'color' => '#6b7280', 'icon' => 'lock'],
             ];
             foreach ($columns as $status => $cfg):
@@ -54,10 +54,10 @@
             <?php
             $allStatuses = [
                 'open'         => ['label' => 'Abierto',    'color' => 'rgba(239,68,68,0.1)',   'border' => 'rgba(239,68,68,0.3)',   'badge' => 'bg-danger-subtle text-danger',   'icon' => 'inbox'],
-                'in_analysis'  => ['label' => 'En Análisis','color' => 'rgba(251,191,36,0.1)',  'border' => 'rgba(251,191,36,0.3)',  'badge' => 'bg-warning-subtle text-warning', 'icon' => 'manage_search'],
-                'in_progress'  => ['label' => 'En Proceso', 'color' => 'rgba(59,130,246,0.1)',  'border' => 'rgba(59,130,246,0.3)',  'badge' => 'bg-info-subtle text-info',       'icon' => 'autorenew'],
-                'resolved'     => ['label' => 'Resuelto',   'color' => 'rgba(34,197,94,0.1)',   'border' => 'rgba(34,197,94,0.3)',   'badge' => 'bg-success-subtle text-success', 'icon' => 'check_circle'],
-                'closed'       => ['label' => 'Cerrado',    'color' => 'rgba(107,114,128,0.08)','border' => 'rgba(107,114,128,0.3)','badge' => 'bg-secondary-subtle text-secondary','icon' => 'lock'],
+                'in_analysis'  => ['label' => 'En Análisis','color' => 'rgba(92,77,125,0.1)',  'border' => 'rgba(92,77,125,0.3)',  'badge' => 'bg-warning-subtle text-warning', 'icon' => 'manage_search'],
+                'in_progress'  => ['label' => 'En Proceso', 'color' => 'rgba(48,197,255,0.1)',  'border' => 'rgba(48,197,255,0.3)',  'badge' => 'bg-info-subtle text-info',       'icon' => 'autorenew'],
+                'resolved'     => ['label' => 'Resuelto',   'color' => 'rgba(16,185,129,0.1)',   'border' => 'rgba(16,185,129,0.3)',   'badge' => 'bg-success-subtle text-success', 'icon' => 'check_circle'],
+                'closed'       => ['label' => 'Cerrado',    'color' => 'rgba(10,10,10,0.08)','border' => 'rgba(255,255,255,0.1)','badge' => 'bg-secondary-subtle text-secondary','icon' => 'lock'],
             ];
 
             foreach ($allStatuses as $status => $cfg):
@@ -84,7 +84,7 @@
                         <?php foreach ($colTickets as $t): ?>
                             <?php
                             $score = $t['lead_score'] ?? 0;
-                            $scoreColor = $score >= 75 ? '#D4AF37' : ($score >= 40 ? '#30C5FF' : 'rgba(255,255,255,0.3)');
+                            $scoreColor = $score >= 75 ? 'var(--vzl-color-gold)' : ($score >= 40 ? 'var(--vzl-color-info)' : 'rgba(255,255,255,0.3)');
                             ?>
                             <div class="kanban-card rounded-4 p-3 cursor-grab"
                                 data-ticket-id="<?php echo $t['id']; ?>"
@@ -93,7 +93,7 @@
 
                                 <!-- Card Header -->
                                 <div class="d-flex align-items-center justify-content-between mb-2">
-                                    <span class="fw-black font-monospace x-small" style="color: #30C5FF;"><?php echo $t['ticket_number']; ?></span>
+                                    <span class="fw-black font-monospace x-small" style="color: var(--vzl-color-info);"><?php echo $t['ticket_number']; ?></span>
                                     <?php if ($score > 0): ?>
                                         <span class="badge rounded-pill fw-bold x-small" style="background: rgba(0,0,0,0.3); color: <?php echo $scoreColor; ?>; border: 1px solid <?php echo $scoreColor; ?>; font-size: 0.6rem;">
                                             <?php echo $score; ?> pts
@@ -164,7 +164,7 @@
 <style>
     .kanban-board::-webkit-scrollbar { height: 6px; }
     .kanban-board::-webkit-scrollbar-track { background: rgba(255,255,255,0.05); border-radius: 3px; }
-    .kanban-board::-webkit-scrollbar-thumb { background: var(--elegant-gold); border-radius: 3px; }
+    .kanban-board::-webkit-scrollbar-thumb { background: var(--vzl-color-gold); border-radius: 3px; }
 
     .kanban-card {
         cursor: grab;
@@ -174,7 +174,7 @@
     }
     .kanban-card:hover {
         background: rgba(255,255,255,0.08) !important;
-        border-color: rgba(212,175,55,0.3) !important;
+        border-color: var(--vzl-color-gold) !important;
         transform: translateY(-2px);
         box-shadow: 0 8px 24px rgba(0,0,0,0.3);
     }
@@ -187,7 +187,7 @@
         transform: rotate(1deg) scale(1.03);
     }
     .kanban-drop-zone.drag-over {
-        border-color: rgba(212,175,55,0.5) !important;
+        border-color: var(--vzl-color-gold) !important;
         background: rgba(212,175,55,0.04);
     }
     .line-clamp-2 {

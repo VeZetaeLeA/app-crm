@@ -37,9 +37,9 @@
                                 class="rounded-circle shadow-gold"
                                 style="width: 50px; height: 50px; object-fit: cover;">
                             <div>
-                                <h3 class="text-white h5 mb-0 fw-bold"><?php echo getenv('COMPANY_NAME'); ?></h3>
+                                <h3 class="text-white h5 mb-0 fw-bold"><?php echo \Core\Config::get('business.company_name'); ?></h3>
                                 <p class="text-white-50 x-small mb-0 uppercase tracking-widest">
-                                    <?php echo getenv('COMPANY_SLOGAN'); ?>
+                                    <?php echo \Core\Config::get('business.company_slogan'); ?>
                                 </p>
                             </div>
                         </div>

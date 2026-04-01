@@ -15,10 +15,11 @@ VeZetaeLeA OS ha alcanzado la **Evolución 20.1.0**. En esta fase se ha completa
 
 ## 🐛 Core Logic & Bugfixes (Sprint 20.1.1)
 - [x] **Email Queue Bypass**: Desacoplamiento de la configuración de correos para entornos `demo`, permitiendo envíos sincrónicos mediante `MAIL_QUEUE=false` y previniendo el silenciamiento por colas huérfanas o por namespace inválido (`mail.enabled`).
-- [x] **Ticket Guided Flow (Frontend/Backend Sync)**: Corrección de inyección dinámica `service_plan_id` en el formulario para asegurar compatibilidad estricta con orquestador PHP.
+- [x] **Ticket Guided Flow (Frontend/Backend Sync)**: Curado de `baseUrl` mediante regex en `guided_flow.js` para neutralizar dobles slashes (`//`) y resolver el error 404 en la captura comercial de APIs.
 - [x] **Admin Notification System**: Solucionado el Fatal Error al procesar notificaciones directas (`User::getStaffAndAdmins`) tras crear un nuevo ticket comercial.
-
-
+- [x] **SMTP Sanitization**: Auditoría de tabla `app_config` y saneamiento estructural de la llave `mail.from_address` (`contacto@vezetaelea.com`) restaurando su precedencia frente al `.env`.
+- [x] **Env Editor Deprecation**: Eliminación proactiva del módulo visual de edición `.env` en producción por razones de seguridad arquitectónica (Ecosistema OS).
+- [x] **Iconografía Micro-UX**: Transición del dashboard icon al vector relacional `emoji_people` en layout auth para mejorar calidez del portal de leads.
 ---
 
 ## 🏗️ Arquitectura Avanzada (Fase 4 - Sprint 4)

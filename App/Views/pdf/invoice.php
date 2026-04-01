@@ -3,6 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>Factura <?= $invoice['invoice_number'] ?></title>
+    <?php
+        // PDF Color Tokens — resolved from .env via Config (Dompdf cannot load Google Fonts)
+        $pdfPrimary = \Core\Config::get('ui.primary_color',    '#0ea5e9');
+        $pdfGold    = \Core\Config::get('ui.gold_color',       '#D4AF37');
+        $pdfBgDark  = \Core\Config::get('ui.color_bg_dark',    '#020617');
+    ?>
     <style>
         @page { margin: 0; }
         body {
@@ -14,7 +20,7 @@
             background-color: #fff;
         }
         .header {
-            background-color: #020617;
+            background-color: <?= $pdfBgDark ?>;
             color: #fff;
             padding: 40px;
             text-align: left;
@@ -36,7 +42,7 @@
         .company-info p {
             margin: 0;
             font-size: 10px;
-            color: #ec4899; /* Pink for Invoices to differentiate */
+            color: <?= $pdfPrimary ?>; /* Accento de marca desde UI_PRIMARY_COLOR */
             text-transform: uppercase;
             letter-spacing: 2px;
         }
@@ -68,7 +74,7 @@
         .section-title {
             font-size: 10px;
             font-weight: bold;
-            color: #ec4899;
+            color: <?= $pdfPrimary ?>;
             text-transform: uppercase;
             letter-spacing: 1px;
             margin-bottom: 10px;
@@ -150,13 +156,13 @@
             font-size: 14px;
         }
         .grand-total {
-            background-color: #020617;
+            background-color: <?= $pdfBgDark ?>;
             color: #fff;
             padding: 15px;
             border-radius: 8px;
             margin-top: 10px;
         }
-        .grand-total .total-label { color: #ec4899; font-weight: bold; }
+        .grand-total .total-label { color: <?= $pdfPrimary ?>; font-weight: bold; }
         .grand-total .total-value { color: #fff; font-size: 18px; }
 
         .footer {
@@ -182,7 +188,7 @@
                     <?php endif; ?>
                 </td>
                 <td class="company-info">
-                    <h1><?= getenv('COMPANY_NAME') ?: 'Tu Empresa' ?></h1>
+                    <h1><?= \Core\Config::get('business.company_name') ?: 'Tu Empresa' ?></h1>
                     <p>Comprobante de Facturación Electrónica</p>
                 </td>
                 <td class="document-title">
@@ -285,9 +291,9 @@
     </div>
 
     <div class="footer">
-        Este documento es una factura válida emitida por <?= getenv('COMPANY_NAME') ?>. 
+        Este documento es una factura válida emitida por <?= \Core\Config::get('business.company_name') ?>. 
         Sujeta a los términos y condiciones del contrato de servicio. 
-        Para soporte o aclaraciones: <?= getenv('COMPANY_MAIL') ?: 'contacto@tuempresa.com' ?>
+        Para soporte o aclaraciones: <?= \Core\Config::get('business.company_mail') ?: 'contacto@tuempresa.com' ?>
     </div>
 </body>
 </html>

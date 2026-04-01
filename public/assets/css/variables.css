@@ -14,47 +14,60 @@
    1. SCALE TOKENS — Typography & Spacing (Static, layout-agnostic)
    ========================================================================== */
 :root {
-    /* Typographic Scale — clamp() = responsive without media queries */
-    --vzl-fs-display: clamp(2.75rem, 8vw, 6rem);
-    --vzl-fs-h1:      clamp(2.25rem, 5vw, 3.75rem);
-    --vzl-fs-h2:      clamp(1.75rem, 4vw, 2.75rem);
-    --vzl-fs-h3:      clamp(1.375rem, 3vw, 2rem);
-    --vzl-fs-h4:      1.25rem;
-    --vzl-fs-h5:      1.125rem;
-    --vzl-fs-h6:      1rem;
-    --vzl-fs-body:    1rem;
-    --vzl-fs-sm:      0.875rem;   /* 14px — table cells, labels */
-    --vzl-fs-xs:      0.75rem;    /* 12px — badges, captions */
-    --vzl-fs-xxs:     0.65rem;    /* 10px — meta info */
+    /* Typographic Scale — clamp() = responsive without media queries (Perfect Fourth 1.333) */
+    --vzl-fs-display: clamp(3rem, 8vw, 7.47rem);
+    --vzl-fs-h1: clamp(2.5rem, 6vw, 5.61rem);
+    --vzl-fs-h2: clamp(2rem, 5vw, 4.21rem);
+    --vzl-fs-h3: clamp(1.5rem, 4vw, 3.16rem);
+    --vzl-fs-h4: clamp(1.25rem, 3vw, 2.37rem);
+    --vzl-fs-h5: 1.77rem;
+    --vzl-fs-h6: 1.33rem;
+    --vzl-fs-body: 1rem;
+    --vzl-fs-sm: 0.875rem;
+    /* 14px — table cells, labels */
+    --vzl-fs-xs: 0.75rem;
+    /* 12px — badges, captions */
+    --vzl-fs-xxs: 0.65rem;
+    /* 10px — meta info */
 
     /* Line Heights */
     --vzl-lh-display: 1.05;
     --vzl-lh-heading: 1.15;
-    --vzl-lh-body:    1.6;
+    --vzl-lh-body: 1.6;
     --vzl-lh-relaxed: 1.75;
 
     /* Letter Spacing */
-    --vzl-tracking-tight:   -0.03em;
-    --vzl-tracking-normal:  -0.01em;
-    --vzl-tracking-wide:    0.05em;
-    --vzl-tracking-widest:  0.12em;
+    --vzl-tracking-tight: -0.03em;
+    --vzl-tracking-normal: -0.01em;
+    --vzl-tracking-wide: 0.05em;
+    --vzl-tracking-widest: 0.12em;
 
     /* Spacing Scale (8px base) */
-    --vzl-space-1:  0.25rem;   /*  4px */
-    --vzl-space-2:  0.5rem;    /*  8px */
-    --vzl-space-3:  0.75rem;   /* 12px */
-    --vzl-space-4:  1rem;      /* 16px */
-    --vzl-space-5:  1.25rem;   /* 20px */
-    --vzl-space-6:  1.5rem;    /* 24px */
-    --vzl-space-8:  2rem;      /* 32px */
-    --vzl-space-10: 2.5rem;    /* 40px */
-    --vzl-space-12: 3rem;      /* 48px */
-    --vzl-space-16: 4rem;      /* 64px */
+    --vzl-space-1: 0.25rem;
+    /*  4px */
+    --vzl-space-2: 0.5rem;
+    /*  8px */
+    --vzl-space-3: 0.75rem;
+    /* 12px */
+    --vzl-space-4: 1rem;
+    /* 16px */
+    --vzl-space-5: 1.25rem;
+    /* 20px */
+    --vzl-space-6: 1.5rem;
+    /* 24px */
+    --vzl-space-8: 2rem;
+    /* 32px */
+    --vzl-space-10: 2.5rem;
+    /* 40px */
+    --vzl-space-12: 3rem;
+    /* 48px */
+    --vzl-space-16: 4rem;
+    /* 64px */
 
     /* Legacy compat aliases (keep existing selectors working) */
-    --text-sm:   var(--vzl-fs-sm);
+    --text-sm: var(--vzl-fs-sm);
     --text-base: var(--vzl-fs-body);
-    --text-lg:   var(--vzl-fs-h6);
+    --text-lg: var(--vzl-fs-h6);
 }
 
 /* ==========================================================================
@@ -63,63 +76,68 @@
    ========================================================================== */
 :root {
     /* Backgrounds */
-    --vzl-bg:          var(--vzl-color-bg-dark);
-    --vzl-surface:     var(--vzl-color-surface-dark);
-    --vzl-surface-2:   var(--vzl-color-surface-elev);
-    --vzl-border:      var(--vzl-color-border-dark);
+    --vzl-bg: var(--vzl-color-bg-dark);
+    --vzl-surface: var(--vzl-color-surface-dark);
+    --vzl-surface-2: var(--vzl-color-surface-elev);
+    --vzl-border: var(--vzl-color-border-dark);
 
     /* Text */
-    --vzl-text:        #f4f4f5;    /* Zinc 100 — high contrast on dark bg */
-    --vzl-text-muted:  #a1a1aa;    /* Zinc 400 */
-    --vzl-text-faint:  #52525b;    /* Zinc 600 */
+    --vzl-text: #f4f4f5;
+    /* Zinc 100 — high contrast on dark bg */
+    --vzl-text-muted: #a1a1aa;
+    /* Zinc 400 */
+    --vzl-text-faint: #52525b;
+    /* Zinc 600 */
 
     /* Interactive */
-    --vzl-focus-ring:  rgba(14, 165, 233, 0.4);  /* Sky Blue focused ring */
+    --vzl-focus-ring: rgba(14, 165, 233, 0.4);
+    /* Sky Blue focused ring */
 
-    /* Glassmorphism */
-    --vzl-glass-bg:     rgba(24, 24, 27, 0.70);  /* Zinc 900 @ 70% */
-    --vzl-glass-border: rgba(255, 255, 255, 0.07);
-    --vzl-glass-blur:   16px;
+    /* Glassmorphism 2.0 - Liquid Glass */
+    --vzl-glass-bg: rgba(15, 23, 42, 0.70);
+    /* Atmospheric surface @ 70% */
+    --vzl-glass-border: rgba(255, 255, 255, 0.06);
+    --vzl-glass-blur: 24px;
 
     /* Shadows */
-    --vzl-shadow-sm:  0 1px 3px rgba(0,0,0,0.4), 0 1px 2px rgba(0,0,0,0.3);
-    --vzl-shadow-md:  0 4px 12px rgba(0,0,0,0.4);
-    --vzl-shadow-lg:  0 8px 30px rgba(0,0,0,0.5);
-    --vzl-shadow-xl:  0 20px 60px rgba(0,0,0,0.6);
+    --vzl-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4), 0 1px 2px rgba(0, 0, 0, 0.3);
+    --vzl-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+    --vzl-shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.5);
+    --vzl-shadow-xl: 0 20px 60px rgba(0, 0, 0, 0.6);
 
     /* Hover glow (activated only on :hover / :focus — never static) */
-    --vzl-glow-primary:   0 0 20px rgba(14, 165, 233, 0.30);
+    --vzl-glow-primary: 0 0 20px rgba(14, 165, 233, 0.30);
     --vzl-glow-secondary: 0 0 20px rgba(192, 38, 211, 0.25);
-    --vzl-glow-gold:      0 0 20px rgba(212, 175, 55, 0.25);
+    --vzl-glow-gold: 0 0 20px rgba(212, 175, 55, 0.25);
 
     /* Legacy compatibility: keep existing classes functional */
     --vzl-deep-black: var(--vzl-color-bg-dark, #09090B);
-    --vzl-midnight:   var(--vzl-color-surface-dark, #18181B);
-    --vzl-steel:      var(--vzl-color-surface-elev, #27272A);
-    --vzl-white:      #f4f4f5;
+    --vzl-midnight: var(--vzl-color-surface-dark, #18181B);
+    --vzl-steel: var(--vzl-color-surface-elev, #27272A);
+    --vzl-white: #f4f4f5;
     --vzl-gray-muted: #a1a1aa;
-    --vzl-cyan:       var(--vzl-primary);
-    --vzl-magenta:    var(--vzl-secondary);
-    --vzl-gold:       var(--vzl-color-gold);
-    --vzl-success:    var(--vzl-color-success);
-    --vzl-warning:    var(--vzl-color-warning);
-    --vzl-danger:     var(--vzl-color-danger);
+    --vzl-cyan: var(--vzl-primary);
+    --vzl-magenta: var(--vzl-secondary);
+    --vzl-gold: var(--vzl-color-gold);
+    --vzl-success: var(--vzl-color-success);
+    --vzl-warning: var(--vzl-color-warning);
+    --vzl-danger: var(--vzl-color-danger);
 
     /* Old CSS custom props used in admin/staff inlined styles */
     --elegant-gold: var(--vzl-color-gold, #D4AF37);
-    --tech-blue:    var(--vzl-primary, #0ea5e9);
-    --deep-black:   var(--vzl-color-bg-dark, #09090B);
-    --font-body:    var(--vzl-font-body);
+    --tech-blue: var(--vzl-primary, #0ea5e9);
+    --deep-black: var(--vzl-color-bg-dark, #09090B);
+    --font-body: var(--vzl-font-body);
 
     /* Button Tokens */
-    --vzl-btn-primary-bg:      var(--vzl-primary);
+    --vzl-btn-primary-bg: var(--vzl-primary);
     --vzl-btn-primary-hover-bg: color-mix(in srgb, var(--vzl-primary) 85%, white);
-    --vzl-btn-secondary-bg:    transparent;
+    --vzl-btn-secondary-bg: transparent;
 
     /* Radius Aliases */
-    --vzl-radius-sm:   var(--vzl-ui-radius-sm, 6px);
-    --vzl-radius-md:   var(--vzl-ui-radius-md, 12px);
-    --vzl-radius-lg:   var(--vzl-ui-radius-lg, 20px);
+    --vzl-radius-sm: var(--vzl-ui-radius-sm, 6px);
+    --vzl-radius-md: var(--vzl-ui-radius-md, 12px);
+    --vzl-radius-lg: var(--vzl-ui-radius-lg, 20px);
     --vzl-radius-pill: var(--vzl-ui-radius-pill, 50rem);
 }
 
@@ -128,28 +146,31 @@
    data-theme="light" on <html> triggers this block.
    ========================================================================== */
 [data-theme="light"] {
-    --vzl-bg:         var(--vzl-color-bg-light, #FAFAFA);
-    --vzl-surface:    var(--vzl-color-surface-light, #FFFFFF);
-    --vzl-surface-2:  #F4F4F5;
-    --vzl-border:     var(--vzl-color-border-light, rgba(0,0,0,0.08));
+    --vzl-bg: var(--vzl-color-bg-light, #FAFAFA);
+    --vzl-surface: var(--vzl-color-surface-light, #FFFFFF);
+    --vzl-surface-2: #F4F4F5;
+    --vzl-border: var(--vzl-color-border-light, rgba(0, 0, 0, 0.08));
 
-    --vzl-text:       #09090B;   /* Zinc 950 */
-    --vzl-text-muted: #52525b;   /* Zinc 600 */
-    --vzl-text-faint: #a1a1aa;   /* Zinc 400 */
+    --vzl-text: #09090B;
+    /* Zinc 950 */
+    --vzl-text-muted: #52525b;
+    /* Zinc 600 */
+    --vzl-text-faint: #a1a1aa;
+    /* Zinc 400 */
 
-    --vzl-glass-bg:     rgba(255,255,255,0.85);
-    --vzl-glass-border: rgba(0,0,0,0.06);
+    --vzl-glass-bg: rgba(255, 255, 255, 0.85);
+    --vzl-glass-border: rgba(0, 0, 0, 0.06);
 
-    --vzl-shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
-    --vzl-shadow-md: 0 4px 12px rgba(0,0,0,0.08);
-    --vzl-shadow-lg: 0 8px 30px rgba(0,0,0,0.10);
+    --vzl-shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.06), 0 1px 2px rgba(0, 0, 0, 0.04);
+    --vzl-shadow-md: 0 4px 12px rgba(0, 0, 0, 0.08);
+    --vzl-shadow-lg: 0 8px 30px rgba(0, 0, 0, 0.10);
 
     /* Legacy compat */
     --vzl-deep-black: var(--vzl-color-bg-light, #FAFAFA);
-    --vzl-midnight:   var(--vzl-color-surface-light, #FFFFFF);
-    --vzl-white:      #09090B;
+    --vzl-midnight: var(--vzl-color-surface-light, #FFFFFF);
+    --vzl-white: #09090B;
     --vzl-gray-muted: #52525b;
-    --deep-black:     var(--vzl-color-bg-light, #FAFAFA);
+    --deep-black: var(--vzl-color-bg-light, #FAFAFA);
 }
 
 /* ==========================================================================
@@ -177,7 +198,12 @@ body {
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-h1, h2, h3, h4, h5, h6 {
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
     font-family: var(--vzl-font-heading, 'Outfit', system-ui, sans-serif);
     line-height: var(--vzl-lh-heading);
     letter-spacing: var(--vzl-tracking-tight);
@@ -195,7 +221,8 @@ td.amount,
 td.id-cell,
 .badge-id {
     font-family: var(--vzl-font-mono, 'JetBrains Mono', monospace) !important;
-    font-feature-settings: "tnum" 1; /* tabular numbers — aligns $ amounts */
+    font-feature-settings: "tnum" 1;
+    /* tabular numbers — aligns $ amounts */
     font-variant-numeric: tabular-nums;
 }
 
@@ -205,11 +232,9 @@ td.id-cell,
 .text-gradient,
 .vzl-text-gradient,
 .vzl-text-gradient-vibrant {
-    background: linear-gradient(
-        135deg,
-        var(--vzl-primary, #0ea5e9) 0%,
-        var(--vzl-secondary, #c026d3) 100%
-    );
+    background: linear-gradient(135deg,
+            var(--vzl-primary, #0ea5e9) 0%,
+            var(--vzl-secondary, #c026d3) 100%);
     -webkit-background-clip: text;
     background-clip: text;
     -webkit-text-fill-color: transparent;
@@ -219,14 +244,12 @@ td.id-cell,
 
 /* Physichromie gradient — animated (for hero/decorative use only) */
 .vzl-gradient-animated {
-    background: linear-gradient(
-        90deg,
-        var(--vzl-primary) 0%,
-        #7c3aed 25%,
-        var(--vzl-secondary) 50%,
-        #f59e0b 75%,
-        var(--vzl-primary) 100%
-    );
+    background: linear-gradient(90deg,
+            var(--vzl-primary) 0%,
+            #7c3aed 25%,
+            var(--vzl-secondary) 50%,
+            #f59e0b 75%,
+            var(--vzl-primary) 100%);
     background-size: 200% auto;
     -webkit-background-clip: text;
     background-clip: text;
@@ -235,8 +258,13 @@ td.id-cell,
 }
 
 @keyframes vzl-physi-flow {
-    0%   { background-position: 0% center; }
-    100% { background-position: 200% center; }
+    0% {
+        background-position: 0% center;
+    }
+
+    100% {
+        background-position: 200% center;
+    }
 }
 
 /* ==========================================================================
@@ -270,6 +298,7 @@ td.id-cell,
     align-items: center;
     gap: 0.5rem;
 }
+
 .vzl-btn-primary:hover,
 .vzl-btn-primary:focus-visible {
     background: color-mix(in srgb, var(--vzl-primary) 85%, white);
@@ -279,7 +308,7 @@ td.id-cell,
 }
 
 /* Ghost Primary — Neon on Interaction Only */
-.vzl-btn-glow-cyan {
+.vzl-btnvzl-font-body-glow-cyan {
     background: transparent !important;
     border: 1px solid rgba(14, 165, 233, 0.35) !important;
     color: var(--vzl-primary, #0ea5e9) !important;
@@ -295,13 +324,14 @@ td.id-cell,
     align-items: center;
     gap: 0.5rem;
 }
+
 .vzl-btn-glow-cyan:hover,
 .vzl-btn-glow-cyan:focus-visible {
     background: rgba(14, 165, 233, 0.08) !important;
     border-color: var(--vzl-primary, #0ea5e9) !important;
     color: #fff !important;
     box-shadow: 0 0 20px rgba(14, 165, 233, 0.30),
-                inset 0 0 12px rgba(14, 165, 233, 0.06) !important;
+        inset 0 0 12px rgba(14, 165, 233, 0.06) !important;
     transform: translateY(-2px);
     outline: none;
 }
@@ -323,13 +353,14 @@ td.id-cell,
     align-items: center;
     gap: 0.5rem;
 }
+
 .vzl-btn-glow-magenta:hover,
 .vzl-btn-glow-magenta:focus-visible {
     background: rgba(192, 38, 211, 0.08) !important;
     border-color: var(--vzl-secondary, #c026d3) !important;
     color: #fff !important;
     box-shadow: 0 0 20px rgba(192, 38, 211, 0.25),
-                inset 0 0 12px rgba(192, 38, 211, 0.05) !important;
+        inset 0 0 12px rgba(192, 38, 211, 0.05) !important;
     transform: translateY(-2px);
     outline: none;
 }
@@ -346,10 +377,12 @@ td.id-cell,
     color: var(--vzl-text) !important;
     font-family: var(--vzl-font-body);
     font-size: var(--vzl-fs-sm);
-    min-height: 44px;   /* Touch target: WCAG 2.5.5 */
+    min-height: 48px;
+    /* Touch target: WCAG 2.5.5 */
     padding: 0.625rem 0.875rem;
     transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
+
 .vzl-input:focus,
 .form-control:focus,
 .form-select:focus {
@@ -358,10 +391,12 @@ td.id-cell,
     outline: none !important;
     background: var(--vzl-surface, #18181B) !important;
 }
+
 .vzl-input::placeholder,
 .form-control::placeholder {
     color: var(--vzl-text-faint);
 }
+
 .form-label {
     display: block;
     font-size: var(--vzl-fs-xs);
@@ -377,9 +412,10 @@ td.id-cell,
 [data-theme="light"] .form-control,
 [data-theme="light"] .form-select {
     background: #fff !important;
-    border-color: rgba(0,0,0,0.12) !important;
+    border-color: rgba(0, 0, 0, 0.12) !important;
     color: #09090B !important;
 }
+
 [data-theme="light"] .vzl-input:focus,
 [data-theme="light"] .form-control:focus,
 [data-theme="light"] .form-select:focus {
@@ -397,10 +433,12 @@ td.id-cell,
     transition: box-shadow 0.2s ease, border-color 0.2s ease;
     overflow: hidden;
 }
+
 .vzl-card:hover {
     box-shadow: var(--vzl-shadow-md);
     border-color: rgba(14, 165, 233, 0.20);
 }
+
 .vzl-card-glass {
     background: var(--vzl-glass-bg);
     backdrop-filter: blur(var(--vzl-glass-blur));
@@ -417,10 +455,12 @@ td.id-cell,
     padding: 1.25rem 1.5rem;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
+
 .vzl-metric-card:hover {
     transform: translateY(-2px);
     box-shadow: var(--vzl-shadow-md);
 }
+
 .vzl-metric-value {
     font-family: var(--vzl-font-mono);
     font-size: var(--vzl-fs-h3);
@@ -440,6 +480,7 @@ td.id-cell,
     --bs-table-bg: transparent;
     --bs-table-border-color: var(--vzl-border);
 }
+
 .table thead th {
     font-size: var(--vzl-fs-xs);
     font-weight: 700;
@@ -451,12 +492,14 @@ td.id-cell,
     white-space: nowrap;
     background: var(--vzl-surface-2);
 }
+
 .table tbody td {
     padding: 0.875rem 1rem;
     vertical-align: middle;
     border-bottom: 1px solid var(--vzl-border);
     color: var(--vzl-text);
 }
+
 /* Financial & ID columns use monospace for vertical alignment */
 .table tbody td.col-amount,
 .table tbody td.col-id,
@@ -465,15 +508,18 @@ td.id-cell,
     font-variant-numeric: tabular-nums;
     letter-spacing: 0;
 }
+
 .table tbody td.col-amount {
     text-align: right;
 }
+
 /* Hover row — very subtle, doesn't compete with content */
-.table-hover tbody tr:hover > td {
-    background: rgba(255,255,255,0.025) !important;
+.table-hover tbody tr:hover>td {
+    background: rgba(255, 255, 255, 0.025) !important;
     transition: background 0.15s ease;
 }
-[data-theme="light"] .table-hover tbody tr:hover > td {
+
+[data-theme="light"] .table-hover tbody tr:hover>td {
     background: rgba(14, 165, 233, 0.04) !important;
 }
 
@@ -493,31 +539,37 @@ td.id-cell,
     border-radius: var(--vzl-radius-pill);
     white-space: nowrap;
 }
+
 .vzl-badge-success {
     color: var(--vzl-color-success, #10B981);
     background: rgba(16, 185, 129, 0.12);
     border: 1px solid rgba(16, 185, 129, 0.25);
 }
+
 .vzl-badge-warning {
     color: var(--vzl-color-warning, #F59E0B);
     background: rgba(245, 158, 11, 0.12);
     border: 1px solid rgba(245, 158, 11, 0.25);
 }
+
 .vzl-badge-danger {
     color: var(--vzl-color-danger, #EF4444);
     background: rgba(239, 68, 68, 0.12);
     border: 1px solid rgba(239, 68, 68, 0.25);
 }
+
 .vzl-badge-info {
     color: var(--vzl-color-info, #3B82F6);
     background: rgba(59, 130, 246, 0.12);
     border: 1px solid rgba(59, 130, 246, 0.25);
 }
+
 .vzl-badge-neutral {
     color: var(--vzl-text-muted);
     background: rgba(161, 161, 170, 0.10);
     border: 1px solid rgba(161, 161, 170, 0.20);
 }
+
 .vzl-badge-gold {
     color: var(--vzl-color-gold, #D4AF37);
     background: rgba(212, 175, 55, 0.10);
@@ -531,6 +583,7 @@ td.id-cell,
     margin-bottom: 3rem;
     text-align: center;
 }
+
 .vzl-section-subtitle {
     display: block;
     color: var(--vzl-primary);
@@ -542,6 +595,7 @@ td.id-cell,
     font-family: var(--vzl-font-body);
     opacity: 0.85;
 }
+
 .vzl-section-title {
     font-family: var(--vzl-font-heading);
     font-size: var(--vzl-fs-h2);
@@ -555,32 +609,83 @@ td.id-cell,
 /* ==========================================================================
    13. BORDER & OPACITY UTILITIES
    ========================================================================== */
-.border-white-5  { border-color: rgba(255,255,255,0.05) !important; }
-.border-white-10 { border-color: rgba(255,255,255,0.10) !important; }
-.border-white-15 { border-color: rgba(255,255,255,0.15) !important; }
-.bg-midnight     { background-color: var(--vzl-surface) !important; }
-.bg-deep-black   { background-color: var(--vzl-bg) !important; }
-.bg-white-5      { background-color: rgba(255,255,255,0.05) !important; }
-.bg-white-10     { background-color: rgba(255,255,255,0.10) !important; }
+.border-white-5 {
+    border-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+.border-white-10 {
+    border-color: rgba(255, 255, 255, 0.10) !important;
+}
+
+.border-white-15 {
+    border-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+.bg-midnight {
+    background-color: var(--vzl-surface) !important;
+}
+
+.bg-deep-black {
+    background-color: var(--vzl-bg) !important;
+}
+
+.bg-white-5 {
+    background-color: rgba(255, 255, 255, 0.05) !important;
+}
+
+.bg-white-10 {
+    background-color: rgba(255, 255, 255, 0.10) !important;
+}
 
 /* ==========================================================================
    14. HOVER COLOR UTILITIES
    ========================================================================== */
-.hover-gold { transition: color 0.2s ease; }
-.hover-gold:hover { color: var(--vzl-color-gold, #D4AF37) !important; }
-.hover-white:hover { color: #fff !important; }
-.hover-primary:hover { color: var(--vzl-primary) !important; }
-.transition-colors { transition: color 0.2s ease; }
-.transition-all    { transition: all 0.2s ease; }
+.hover-gold {
+    transition: color 0.2s ease;
+}
+
+.hover-gold:hover {
+    color: var(--vzl-color-gold, #D4AF37) !important;
+}
+
+.hover-white:hover {
+    color: #fff !important;
+}
+
+.hover-primary:hover {
+    color: var(--vzl-primary) !important;
+}
+
+.transition-colors {
+    transition: color 0.2s ease;
+}
+
+.transition-all {
+    transition: all 0.2s ease;
+}
 
 /* ==========================================================================
    15. TYPOGRAPHY SHORTHAND CLASSES
    ========================================================================== */
-.tracking-widest { letter-spacing: var(--vzl-tracking-widest) !important; }
-.tracking-wide   { letter-spacing: var(--vzl-tracking-wide) !important; }
-.uppercase       { text-transform: uppercase !important; }
-.xx-small        { font-size: var(--vzl-fs-xxs) !important; }
-.x-small         { font-size: var(--vzl-fs-xs) !important; }
+.tracking-widest {
+    letter-spacing: var(--vzl-tracking-widest) !important;
+}
+
+.tracking-wide {
+    letter-spacing: var(--vzl-tracking-wide) !important;
+}
+
+.uppercase {
+    text-transform: uppercase !important;
+}
+
+.xx-small {
+    font-size: var(--vzl-fs-xxs) !important;
+}
+
+.x-small {
+    font-size: var(--vzl-fs-xs) !important;
+}
 
 /* ==========================================================================
    16. USER ACCESS ICON (Navbar)
@@ -598,6 +703,7 @@ td.id-cell,
     transition: all 0.2s ease;
     background: transparent;
 }
+
 .user-access-icon:hover {
     color: var(--vzl-primary);
     border-color: rgba(14, 165, 233, 0.40);
@@ -611,18 +717,21 @@ td.id-cell,
 .navbar-chromatic-border,
 .physichromie-divider {
     height: 2px;
-    background: linear-gradient(
-        90deg,
-        var(--vzl-primary, #0ea5e9) 0%,
-        #7c3aed 33%,
-        var(--vzl-secondary, #c026d3) 66%,
-        var(--vzl-color-gold, #D4AF37) 100%
-    );
+    background: linear-gradient(90deg,
+            var(--vzl-primary, #0ea5e9) 0%,
+            #7c3aed 33%,
+            var(--vzl-secondary, #c026d3) 66%,
+            var(--vzl-color-gold, #D4AF37) 100%);
     background-size: 200% auto;
     animation: vzl-physi-flow 6s linear infinite;
     width: 100%;
 }
-.navbar-chromatic-border { position: absolute; bottom: 0; left: 0; }
+
+.navbar-chromatic-border {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+}
 
 /* ==========================================================================
    18. PRELOADER (Legacy Kinetic)
@@ -637,13 +746,19 @@ td.id-cell,
     justify-content: center;
     transition: opacity 0.5s ease;
 }
-.vzl-preloader.fade-out { opacity: 0; pointer-events: none; }
+
+.vzl-preloader.fade-out {
+    opacity: 0;
+    pointer-events: none;
+}
+
 .vzl-preloader-content {
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 1.5rem;
 }
+
 .vzl-preloader-spinner {
     width: 44px;
     height: 44px;
@@ -652,8 +767,11 @@ td.id-cell,
     border-radius: 50%;
     animation: vzl-spin 0.8s linear infinite;
 }
+
 @keyframes vzl-spin {
-    to { transform: rotate(360deg); }
+    to {
+        transform: rotate(360deg);
+    }
 }
 
 /* ==========================================================================
@@ -676,6 +794,7 @@ td.id-cell,
     cursor: pointer;
     transition: all 0.2s ease;
 }
+
 .scroll-to-top:hover {
     color: var(--vzl-primary);
     border-color: rgba(14, 165, 233, 0.4);
@@ -700,7 +819,13 @@ td.id-cell,
     box-shadow: 0 4px 16px rgba(37, 211, 102, 0.40);
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
-.floating-whatsapp svg { width: 28px; height: 28px; fill: #fff; }
+
+.floating-whatsapp svg {
+    width: 28px;
+    height: 28px;
+    fill: #fff;
+}
+
 .floating-whatsapp:hover {
     transform: scale(1.08);
     box-shadow: 0 6px 24px rgba(37, 211, 102, 0.55);
@@ -713,4 +838,51 @@ td.id-cell,
     padding: 1.25rem 0;
     background: var(--vzl-bg);
     border-top: 1px solid var(--vzl-border);
+}
+
+/* ==========================================================================
+   22. NAV-LINK SIDEBAR COMPONENT — Token-Driven (centralizado)
+   Reemplaza los bloques <style> inline de admin/client/staff layouts.
+   Para cambiar el color activo: editar UI_GOLD_COLOR en .env.
+   ========================================================================== */
+.nav-link-custom {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 16px;
+    border-radius: var(--vzl-radius-md);
+    color: rgba(255, 255, 255, 0.6);
+    text-decoration: none;
+    font-family: var(--vzl-font-body);
+    font-size: var(--vzl-fs-sm);
+    font-weight: 500;
+    transition: all 0.2s ease;
+}
+
+.nav-link-custom:hover {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--vzl-color-gold);
+}
+
+.nav-link-custom.active {
+    background: color-mix(in srgb, var(--vzl-color-gold) 10%, transparent);
+    color: var(--vzl-color-gold);
+    border: 1px solid color-mix(in srgb, var(--vzl-color-gold) 20%, transparent);
+}
+
+.nav-link-custom .material-symbols-outlined {
+    font-size: 1.25rem;
+}
+
+/* Light mode sidebar active nav */
+[data-theme="light"] .nav-link-custom {
+    color: rgba(9, 9, 11, 0.6);
+}
+[data-theme="light"] .nav-link-custom:hover {
+    background: color-mix(in srgb, var(--vzl-color-gold) 6%, transparent);
+    color: var(--vzl-color-gold);
+}
+[data-theme="light"] .nav-link-custom.active {
+    background: color-mix(in srgb, var(--vzl-color-gold) 12%, transparent);
+    color: var(--vzl-color-gold);
 }

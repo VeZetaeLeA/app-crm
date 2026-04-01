@@ -76,7 +76,7 @@
             </div>
             <div class="progress rounded-pill" style="height: 12px; background: rgba(255,255,255,0.08);">
                 <div class="progress-bar" role="progressbar"
-                    style="width: <?php echo $pct; ?>%; background: linear-gradient(90deg, #D4AF37, #30C5FF);"
+                    style="width: <?php echo $pct; ?>%; background: linear-gradient(90deg, var(--vzl-color-gold), var(--vzl-color-info));"
                     aria-valuenow="<?php echo $pct; ?>" aria-valuemin="0" aria-valuemax="100"></div>
             </div>
             <div class="d-flex justify-content-between mt-1">
@@ -107,9 +107,9 @@
                         <?php
                         $status = $d['status'] ?? 'pending_review';
                         $statusMap = [
-                            'pending_review' => ['icon' => 'pending',      'color' => '#fbbf24', 'label' => 'Pendiente de Revisión', 'bg' => 'rgba(251,191,36,0.12)',  'border' => 'rgba(251,191,36,0.35)'],
-                            'approved'       => ['icon' => 'check_circle', 'color' => '#22c55e', 'label' => 'Aprobado',             'bg' => 'rgba(34,197,94,0.12)',   'border' => 'rgba(34,197,94,0.35)'],
-                            'rejected'       => ['icon' => 'cancel',       'color' => '#ef4444', 'label' => 'Rechazado',            'bg' => 'rgba(239,68,68,0.12)',   'border' => 'rgba(239,68,68,0.35)'],
+                            'pending_review' => ['icon' => 'pending',      'color' => \Core\Config::get('ui.warning_color', '#fbbf24'), 'label' => 'Pendiente de Revisión', 'bg' => 'rgba(251,191,36,0.12)',  'border' => 'rgba(251,191,36,0.35)'],
+                            'approved'       => ['icon' => 'check_circle', 'color' => \Core\Config::get('ui.success_color', '#22c55e'), 'label' => 'Aprobado',             'bg' => 'rgba(34,197,94,0.12)',   'border' => 'rgba(34,197,94,0.35)'],
+                            'rejected'       => ['icon' => 'cancel',       'color' => \Core\Config::get('ui.danger_color',  '#ef4444'), 'label' => 'Rechazado',            'bg' => 'rgba(239,68,68,0.12)',   'border' => 'rgba(239,68,68,0.35)'],
                         ];
                         $sm = $statusMap[$status];
                         $uploadDate  = date('d M, Y · H:i', strtotime($d['created_at']));
@@ -191,7 +191,7 @@
                     <!-- Final marker -->
                     <div class="position-relative ps-4 mb-2">
                         <div class="position-absolute d-flex align-items-center justify-content-center rounded-circle"
-                            style="left: -14px; top: 50%; transform: translateY(-50%); width: 20px; height: 20px; background: rgba(212,175,55,0.3); border: 2px solid rgba(212,175,55,0.5);">
+                            style="left: -14px; top: 50%; transform: translateY(-50%); width: 20px; height: 20px; background: rgba(212,175,55,0.3); border: 2px solid var(--vzl-color-gold);">
                         </div>
                         <span class="text-white-25 x-small italic">Fin de la línea de tiempo</span>
                     </div>
@@ -209,7 +209,7 @@
     .animate-slide-in {
         animation: slideInLeft 0.4s ease-out both;
     }
-    .text-gold { color: var(--elegant-gold) !important; }
-    .hover-gold:hover { color: var(--elegant-gold) !important; }
+    .text-gold { color: var(--vzl-color-gold) !important; }
+    .hover-gold:hover { color: var(--vzl-color-gold) !important; }
     .transition-all { transition: all 0.2s ease; }
 </style>

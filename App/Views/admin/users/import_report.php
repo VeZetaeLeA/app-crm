@@ -55,7 +55,7 @@
 <style>
     .custom-scroll::-webkit-scrollbar { width: 4px; }
     .custom-scroll::-webkit-scrollbar-track { background: rgba(255,255,255,0.02); }
-    .custom-scroll::-webkit-scrollbar-thumb { background: #D4AF37; border-radius: 10px; }
+    .custom-scroll::-webkit-scrollbar-thumb { background: var(--vzl-color-gold); border-radius: 10px; }
     .hover-bg-light-05:hover { background: rgba(255,255,255,0.05) !important; cursor: default; }
     .btn-xs { font-size: 0.75rem !important; }
 </style>
