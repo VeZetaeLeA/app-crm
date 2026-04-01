@@ -1,16 +1,25 @@
-**Estado al:** 01 de Abril, 2026 (Sprint 20.2.0 — Visual Vanguard: Indigo/Sora/Zinc)  
-**Versión:** 20.2.0 (Visual Vanguard: Tech-Premium Standard)  
-**Estado:** ✅ **VeZetaeLeA OS: Enterprise Visual Vanguard & Design Maturity**
+**Estado al:** 01 de Abril, 2026 (Sprint 20.2.1 — Stability & Media Expansion)  
+**Versión:** 20.2.1 (Visual Vanguard: Performance Edition)  
+**Estado:** ✅ **VeZetaeLeA OS: Stable & High-Performance Enterprise**
+
 
 VeZetaeLeA OS ha alcanzado la **Evolución 20.2.0**. En esta fase se ha consolidado la identidad de "Arquitectos Digitales" mediante un despliegue de diseño de vanguardia empresarial (2025/2026). Se ha refinado la paleta cromática a una escala de **Zinc-950** profunda con acentos **Indigo Authority**, logrando una legibilidad y profesionalismo de nivel SaaS Global.
 
 ---
 
+## ⚡ High-Performance & Stability (Sprint 20.2.1)
+- [x] **MIME Expansion (WebP & SVG)**: Soporte completo para formatos de imagen de próxima generación con validación binaria estricta.
+- [x] **UI Inheritance Fix**: Corregido el problema de fuentes (fallo Times New Roman) mediante la eliminación de saneamiento HTML en variables CSS dinámicas.
+- [x] **Sidebar Layout Stability**: Refuerzo de posicionamiento `fixed` y anulación de gaps en resoluciones móviles/tablets.
+- [x] **Zero-Hardcode Typography**: Actualización del protocolo de inyección para soportar stacks de fuentes simplificados desde `.env`.
+
 ## 🎨 Visual Vanguard & Brand Maturity (Sprint 20.2.0)
-- [x] **Indigo Authority Integration**: Migración del color primario a Indigo-500 (`#6366F1`) para proyectar confianza ejecutiva y solidez técnica.
-- [x] Evolución 20.2.0 (Visual Vanguard): Implementación de paleta **Indigo/Zinc** y tipografía **Sora/Google Sans** centralizada.
-- [x] **Zinc Deep Scale**: Implementación de fondos en Zinc-950 (`#09090B`) logrando un contraste atmosférico superior en modo oscuro.
-- [x] **Typography Evolution (Sora & Google Sans)**: Adopción de **Sora** para encabezados (Precisión Industrial) y **Google Sans/Outfit** para cuerpo (Legibilidad Enterprise & Brand Trust).
+
+- [x] **Typography Evolution (Sora & Google Sans)**: Adopción de **Sora** para encabezados (Precisión Industrial) e **Inter/Google Sans/Outfit** para cuerpo (Legibilidad Enterprise & Brand Trust).
+- [x] **Responsive Container Layouts**: Implementación de `@container` en widgets del dashboard para una adaptabilidad modular superior.
+- [x] **Repository Pattern Expansion**: Migración de `ProjectRepository` para desacoplamiento total de la capa de datos.
+- [x] **Indigo Authority Integration**: Migración del color primario a Indigo-500 (#6366F1) para proyectar confianza ejecutiva y solidez técnica.
+
 - [x] **Architectural Glassmorphism**: Refinamiento de la cristalería a 24px blur con opacidad 0.8 y bordes Zinc-200 (light) / White-0.08 (dark).
 - [x] **Logo Monolith Treatment**: Implementación de filtro monocromático técnico para elevar la percepción de marca y reducir ruido visual de colores primarios en la UI.
 - [x] **Config-Driven Convergence**: Sincronización absoluta entre `.env`, `config/app.php` y variables CSS dinámicas para un despliegue White-Label impecable.
@@ -174,11 +183,41 @@ Se ha ejecutado el **Hardening de Seguridad Crítico** según el nuevo PRD de Ev
 ---
 
 ## 📅 Próximos Pasos (Arquitectura & Escalabilidad)
-1.  **Fase 1 - Sistema de Internacionalización (i18n)**: ✅ **COMPLETADO**. Carga dinámica de diccionarios JSON (`locales/es.json`), helpers globales `__()` en toda el área de vistas (`App/Views`), y unificación semántica de **`Core\Mail`** usando strings dinámicos (Zero-Hardcode alcanzando Nivel 5 absoluto en comunicaciones hacia el usuario).
+1.  **Fase 1 - Sistema de Internacionalización (i18n)**: ✅ **COMPLETADO**.
 2.  **Fase 2 - Arquitectura (Sprint 8)**: ✅ **EN PROCESO**. Implementación del **Repository Pattern**.
-    - [x] Consolidado contrato `TicketRepositoryInterface` (SaaS Compliance: `Tenant_id` injection).
-    - [x] Migración abstracta de funciones de IA (GAI-04/05) en almacenamiento (Sentimientos y Action Items).
-    - [x] Desacoplamiento total del Controlador Orquestador (`TicketController::submit`) de los queries `RAW SQL`.
-3.  **Fase 3 - Continuidad Repositories**: Expandir este patrón arquitectónico a `InvoiceRepository`, `UserRepository` y `ProjectRepository`.
-4.  **Estandarización de Respuestas API (RF-10)**: Unificar todos los controladores bajo un esquema JSON rígido para facilitar la integración SaaS.
+    - [x] Consolidado contrato `TicketRepositoryInterface` y `ProjectRepositoryInterface`.
+    - [x] Desacoplamiento total de controladores de queries `RAW SQL`.
+3.  **Fase 3 - Continuidad Repositories**: Expandir este patrón arquitectónico a `InvoiceRepository` y `UserRepository`.
+4.  **Estandarización de Respuestas API (RF-10)**: Unificar todos los controladores bajo un esquema JSON rígido.
+
+---
+
+## ✒️ Instructivo: Actualización de Tipografía (Protocolo 2026)
+
+Para modificar las fuentes del sistema (ej: cambiar **Sora** por **XX**), sigue este protocolo exacto para asegurar consistencia visual y rendimiento:
+
+### 1. Obtención de URL en Google Fonts
+1. Ve a [Google Fonts](https://fonts.google.com/).
+2. Selecciona la nueva fuente (ej: **XX**) y los pesos necesarios (mínimo: 300, 400, 600, 700, 800).
+3. Copia el valor del atributo `href` del tag `<link>`.
+4. **IMPORTANTE:** La URL debe incluir `&display=swap` al final para evitar el destello de texto invisible (FOIT).
+
+### 2. Sincronización en `.env`
+Actualiza las variables con el nuevo nombre exacto de la fuente de Google Fonts:
+
+```env
+# 1. Pega la URL completa de Google Fonts aquí
+FONT_URL="https://fonts.googleapis.com/css2?family=Sora:wght@300..800&family=Outfit:wght@100..900&display=swap"
+
+# 2. Define la fuente para Encabezados (H1-H6) - SIN comillas internas si no hay espacios
+FONT_HEADING="Sora, system-ui, sans-serif"
+
+# 3. Define la fuente para el Cuerpo de texto
+FONT_BODY="Outfit, system-ui, sans-serif"
+```
+
+
+### 3. Verificación de Inyección Dinámica
+El sistema inyecta estas variables dinámicamente en `:root` a través del controlador de configuración. No es necesario modificar ningún archivo CSS; los cambios se propagan a todas las áreas de la plataforma inmediatamente al guardar el archivo `.env`.
+
 

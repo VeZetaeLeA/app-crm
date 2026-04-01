@@ -20,9 +20,10 @@
     <?php $ui = \Core\Config::get('ui'); $typo = \Core\Config::get('typography'); ?>
     <style>
         :root {
-            --vzl-font-heading: <?= htmlspecialchars($typo['font_heading']) ?>;
-            --vzl-font-body:    <?= htmlspecialchars($typo['font_body']) ?>;
-            --vzl-font-mono:    <?= htmlspecialchars($typo['font_mono']) ?>;
+            --vzl-font-heading: <?= $typo['font_heading'] ?>;
+            --vzl-font-body:    <?= $typo['font_body'] ?>;
+            --vzl-font-mono:    <?= $typo['font_mono'] ?>;
+
             --vzl-color-bg-dark:       <?= htmlspecialchars($ui['color_bg_dark']) ?>;
             --vzl-color-surface-dark:  <?= htmlspecialchars($ui['color_surface_dark']) ?>;
             --vzl-color-surface-elev:  <?= htmlspecialchars($ui['color_surface_elev']) ?>;
@@ -64,7 +65,8 @@
 
         <!-- Sidebar -->
         <aside id="main-sidebar"
-            class="bg-midnight border-end border-white-10 flex-shrink-0 d-flex flex-column sidebar-responsive position-relative overflow-hidden">
+            class="bg-midnight border-end border-white-10 flex-shrink-0 d-flex flex-column sidebar-responsive position-relative overflow-hidden no-print">
+
             <!-- Chromatic animated border at top of sidebar -->
             <div class="navbar-chromatic-border"></div>
             <div class="p-4 border-bottom border-white-10 bg-deep-black bg-opacity-50 side-header d-flex align-items-center justify-content-between">
@@ -316,13 +318,15 @@
 
         @media (max-width: 991.98px) {
             .sidebar-responsive {
-                position: fixed;
+                position: fixed !important;
                 top: 0;
                 left: 0;
                 height: 100vh;
                 z-index: 1050;
                 transform: translateX(-100%);
+                width: 280px; /* Mantener ancho fijo en móvil */
             }
+
 
             .sidebar-responsive.active {
                 transform: translateX(0);

@@ -227,11 +227,15 @@ class Validator
 
         // Mapeo básico de extensiones permitidas a MIME types comunes para seguridad extra
         $mimeMap = [
-            'jpg' => ['image/jpeg', 'image/jpg'],
-            'jpeg' => ['image/jpeg', 'image/jpg'],
-            'png' => ['image/png'],
+            'jpg' => ['image/jpeg', 'image/jpg', 'image/pjpeg'],
+            'jpeg' => ['image/jpeg', 'image/jpg', 'image/pjpeg'],
+            'png' => ['image/png', 'image/x-png'],
             'gif' => ['image/gif'],
+            'webp' => ['image/webp'],
+            'svg' => ['image/svg+xml', 'image/svg'],
             'pdf' => ['application/pdf'],
+
+
             'zip' => ['application/zip', 'application/x-zip-compressed'],
             'doc' => ['application/msword'],
             'docx' => ['application/vnd.openxmlformats-officedocument.wordprocessingml.document'],

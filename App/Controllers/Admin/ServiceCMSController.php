@@ -230,7 +230,8 @@ class ServiceCMSController extends Controller
 
         // Hardened Image Upload
         if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
-            $errors = \Core\Validator::validateFile($_FILES['image'], 5 * 1024 * 1024, ['png', 'jpg', 'jpeg']);
+            $errors = \Core\Validator::validateFile($_FILES['image'], 5 * 1024 * 1024, ['png', 'jpg', 'jpeg', 'webp', 'svg']);
+
 
             if (empty($errors)) {
                 $uploadDir = BASE_PATH . '/public/assets/images/';
@@ -238,8 +239,10 @@ class ServiceCMSController extends Controller
                     mkdir($uploadDir, 0755, true);
                 }
 
-                $fileName = "pillar_" . $slug . ".png";
+                $ext = strtolower(pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION));
+                $fileName = "pillar_" . $slug . "." . $ext;
                 $uploadFile = $uploadDir . $fileName;
+
 
                 if (move_uploaded_file($_FILES['image']['tmp_name'], $uploadFile)) {
                     $image = "assets/images/" . $fileName;
@@ -279,7 +282,8 @@ class ServiceCMSController extends Controller
 
         // Hardened Image Upload
         if (isset($_FILES['image']) && $_FILES['image']['error'] === UPLOAD_ERR_OK) {
-            $errors = \Core\Validator::validateFile($_FILES['image'], 5 * 1024 * 1024, ['png', 'jpg', 'jpeg']);
+            $errors = \Core\Validator::validateFile($_FILES['image'], 5 * 1024 * 1024, ['png', 'jpg', 'jpeg', 'webp', 'svg']);
+
 
             if (empty($errors)) {
                 $uploadDir = BASE_PATH . '/public/assets/images/';
@@ -287,8 +291,10 @@ class ServiceCMSController extends Controller
                     mkdir($uploadDir, 0755, true);
                 }
 
-                $fileName = "pillar_" . $new_slug . ".png";
+                $ext = strtolower(pathinfo($_FILES['image']['name'], PATHINFO_EXTENSION));
+                $fileName = "pillar_" . $new_slug . "." . $ext;
                 $uploadFile = $uploadDir . $fileName;
+
 
                 if (move_uploaded_file($_FILES['image']['tmp_name'], $uploadFile)) {
                     $image = "assets/images/" . $fileName;

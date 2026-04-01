@@ -113,12 +113,13 @@
     --vzl-steel: var(--vzl-color-surface-elev, #27272A);
     --vzl-white: #f4f4f5;
     --vzl-gray-muted: #a1a1aa;
-    --vzl-cyan: var(--vzl-primary);
-    --vzl-magenta: var(--vzl-secondary);
-    --vzl-gold: var(--vzl-color-gold);
-    --vzl-success: var(--vzl-color-success);
-    --vzl-warning: var(--vzl-color-warning);
-    --vzl-danger: var(--vzl-color-danger);
+    --vzl-cyan: var(--vzl-primary, #6366F1);
+    --vzl-magenta: var(--vzl-secondary, #DB2777);
+    --vzl-gold: var(--vzl-color-gold, #D4AF37);
+    --vzl-success: var(--vzl-color-success, #10B981);
+    --vzl-warning: var(--vzl-color-warning, #F59E0B);
+    --vzl-danger: var(--vzl-color-danger, #EF4444);
+    --vzl-info: var(--vzl-color-info, #3B82F6);
 
     /* Old CSS custom props used in admin/staff inlined styles */
     --elegant-gold: var(--vzl-color-gold, #D4AF37);
@@ -187,7 +188,8 @@ html {
 }
 
 body {
-    font-family: var(--vzl-font-body, 'Google Sans', 'Outfit', system-ui, sans-serif);
+    font-family: var(--vzl-font-body), sans-serif;
+
     font-size: var(--vzl-fs-body);
     line-height: var(--vzl-lh-body);
     color: var(--vzl-text);
@@ -201,7 +203,8 @@ h3,
 h4,
 h5,
 h6 {
-    font-family: var(--vzl-font-heading, 'Outfit', system-ui, sans-serif);
+    font-family: var(--vzl-font-heading), sans-serif;
+
     line-height: var(--vzl-lh-heading);
     letter-spacing: var(--vzl-tracking-tight);
     color: var(--vzl-text);
@@ -478,7 +481,18 @@ td.id-cell,
 /* ==========================================================================
    10. TABLE SYSTEM — Dense CRM View
    ========================================================================== */
+/**
+ * ✦ CONTAINER QUERY INFRASTRUCTURE
+ * Allows components to react to their own width.
+ * Essential for modular dashboards.
+ */
+.widget-wrapper {
+    container-type: inline-size;
+    container-name: dashboard-widget;
+}
+
 .table {
+
     font-family: var(--vzl-font-body);
     font-size: var(--vzl-fs-sm);
     color: var(--vzl-text);

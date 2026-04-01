@@ -1,58 +1,30 @@
-<?php
-namespace App\Controllers;
-
-use Core\Controller;
-use Core\Database;
 use Core\Auth;
 use Core\Session;
 use PDO;
+use App\Repositories\ProjectRepository;
 
 class ProjectController extends Controller
 {
+    private $projectRepo;
+
     public function __construct()
     {
+        $this->projectRepo = new ProjectRepository(Database::getInstance()->getConnection());
         $this->middleware('auth');
         $this->middleware('2fa');
     }
 
+
     public function workspace()
     {
-        $db = Database::getInstance()->getConnection();
         $user = Auth::user();
 
         if (Auth::isClient()) {
-            $stmt = $db->prepare("SELECT s.*, p.name as plan_name,
-                                 i.total as invoice_total,
-                                 i.paid_amount as invoice_paid,
-                                 (i.total - i.paid_amount) as invoice_pending,
-                                 i.status as invoice_status,
-                                 i.id as invoice_id_ref,
-                                 (SELECT COUNT(*) FROM project_deliverables pd WHERE pd.active_service_id = s.id) as current_deliverables
-                                 FROM active_services s
-                                 JOIN service_plans p ON s.service_plan_id = p.id
-                                 LEFT JOIN invoices i ON s.invoice_id = i.id
-                                 WHERE s.client_id = ? AND s.status = 'active'");
-            $stmt->execute([$user['id']]);
-            $services = $stmt->fetchAll();
-
-            foreach ($services as &$s) {
-                $s['progress_percent'] = ($s['total_deliverables'] > 0)
-                    ? round(($s['current_deliverables'] / $s['total_deliverables']) * 100)
-                    : 0;
-                if (!isset($s['invoice_total'])) {
-                    $s['invoice_total'] = 0;
-                    $s['invoice_paid'] = 0;
-                    $s['invoice_pending'] = 0;
-                    $s['invoice_status'] = 'draft';
-                    $s['invoice_id_ref'] = 0;
-                }
-            }
-
+            $services = $this->projectRepo->getActiveServicesByClient($user['id']);
+            
             $deliverables = [];
             foreach ($services as $service) {
-                $stmt = $db->prepare("SELECT * FROM project_deliverables WHERE active_service_id = ? ORDER BY created_at DESC");
-                $stmt->execute([$service['id']]);
-                $deliverables[$service['id']] = $stmt->fetchAll();
+                $deliverables[$service['id']] = $this->projectRepo->getDeliverablesByService($service['id']);
             }
 
             $this->viewLayout('client/project/workspace', 'client', [
@@ -61,28 +33,7 @@ class ProjectController extends Controller
                 'deliverables' => $deliverables
             ]);
         } else {
-            $stmt = $db->query("SELECT s.*, u.name as client_name, p.name as plan_name,
-                               i.total as invoice_total,
-                               i.paid_amount as invoice_paid,
-                               (i.total - i.paid_amount) as invoice_pending,
-                               i.status as invoice_status,
-                               i.id as invoice_id_ref
-                               FROM active_services s
-                               JOIN users u ON s.client_id = u.id
-                               JOIN service_plans p ON s.service_plan_id = p.id
-                               LEFT JOIN invoices i ON s.invoice_id = i.id
-                               ORDER BY s.created_at DESC");
-            $services = $stmt->fetchAll();
-
-            foreach ($services as &$s) {
-                if (!isset($s['invoice_total'])) {
-                    $s['invoice_total'] = 0;
-                    $s['invoice_paid'] = 0;
-                    $s['invoice_pending'] = 0;
-                    $s['invoice_status'] = 'draft';
-                    $s['invoice_id_ref'] = 0;
-                }
-            }
+            $services = $this->projectRepo->getAllActiveServices();
 
             $this->viewLayout(Auth::role() . '/project/manage', Auth::role(), [
                 'title' => 'Gestión de Workspaces | ' . \Core\Config::get('business.company_name'),
@@ -90,6 +41,7 @@ class ProjectController extends Controller
             ]);
         }
     }
+
 
     /**
      * Manage a specific service workspace (Staff/Admin)
@@ -99,25 +51,12 @@ class ProjectController extends Controller
         if (Auth::isClient())
             $this->redirect('/project/workspace');
 
-        $db = Database::getInstance()->getConnection();
-
-        $stmt = $db->prepare("SELECT s.*, u.name as client_name, p.name as plan_name
-                             FROM active_services s
-                             JOIN users u ON s.client_id = u.id
-                             JOIN service_plans p ON s.service_plan_id = p.id
-                             WHERE s.id = ?");
-        $stmt->execute([$id]);
-        $service = $stmt->fetch();
+        $service = $this->projectRepo->getServiceDetail($id);
 
         if (!$service)
             $this->redirect('/project/workspace');
 
-        $stmt = $db->prepare("SELECT d.*, u.name as author_name
-                             FROM project_deliverables d
-                             JOIN users u ON d.uploaded_by = u.id
-                             WHERE d.active_service_id = ? ORDER BY d.created_at DESC");
-        $stmt->execute([$id]);
-        $deliverables = $stmt->fetchAll();
+        $deliverables = $this->projectRepo->getDeliverablesByService($id);
 
         $this->viewLayout(Auth::role() . '/project/detail', Auth::role(), [
             'title' => 'Workspace: ' . $service['name'],
@@ -125,6 +64,7 @@ class ProjectController extends Controller
             'deliverables' => $deliverables
         ]);
     }
+
 
     /**
      * Upload Deliverable + Notify Client (SPRINT 2.1)
@@ -166,34 +106,23 @@ class ProjectController extends Controller
             $dbFilepath = '/storage/projects/' . $service_id . '/' . $secureFilename;
 
             if (move_uploaded_file($file['tmp_name'], $targetPath)) {
-                $db  = Database::getInstance()->getConnection();
-                $sql = "INSERT INTO project_deliverables
-                            (active_service_id, uploaded_by, title, description, filename, filepath, file_type, file_size, version, status)
-                        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, 'pending_review')";
-                $stmt = $db->prepare($sql);
-                $stmt->execute([
-                    $service_id,
-                    Auth::user()['id'],
-                    $title,
-                    $description,
-                    $file['name'],
-                    $dbFilepath,
-                    $type,
-                    $file['size'],
-                    $version
+                $deliverableId = $this->projectRepo->addDeliverable([
+                    'active_service_id' => $service_id,
+                    'uploaded_by' => Auth::user()['id'],
+                    'title'       => $title,
+                    'description' => $description,
+                    'filename'    => $file['name'],
+                    'filepath'    => $dbFilepath,
+                    'file_type'   => $type,
+                    'file_size'   => $file['size'],
+                    'version'     => $version
                 ]);
-
-                $deliverableId = $db->lastInsertId();
 
                 // ============================================================
                 // SPRINT 2.1 — Notificación al cliente al subir entregable
                 // ============================================================
-                $stmt = $db->prepare("SELECT s.client_id, u.email, u.name as client_name, s.name as service_name
-                                     FROM active_services s
-                                     JOIN users u ON s.client_id = u.id
-                                     WHERE s.id = ?");
-                $stmt->execute([$service_id]);
-                $serviceData = $stmt->fetch();
+                $serviceData = $this->projectRepo->getServiceDetail($service_id);
+
 
                 if ($serviceData) {
                     \Core\Mail::sendDeliverableReady(
@@ -244,12 +173,7 @@ class ProjectController extends Controller
         $db   = Database::getInstance()->getConnection();
         $user = Auth::user();
 
-        $stmt = $db->prepare("SELECT d.*, s.client_id, s.name as service_name, s.id as service_id
-                             FROM project_deliverables d
-                             JOIN active_services s ON d.active_service_id = s.id
-                             WHERE d.id = ?");
-        $stmt->execute([$id]);
-        $deliverable = $stmt->fetch();
+        $deliverable = $this->projectRepo->getDeliverable($id);
 
         if (!$deliverable || $deliverable['client_id'] != $user['id']) {
             Session::flash('error', 'No tienes permiso para revisar este entregable.');
@@ -259,12 +183,10 @@ class ProjectController extends Controller
 
         $newStatus = $action === 'approve' ? 'approved' : 'rejected';
 
-        $stmt = $db->prepare("UPDATE project_deliverables
-                             SET status = ?, reviewed_by = ?, reviewed_at = NOW(), review_notes = ?
-                             WHERE id = ?");
-        $stmt->execute([$newStatus, $user['id'], $notes, $id]);
+        $this->projectRepo->updateDeliverableStatus($id, $newStatus, $user['id'], $notes);
 
         $staffStmt = $db->query("SELECT id FROM users WHERE role IN ('admin', 'staff')");
+
         $staff     = $staffStmt->fetchAll();
         $actionLabel = $action === 'approve' ? 'aprobado' : 'rechazado';
         $emoji       = $action === 'approve' ? '✅' : '❌';
@@ -291,26 +213,15 @@ class ProjectController extends Controller
         if (Auth::isClient())
             $this->redirect('/project/workspace');
 
-        $db = Database::getInstance()->getConnection();
-
-        $stmt = $db->prepare("SELECT s.*, u.name as client_name, p.name as plan_name
-                             FROM active_services s
-                             JOIN users u ON s.client_id = u.id
-                             JOIN service_plans p ON s.service_plan_id = p.id
-                             WHERE s.id = ?");
-        $stmt->execute([$id]);
-        $service = $stmt->fetch();
+        $service = $this->projectRepo->getServiceDetail($id);
 
         if (!$service)
             $this->redirect('/project/workspace');
 
-        $stmt = $db->prepare("SELECT d.*, u.name as author_name, rv.name as reviewer_name
-                             FROM project_deliverables d
-                             JOIN users u ON d.uploaded_by = u.id
-                             LEFT JOIN users rv ON d.reviewed_by = rv.id
-                             WHERE d.active_service_id = ? ORDER BY d.created_at ASC");
-        $stmt->execute([$id]);
-        $deliverables = $stmt->fetchAll();
+        // Note: Repository returns DESC usually, for timeline we might want ASC or handle in Repo
+        // For simplicity we use the same repo but we could add getTimeline()
+        $deliverables = $this->projectRepo->getDeliverablesByService($id);
+        $deliverables = array_reverse($deliverables); // Simple flip for ASC timeline
 
         $this->viewLayout(Auth::role() . '/project/timeline', Auth::role(), [
             'title' => 'Timeline: ' . $service['name'],
@@ -319,18 +230,14 @@ class ProjectController extends Controller
         ]);
     }
 
+
     /**
      * Secure File Download
      */
     public function download($id)
     {
+        $file = $this->projectRepo->getDeliverable($id);
 
-        $db   = Database::getInstance()->getConnection();
-        $stmt = $db->prepare("SELECT d.*, s.client_id FROM project_deliverables d
-                              JOIN active_services s ON d.active_service_id = s.id
-                              WHERE d.id = ?");
-        $stmt->execute([$id]);
-        $file = $stmt->fetch();
 
         if (!$file) {
             Session::flash('error', 'Archivo no encontrado.');
@@ -377,21 +284,18 @@ class ProjectController extends Controller
         if (Auth::isClient())
             $this->redirect('/project/workspace');
 
-        $db   = Database::getInstance()->getConnection();
-        $stmt = $db->prepare("SELECT * FROM project_deliverables WHERE id = ?");
-        $stmt->execute([$id]);
-        $file = $stmt->fetch();
+        $file = $this->projectRepo->getDeliverable($id);
 
         if ($file) {
             $fullPath = 'public' . $file['filepath'];
             if (file_exists($fullPath)) {
                 unlink($fullPath);
             }
-            $stmt = $db->prepare("DELETE FROM project_deliverables WHERE id = ?");
-            $stmt->execute([$id]);
+            $this->projectRepo->deleteDeliverable($id);
             Session::flash('success', 'Entregable eliminado.');
             $this->redirect('/project/manage/' . $file['active_service_id']);
         }
+
 
         $this->redirect('/project/workspace');
     }
@@ -409,9 +313,8 @@ class ProjectController extends Controller
         $total      = (int) $_POST['total_deliverables'];
 
         if ($service_id) {
-            $db   = Database::getInstance()->getConnection();
-            $stmt = $db->prepare("UPDATE active_services SET total_deliverables = ? WHERE id = ?");
-            $stmt->execute([$total, $service_id]);
+            $this->projectRepo->updateServiceScope($service_id, $total);
+
 
             \Core\SecurityLogger::log('project_scope_updated', [
                 'service_id'        => $service_id,

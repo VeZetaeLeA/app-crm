@@ -33,9 +33,11 @@
 ## ✨ Características Principales
 
 ### 🤖 Arquitectura & Core
-- ✅ **100% Zero-Hardcode (White-Label Ready)**: Configuración técnica y de marca totalmente dinámica desde el `.env` y el gestor de configuración avanzado.
-- ✅ **Sistema de Internacionalización (i18n)**: Soporte bilingüe (ES/EN) nativo mediante carga dinámica de diccionarios JSON y helper `__()`.
-- ✅ **Core Dinámico**: URLs escalables, marcas mutables, templates genéricos, e Inyección de Dependencias.
+- ✅ **Zero-Coding Typography**: Personalización total de fuentes (Heading/Body/Mono) desde el `.env` sin tocar CSS. [Ver Guía](PROJECT_SUMMARY.md#%EF%B8%8F-instructivo-actualizaci%C3%B3n-de-tipograf%C3%ADa-protocolo-2026).
+- ✅ **100% Zero-Hardcode (White-Label Ready)**: Configuración técnica y de marca totalmente dinámica desde el `.env`.
+- ✅ **Responsive Container Layouts**: Uso de `@container` para widgets del dashboard modulares.
+- ✅ **Sistema de Internacionalización (i18n)**: Soporte bilingüe (ES/EN) nativo.
+
 
 ### 🏠 Ecosistema Público
 
@@ -313,12 +315,13 @@ Encuentra todos los detalles técnicos y de configuración en el nuevo ecosistem
 ### Documentos Core
 | Documento | Descripción |
 |-----------|-------------|
-| [PROJECT_SUMMARY.md](PROJECT_SUMMARY.md) | Resumen completo del proyecto (estado del arte). |
+| [PROJECT_SUMMARY.md](PROJECT_SUMMARY.md) | Resumen completo del proyecto e **Instructivo de Tipografía**. |
 | [docs/DEPLOYMENT_GUIDE.md](docs/DEPLOYMENT_GUIDE.md) | Guía paso a paso para deployment en Hostinger. |
 | [docs/CODE_ANALYSIS.md](docs/CODE_ANALYSIS.md) | Análisis profundo del código y la arquitectura. |
 | [docs/SECURITY.md](docs/SECURITY.md) | Manual de mejores prácticas de seguridad. |
 | [docs/ENV_CONFIGURATION_GUIDE.md](docs/ENV_CONFIGURATION_GUIDE.md) | Guía de variables de entorno. |
 | [docs/MERCADOPAGO_INTEGRATION.md](docs/MERCADOPAGO_INTEGRATION.md) | Manual técnico para incorporar llaves y webhooks de MP. |
+
 
 ---
 

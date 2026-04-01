@@ -84,13 +84,14 @@
 
                 if (!empty($widgetHTML)):
                     ?>
-                    <div class="widget-wrapper col-12 <?php
+                    <div class="col-12 widget-wrapper <?php
                     // Dynamic column widths based on widget type
                     echo in_array($key, ['performance_chart']) ? 'col-lg-8' :
                         (in_array($key, ['resource_dist', 'sla_summary']) ? 'col-lg-4' :
                             (in_array($key, ['bi_indicators', 'insight_alerts']) ? 'col-lg-6' : 'col-12'));
                     ?>" data-widget-id="<?php echo $key; ?>">
                         <div class="widget-container h-100 position-relative">
+
                             <!-- Drag Handle -->
                             <div class="widget-drag-handle position-absolute top-0 start-50 translate-middle-x p-2 no-print"
                                 style="cursor: grab; z-index: 10; opacity: 0.3; transition: opacity 0.3s;">

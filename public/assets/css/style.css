@@ -14,8 +14,8 @@
     --text-h5:   var(--vzl-fs-h5);
     --text-h6:   var(--vzl-fs-h6);
     --text-xs:   var(--vzl-fs-xs);
-    --text-sm:   var(--vzl-fs-sm);
-    --text-base: var(--vzl-fs-body);
+    --vzl-lh-base: 1.6;
+    --vzl-fs-body: 1rem;
 
     --font-heading:  var(--vzl-font-heading);
     --font-body:     var(--vzl-font-body);
@@ -287,11 +287,10 @@ html[data-theme="light"] body {
 body {
     background-color: var(--vzl-deep-black);
     color: var(--vzl-white);
-    font-family: var(--vzl-font-body);
-    font-size: var(--vzl-fs-body);
     line-height: var(--vzl-lh-base);
     -webkit-font-smoothing: antialiased;
 }
+
 
 .has-fixed-navbar {
     padding-top: 80px; /* Space for fixed-top navbar on public landing */
