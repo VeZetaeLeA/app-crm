@@ -12,6 +12,8 @@ VeZetaeLeA OS ha alcanzado la **Evolución 20.2.0**. En esta fase se ha consolid
 - [x] **UI Inheritance Fix**: Corregido el problema de fuentes (fallo Times New Roman) mediante la eliminación de saneamiento HTML en variables CSS dinámicas.
 - [x] **Sidebar Layout Stability**: Refuerzo de posicionamiento `fixed` y anulación de gaps en resoluciones móviles/tablets.
 - [x] **Zero-Hardcode Typography**: Actualización del protocolo de inyección para soportar stacks de fuentes simplificados desde `.env`.
+- [x] **SMTP Identity Correction**: Sincronización forzada de la tabla `app_config` con el `.env` mediante `fix_demo_mail.php`. Se eliminaron los valores estáticos en la migración `create_app_config` para asegurar que el remitente coincida siempre con el usuario autenticado.
+- [x] **Mail Job Consistency**: Unificación de llaves de configuración (`mail.enabled`) en el sistema de colas asíncronas para evitar fallos silenciosos en entornos demo.
 
 ## 🎨 Visual Vanguard & Brand Maturity (Sprint 20.2.0)
 

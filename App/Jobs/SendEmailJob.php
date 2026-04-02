@@ -22,7 +22,7 @@ class SendEmailJob
         }
 
         // We bypass the global send() which might re-queue it.
-        if (!\Core\Config::get('mail_enabled', false)) {
+        if (!\Core\Config::get('mail.enabled', false)) {
             // Simulated Success if mail is disabled
             return;
         }

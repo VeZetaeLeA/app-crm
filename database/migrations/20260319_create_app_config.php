@@ -36,13 +36,13 @@ try {
     // Initial data
     echo "Inserting default configurations...\n";
     $defaults = [
-        ['business.company_name', 'Vezetaelea CRM', 'branding', 'text', 'Nombre de la Empresa'],
-        ['business.support_email', 'soporte@vezetaelea.com', 'branding', 'text', 'Email de Soporte'],
-        ['mail.from_name', 'Vezetaelea CRM', 'mail', 'text', 'Nombre Remitente Email'],
-        ['mail.from_address', 'no-reply@vezetaelea.com', 'mail', 'text', 'Dirección Remitente Email'],
+        ['business.company_name', getenv('APP_NAME') ?: 'Vezetaelea CRM', 'branding', 'text', 'Nombre de la Empresa'],
+        ['business.support_email', getenv('MAIL_FROM_ADDRESS') ?: 'soporte@vezetaelea.com', 'branding', 'text', 'Email de Soporte'],
+        ['mail.from_name', getenv('MAIL_FROM_NAME') ?: 'Vezetaelea CRM', 'mail', 'text', 'Nombre Remitente Email'],
+        ['mail.from_address', getenv('MAIL_FROM_ADDRESS') ?: 'no-reply@vezetaelea.com', 'mail', 'text', 'Dirección Remitente Email'],
         ['limits.max_upload_size', '10485760', 'system', 'number', 'Tamaño Máximo Upload (bytes)'],
         ['security.force_2fa', '1', 'security', 'bool', 'Forzar 2FA para Staff'],
-        ['ui.theme_color', '#D4AF37', 'ui', 'text', 'Color de Marca (HEX)'],
+        ['ui.theme_color', getenv('UI_PRIMARY_COLOR') ?: '#D4AF37', 'ui', 'text', 'Color de Marca (HEX)'],
     ];
 
     $stmt = $db->prepare("INSERT IGNORE INTO app_config (config_key, config_value, config_group, field_type, label) VALUES (?, ?, ?, ?, ?)");
