@@ -18,7 +18,7 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         return $row ?: null;
     }
 
-    public function create(array $data)
+    public function create(array $data): int
     {
         if (isset($data['phone']) && !empty($data['phone'])) {
             $data['phone'] = \Core\Encryption::encrypt($data['phone']);
@@ -26,7 +26,7 @@ class UserRepository extends BaseRepository implements UserRepositoryInterface
         return parent::create($data);
     }
 
-    public function update(int $id, array $data)
+    public function update(int $id, array $data): bool
     {
         if (isset($data['phone']) && !empty($data['phone'])) {
             $data['phone'] = \Core\Encryption::encrypt($data['phone']);
