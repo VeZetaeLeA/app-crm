@@ -21,7 +21,7 @@ class CsvExporter
         header('Access-Control-Allow-Origin: *');
         header('Access-Control-Expose-Headers: Content-Disposition');
 
-        $output = fopen('php::output', 'w');
+        $output = fopen('php://output', 'w');
         
         // Fix for Excel UTF-8 encoding
         fprintf($output, chr(0xEF).chr(0xBB).chr(0xBF));

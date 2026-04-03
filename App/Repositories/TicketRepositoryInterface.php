@@ -1,9 +1,11 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Repositories;
 
 interface TicketRepositoryInterface extends RepositoryInterface
 {
-    public function getRecentWithClients(int $limit = 10, array $excludeStatuses = []);
+    public function getRecentWithClients(int $limit = 10, array $excludeStatuses = []): array;
     public function getStats(): array;
     public function getDistribution(): array;
     public function createTicket(array $data): int;

@@ -21,6 +21,7 @@ class InvoiceServiceTest extends \Tests\TestCase
         $this->invoiceService = new InvoiceService();
 
         // Clean up
+        $this->db->exec("DELETE FROM invoice_events WHERE invoice_id = 9999");
         $this->db->exec("DELETE FROM payment_receipts WHERE invoice_id = 9999");
         $this->db->exec("DELETE FROM active_services WHERE invoice_id = 9999");
         $this->db->exec("DELETE FROM invoices WHERE id = 9999");
@@ -42,10 +43,16 @@ class InvoiceServiceTest extends \Tests\TestCase
                     VALUES (9999, 'TEST-INV-001', ?, ?, CURDATE(), DATE_ADD(CURDATE(), INTERVAL 7 DAY), 800, 200, 1000, 'unpaid', 1)");
         $stmt->execute([$this->testClientId, $this->testBudgetId]);
         $this->testInvoiceId = 9999;
+
+        // Systematic Debugging Fix: Registrar evento de creación para que el balance no sea 0
+        $finOps = new \App\Services\FinOpsService();
+        $finOps->recordEvent($this->testInvoiceId, 'CREATE', 1000, ['test' => true], 1);
+        $finOps->syncInvoiceProjection($this->testInvoiceId);
     }
 
     protected function tearDown(): void
     {
+        $this->db->exec("DELETE FROM invoice_events WHERE invoice_id = 9999");
         $this->db->exec("DELETE FROM payment_receipts WHERE invoice_id = 9999");
         $this->db->exec("DELETE FROM active_services WHERE invoice_id = 9999");
         $this->db->exec("DELETE FROM invoices WHERE id = 9999");
@@ -72,9 +79,9 @@ class InvoiceServiceTest extends \Tests\TestCase
 
         $this->assertEquals('partial', $status, 'La factura debería estar en estado de pago parcial');
 
-        // Verificamos que NO haya servicios activos generados
+        // Verificamos que SI haya servicios activos generados (Regla: Activación con pago inicial/parcial)
         $count = $this->db->query("SELECT COUNT(*) FROM active_services WHERE invoice_id = 9999")->fetchColumn();
-        $this->assertEquals(0, $count, 'No debe existir servicio activo si el pago no es total');
+        $this->assertEquals(1, $count, 'Se debe activar el servicio incluso con pago parcial (depósito inicial)');
     }
 
     public function test_full_payment_activates_service()

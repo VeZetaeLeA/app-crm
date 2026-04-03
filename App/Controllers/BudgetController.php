@@ -111,12 +111,15 @@ class BudgetController extends Controller
 
             $subtotal = 0;
             foreach ($items as $item) {
-                $subtotal += ($item['quantity'] * $item['unit_price']);
+                $qty   = is_numeric($item['quantity'] ?? 0) ? (float)$item['quantity'] : 0;
+                $price = is_numeric($item['unit_price'] ?? 0) ? (float)$item['unit_price'] : 0;
+                $subtotal += ($qty * $price);
             }
 
-            $tax_rate = \Core\Config::get('TAX_RATE', 16.00);
+            // C-01 FIX: Usar clave correcta del árbol de configuración (business.tax_rate desde .env)
+            $tax_rate   = (float) \Core\Config::get('business.tax_rate', 0);
             $tax_amount = $subtotal * ($tax_rate / 100);
-            $total = $subtotal + $tax_amount;
+            $total      = $subtotal + $tax_amount;
             $budget_number = 'VZL-B' . date('Y') . '-' . strtoupper(bin2hex(random_bytes(2)));
 
             // 1. Insert New Version
@@ -169,7 +172,10 @@ class BudgetController extends Controller
 
         } catch (\Exception $e) {
             $db->rollBack();
-            die("Error updating budget: " . $e->getMessage());
+            error_log('[BudgetController::updateVersion] ' . $e->getMessage());
+            Session::flash('error', 'Error al generar la nueva versión del presupuesto. Contacta a soporte.');
+            $this->redirect('/dashboard');
+            return;
         }
     }
 
@@ -194,12 +200,15 @@ class BudgetController extends Controller
 
             $subtotal = 0;
             foreach ($items as $item) {
-                $subtotal += ($item['quantity'] * $item['unit_price']);
+                $qty   = is_numeric($item['quantity'] ?? 0) ? (float)$item['quantity'] : 0;
+                $price = is_numeric($item['unit_price'] ?? 0) ? (float)$item['unit_price'] : 0;
+                $subtotal += ($qty * $price);
             }
 
-            $tax_rate = \Core\Config::get('TAX_RATE', 16.00); // Dynamic tax from .env
+            // C-01 FIX: Usar clave correcta del árbol de configuración (business.tax_rate desde .env)
+            $tax_rate   = (float) \Core\Config::get('business.tax_rate', 0);
             $tax_amount = $subtotal * ($tax_rate / 100);
-            $total = $subtotal + $tax_amount;
+            $total      = $subtotal + $tax_amount;
             $budget_number = 'VZL-B' . date('Y') . '-' . strtoupper(bin2hex(random_bytes(2)));
 
             // 1. Insert Budget
@@ -248,7 +257,10 @@ class BudgetController extends Controller
 
         } catch (\Exception $e) {
             $db->rollBack();
-            die("Error generating budget: " . $e->getMessage());
+            error_log('[BudgetController::store] ' . $e->getMessage());
+            Session::flash('error', 'Error al guardar el presupuesto. Contacta a soporte.');
+            $this->redirect('/dashboard');
+            return;
         }
     }
 
@@ -356,7 +368,10 @@ class BudgetController extends Controller
             $this->redirect('/budget/show/' . $budget_id);
         } catch (\Exception $e) {
             $db->rollBack();
-            die("Error processing decision: " . $e->getMessage());
+            error_log('[BudgetController::decision] ' . $e->getMessage());
+            Session::flash('error', 'Error al procesar la decisión. Por favor intenta nuevamente.');
+            $this->redirect('/budget/show/' . $budget_id);
+            return;
         }
     }
 

@@ -58,6 +58,9 @@ abstract class Controller
      */
     protected function redirect($url)
     {
+        if (defined('PHPUNIT_TESTING') && PHPUNIT_TESTING) {
+            throw new \Tests\RedirectException(url($url));
+        }
         header("Location: " . url($url));
         exit;
     }
@@ -67,6 +70,11 @@ abstract class Controller
      */
     protected function json($data)
     {
+        if (defined('PHPUNIT_TESTING') && PHPUNIT_TESTING) {
+            header('Content-Type: application/json');
+            echo json_encode($data);
+            return;
+        }
         header('Content-Type: application/json');
         echo json_encode($data);
         exit;

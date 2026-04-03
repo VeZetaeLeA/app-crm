@@ -115,7 +115,23 @@ class TicketController extends Controller
         // Rate Limiting: Max 5 tickets per hour per IP
         $ip = $_SERVER['REMOTE_ADDR'] ?? '0.0.0.0';
         if (!\Core\RateLimiter::attempt('ticket_submit_ip_' . $ip, 5, 3600)) {
-            Session::flash('error', 'Límite de solicitudes mensuales/horarias excedido. Por favor, contacta a soporte directamente.');
+            // M-08 FIX: Mensaje de rate limit preciso
+            Session::flash('error', 'Has alcanzado el límite de 5 solicitudes por hora. Por favor, espera antes de enviar otra.');
+            $this->redirect('/ticket/request');
+            return;
+        }
+
+        // M-06 FIX: Validación server-side de campos críticos
+        $validator = new \Core\Validator();
+        $validator->validate($_POST, [
+            'name'        => 'required|min:2|max:100',
+            'email'       => 'required|email',
+            'subject'     => 'required|min:5|max:200',
+            'description' => 'required|min:10|max:3000',
+        ]);
+        if ($validator->fails()) {
+            $firstErrors = array_map(fn($e) => $e[0], $validator->errors());
+            Session::flash('error', implode(' ', $firstErrors));
             $this->redirect('/ticket/request');
             return;
         }
@@ -238,7 +254,9 @@ class TicketController extends Controller
             }
 
             // AUTO-LOGIN: Set user in session so they can access the dashboard immediately
-            session_regenerate_id(true);
+            if (!headers_sent()) {
+                session_regenerate_id(true);
+            }
             Session::set('user', $user);
 
             $this->redirect('/quote/received');
@@ -299,11 +317,21 @@ class TicketController extends Controller
      */
     public function updateStatus()
     {
-        if (Auth::isClient())
-            $this->json(['success' => false]);
+        if (Auth::isClient()) {
+            $this->json(['success' => false, 'message' => 'Acción no permitida.']);
+            return;
+        }
 
-        $id = $_POST['ticket_id'];
-        $status = $_POST['status'];
+        $id = $_POST['ticket_id'] ?? null;
+        $status = $_POST['status'] ?? '';
+
+        // C-03 FIX: Whitelist de estados válidos para prevenir inyección de valores arbitrarios
+        $allowedStatuses = ['open', 'in_progress', 'budget_sent', 'budget_approved',
+                            'budget_rejected', 'resolved', 'closed', 'cancelled'];
+        if (!$id || !in_array($status, $allowedStatuses, true)) {
+            $this->json(['success' => false, 'message' => 'Estado o ticket inválido.']);
+            return;
+        }
 
         // Get info via Repo
         $info = $this->ticketRepo->getById($id);

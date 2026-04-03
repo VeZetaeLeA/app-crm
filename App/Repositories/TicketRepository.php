@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Repositories;
 
 use PDO;
@@ -7,9 +9,9 @@ class TicketRepository extends BaseRepository implements TicketRepositoryInterfa
 {
     protected string $table = 'tickets';
 
-    public function getRecentWithClients(int $limit = 10, array $excludeStatuses = [])
+    public function getRecentWithClients(int $limit = 10, array $excludeStatuses = []): array
     {
-        $tenantId = \Core\Config::get('current_tenant_id', 1);
+        $tenantId = $this->getTenantId();
         $excludeSql = " WHERE t.tenant_id = ? ";
 
         if (!empty($excludeStatuses)) {
@@ -35,12 +37,12 @@ class TicketRepository extends BaseRepository implements TicketRepositoryInterfa
         $stmt->bindValue($i, $limit, PDO::PARAM_INT);
 
         $stmt->execute();
-        return $stmt->fetchAll();
+        return $stmt->fetchAll() ?: [];
     }
 
     public function getStats(): array
     {
-        $tenantId = \Core\Config::get('current_tenant_id', 1);
+        $tenantId = $this->getTenantId();
         $stmt = $this->db->prepare("SELECT COUNT(*) FROM {$this->table} WHERE tenant_id = ?");
         $stmt->execute([$tenantId]);
         $total = $stmt->fetchColumn();
@@ -50,14 +52,14 @@ class TicketRepository extends BaseRepository implements TicketRepositoryInterfa
         $open = $stmt->fetchColumn();
 
         return [
-            'total' => $total,
-            'open' => $open,
+            'total' => (int) $total,
+            'open' => (int) $open,
         ];
     }
 
     public function getDistribution(): array
     {
-        $tenantId = \Core\Config::get('current_tenant_id', 1);
+        $tenantId = $this->getTenantId();
 
         $sql = "SELECT 
                 SUM(IF(status = 'open', 1, 0)) as open,
@@ -66,9 +68,7 @@ class TicketRepository extends BaseRepository implements TicketRepositoryInterfa
                 SUM(IF(status = 'closed', 1, 0)) as closed
                 FROM {$this->table} WHERE tenant_id = ?";
 
-        $stmt = $this->db->prepare($sql);
-        $stmt->execute([$tenantId]);
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
+        $row = $this->fetch($sql, [$tenantId]);
 
         return [
             'open' => (int) ($row['open'] ?? 0),
@@ -80,12 +80,11 @@ class TicketRepository extends BaseRepository implements TicketRepositoryInterfa
 
     public function createTicket(array $data): int
     {
-        $tenantId = \Core\Config::get('current_tenant_id', 1);
+        $tenantId = $this->getTenantId();
         $sql = "INSERT INTO tickets (ticket_number, tenant_id, client_id, service_plan_id, subject, description, priority, status, sla_deadline, created_at) 
                 VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, NOW())";
 
-        $stmt = $this->db->prepare($sql);
-        $stmt->execute([
+        $this->execute($sql, [
             $data['ticket_number'],
             $tenantId,
             $data['client_id'],
@@ -103,15 +102,13 @@ class TicketRepository extends BaseRepository implements TicketRepositoryInterfa
     public function updateStatus(int $id, string $status): bool
     {
         $sql = "UPDATE tickets SET status = ?, updated_at = NOW() WHERE id = ?";
-        $stmt = $this->db->prepare($sql);
-        return $stmt->execute([$status, $id]);
+        return $this->execute($sql, [$status, $id])->rowCount() > 0;
     }
 
     public function assignTicket(int $id, int $staffId): bool
     {
         $sql = "UPDATE tickets SET assigned_to = ?, updated_at = NOW() WHERE id = ?";
-        $stmt = $this->db->prepare($sql);
-        return $stmt->execute([$staffId, $id]);
+        return $this->execute($sql, [$staffId, $id])->rowCount() > 0;
     }
 
     public function getTicketWithClientAndPlan(int $id): ?array
@@ -120,40 +117,30 @@ class TicketRepository extends BaseRepository implements TicketRepositoryInterfa
                 FROM tickets t 
                 LEFT JOIN users u ON t.client_id = u.id 
                 WHERE t.id = ?";
-        $stmt = $this->db->prepare($sql);
-        $stmt->execute([$id]);
-        $ticket = $stmt->fetch();
-        return $ticket ?: null;
+        return $this->fetch($sql, [$id]);
     }
 
-    // Client related queries that originally lived in TicketService
     public function getClientByEmail(string $email): ?array
     {
         $sql = "SELECT id FROM users WHERE email = ?";
-        $stmt = $this->db->prepare($sql);
-        $stmt->execute([$email]);
-        $client = $stmt->fetch();
-        return $client ?: null;
+        return $this->fetch($sql, [$email]);
     }
 
     public function getClientById(int $id): ?array
     {
         $sql = "SELECT email, name FROM users WHERE id = ?";
-        $stmt = $this->db->prepare($sql);
-        $stmt->execute([$id]);
-        $client = $stmt->fetch();
-        return $client ?: null;
+        return $this->fetch($sql, [$id]);
     }
 
     public function getAll(array $filters = []): array
     {
-        $tenantId = \Core\Config::get('current_tenant_id', 1);
+        $tenantId = $this->getTenantId();
         $where = ["t.tenant_id = ?"];
         $params = [$tenantId];
 
         if (!empty($filters['client_id'])) {
             $where[] = "t.client_id = ?";
-            $params[] = $filters['client_id'];
+            $params[] = (int) $filters['client_id'];
         }
 
         $whereSql = implode(' AND ', $where);
@@ -171,7 +158,7 @@ class TicketRepository extends BaseRepository implements TicketRepositoryInterfa
 
     public function getById(int $id): ?array
     {
-        $tenantId = \Core\Config::get('current_tenant_id', 1);
+        $tenantId = $this->getTenantId();
         $sql = "SELECT t.*, u.name as client_name, u.email as client_email, u.company as client_company, sp.name as plan_name, s.name as service_name 
                 FROM {$this->table} t 
                 LEFT JOIN users u ON t.client_id = u.id 
@@ -179,8 +166,7 @@ class TicketRepository extends BaseRepository implements TicketRepositoryInterfa
                 LEFT JOIN services s ON sp.service_id = s.id 
                 WHERE t.id = ? AND t.tenant_id = ?";
 
-        $row = $this->fetch($sql, [$id, $tenantId]);
-        return $row ?: null;
+        return $this->fetch($sql, [$id, $tenantId]);
     }
 
     public function getMessages(int $ticketId): array
@@ -194,7 +180,7 @@ class TicketRepository extends BaseRepository implements TicketRepositoryInterfa
 
     public function getTasks(int $ticketId): array
     {
-        $tenantId = \Core\Config::get('current_tenant_id', 1);
+        $tenantId = $this->getTenantId();
         $sql = "SELECT * FROM ticket_tasks WHERE ticket_id = ? AND tenant_id = ? ORDER BY id ASC";
         return $this->fetchAll($sql, [$ticketId, $tenantId]);
     }
@@ -204,29 +190,27 @@ class TicketRepository extends BaseRepository implements TicketRepositoryInterfa
     public function updateAiAnalysis(int $ticketId, string $sentiment, array $analysis): bool
     {
         $sql = "UPDATE {$this->table} SET ai_sentiment = ?, ai_analysis = ? WHERE id = ?";
-        return $this->db->prepare($sql)->execute([$sentiment, json_encode($analysis), $ticketId]);
+        return $this->execute($sql, [$sentiment, json_encode($analysis), $ticketId])->rowCount() > 0;
     }
 
     public function updatePriority(int $ticketId, string $priority): bool
     {
         $sql = "UPDATE {$this->table} SET priority = ? WHERE id = ?";
-        return $this->db->prepare($sql)->execute([$priority, $ticketId]);
+        return $this->execute($sql, [$priority, $ticketId])->rowCount() > 0;
     }
 
     public function createTask(int $ticketId, string $description): int
     {
-        $tenantId = \Core\Config::get('current_tenant_id', 1);
+        $tenantId = $this->getTenantId();
         $sql = "INSERT INTO ticket_tasks (ticket_id, tenant_id, description) VALUES (?, ?, ?)";
-        $stmt = $this->db->prepare($sql);
-        $stmt->execute([$ticketId, $tenantId, $description]);
+        $this->execute($sql, [$ticketId, $tenantId, $description]);
         return (int) $this->db->lastInsertId();
     }
 
     public function createMessage(int $ticketId, ?int $userId, string $message, string $messageType = 'client'): int
     {
         $sql = "INSERT INTO chat_messages (ticket_id, user_id, message, message_type) VALUES (?, ?, ?, ?)";
-        $stmt = $this->db->prepare($sql);
-        $stmt->execute([$ticketId, $userId, $message, $messageType]);
+        $this->execute($sql, [$ticketId, $userId, $message, $messageType]);
         return (int) $this->db->lastInsertId();
     }
 }

@@ -109,9 +109,10 @@ class InvoiceController extends Controller
                 $this->redirect('/invoice/show/' . $invoice_id);
             }
 
-            $upload_dir = 'public/uploads/receipts/';
-            if (!is_dir($upload_dir))
-                mkdir($upload_dir, 0777, true);
+            $upload_dir = BASE_PATH . '/public/uploads/receipts/';
+            if (!is_dir($upload_dir)) {
+                mkdir($upload_dir, 0755, true);
+            }
 
             $filename = \Core\Validator::generateSecureFileName($_FILES['receipt']['name']);
             $filepath = 'uploads/receipts/' . $filename;
@@ -225,6 +226,7 @@ class InvoiceController extends Controller
         $invoiceCurrency = $invoice['currency'] ?? 'USD';
         $mpCurrency = \Core\Config::get('payment.mp_currency_id') ?: 'ARS';
         $amountToPayMP = $amount;
+        $exchangeRate = 1;
 
         if ($invoiceCurrency !== $mpCurrency) {
             $exchangeRate = (float) \Core\Config::get('payment.exchange_rate') ?: 1;
@@ -266,7 +268,20 @@ class InvoiceController extends Controller
         ]);
         curl_setopt($ch, CURLOPT_POST, true);
         curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($preferenceData));
+        curl_setopt($ch, CURLOPT_TIMEOUT, 15);
+        curl_setopt($ch, CURLOPT_CONNECTTIMEOUT, 5);
+
         $response = curl_exec($ch);
+
+        if ($response === false) {
+            $error = curl_error($ch);
+            curl_close($ch);
+            \Core\SecurityLogger::log('mp_connection_error', ['error' => $error], 'ERROR');
+            Session::flash('error', 'Error de conexión con la plataforma de pago. Intenta más tarde.');
+            $this->redirect('/invoice/show/' . $invoice_id);
+            return;
+        }
+
         $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
         curl_close($ch);
 
@@ -436,6 +451,9 @@ class InvoiceController extends Controller
      */
     public function exportCsv()
     {
+        if (!Auth::isAdmin()) {
+            $this->redirect('/dashboard');
+        }
 
         $db = Database::getInstance()->getConnection();
         $stmt = $db->query("SELECT i.invoice_number, u.name as client_name, i.issue_date, i.total, i.paid_amount, i.status 

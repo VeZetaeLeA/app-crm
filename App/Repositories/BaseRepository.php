@@ -1,4 +1,6 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Repositories;
 
 use Core\Database;
@@ -9,7 +11,7 @@ use PDO;
  */
 abstract class BaseRepository implements RepositoryInterface
 {
-    protected $db;
+    protected \PDO $db;
     protected string $table;
 
     public function __construct(\PDO $db)
@@ -20,7 +22,7 @@ abstract class BaseRepository implements RepositoryInterface
     /**
      * Ejecuta una consulta preparada.
      */
-    protected function execute(string $sql, array $params = [])
+    protected function execute(string $sql, array $params = []): \PDOStatement
     {
         $stmt = $this->db->prepare($sql);
         $stmt->execute($params);
@@ -30,7 +32,7 @@ abstract class BaseRepository implements RepositoryInterface
     /**
      * Obtiene un solo registro.
      */
-    protected function fetch(string $sql, array $params = [], int $fetchMode = \PDO::FETCH_ASSOC)
+    protected function fetch(string $sql, array $params = [], int $fetchMode = \PDO::FETCH_ASSOC): ?array
     {
         $result = $this->execute($sql, $params)->fetch($fetchMode);
         return $result !== false ? $result : null;
@@ -39,9 +41,10 @@ abstract class BaseRepository implements RepositoryInterface
     /**
      * Obtiene todos los registros.
      */
-    protected function fetchAll(string $sql, array $params = [], int $fetchMode = \PDO::FETCH_ASSOC)
+    protected function fetchAll(string $sql, array $params = [], int $fetchMode = \PDO::FETCH_ASSOC): array
     {
-        return $this->execute($sql, $params)->fetchAll($fetchMode);
+        $result = $this->execute($sql, $params)->fetchAll($fetchMode);
+        return $result ?: [];
     }
 
     /**
@@ -59,29 +62,21 @@ abstract class BaseRepository implements RepositoryInterface
         return (int) ($tenantId ?: 1); // Fallback a 1 solo en dev/local
     }
 
-    public function all()
+    public function all(): array
     {
         $tenantId = $this->getTenantId();
         $sql = "SELECT * FROM {$this->table} WHERE tenant_id = ? AND deleted_at IS NULL ORDER BY id DESC";
-        
-        $stmt = $this->db->prepare($sql);
-        $stmt->execute([$tenantId]);
-        return $stmt->fetchAll() ?: [];
+        return $this->fetchAll($sql, [$tenantId]);
     }
 
-    public function find(int $id)
+    public function find(int $id): ?array
     {
         $tenantId = $this->getTenantId();
         $sql = "SELECT * FROM {$this->table} WHERE id = ? AND tenant_id = ? AND deleted_at IS NULL LIMIT 1";
-        
-        $stmt = $this->db->prepare($sql);
-        $stmt->execute([$id, $tenantId]);
-        $row = $stmt->fetch();
-        
-        return $row ?: null;
+        return $this->fetch($sql, [$id, $tenantId]);
     }
 
-    public function create(array $data)
+    public function create(array $data): int
     {
         // Garantía SaaS: Auto-inyectar context de tenant
         $data['tenant_id'] = $this->getTenantId();
@@ -92,13 +87,12 @@ abstract class BaseRepository implements RepositoryInterface
 
         $sql = "INSERT INTO {$this->table} ({$fields}) VALUES ({$placeholders})";
         
-        $stmt = $this->db->prepare($sql);
-        $stmt->execute(array_values($data));
+        $this->execute($sql, array_values($data));
 
         return (int)$this->db->lastInsertId();
     }
 
-    public function update(int $id, array $data)
+    public function update(int $id, array $data): bool
     {
         $tenantId = $this->getTenantId();
         
@@ -113,22 +107,22 @@ abstract class BaseRepository implements RepositoryInterface
 
         $sql = "UPDATE {$this->table} SET {$fields} WHERE id = ? AND tenant_id = ?";
         
-        $stmt = $this->db->prepare($sql);
         $values = array_values($data);
         $values[] = $id;
         $values[] = $tenantId;
         
-        return $stmt->execute($values);
+        $stmt = $this->execute($sql, $values);
+        return $stmt->rowCount() > 0;
     }
 
-    public function delete(int $id)
+    public function delete(int $id): bool
     {
         $tenantId = $this->getTenantId();
         // Implementamos Soft Delete por defecto para seguridad SaaS
         $sql = "UPDATE {$this->table} SET deleted_at = NOW() WHERE id = ? AND tenant_id = ?";
         
-        $stmt = $this->db->prepare($sql);
-        return $stmt->execute([$id, $tenantId]);
+        $stmt = $this->execute($sql, [$id, $tenantId]);
+        return $stmt->rowCount() > 0;
     }
 }
 

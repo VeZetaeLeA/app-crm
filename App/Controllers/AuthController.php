@@ -146,7 +146,11 @@ class AuthController extends Controller
         session_regenerate_id(true);
 
         Session::set('user', $user);
-        \Core\SecurityLogger::log('login_success', 'Usuario inició sesión correctamente.');
+        \Core\SecurityLogger::log('login_success', [
+            'user_id' => $user['id'],
+            'email'   => $user['email'],
+            'role'    => $user['role']
+        ], 'INFO');
         $this->redirectByRole();
     }
 
@@ -155,7 +159,13 @@ class AuthController extends Controller
      */
     public function logout()
     {
-        \Core\SecurityLogger::log('logout', 'Usuario cerró sesión.');
+        $user = Auth::user();
+        if ($user) {
+            \Core\SecurityLogger::log('logout', [
+                'user_id' => $user['id'],
+                'email'   => $user['email']
+            ], 'INFO');
+        }
         Session::destroy();
         $this->redirect('/');
     }
