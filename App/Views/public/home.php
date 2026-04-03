@@ -65,7 +65,7 @@
             <div class="col-12">
                 <div class="vzl-section-header text-start">
                     <h6 class="vzl-section-subtitle">Nuestro Factor Tech-Estratégico</h6>
-                    <h2 class="vzl-section-title"><span class="vzl-text-gradient-vibrant"><?= mb_strtoupper(\Core\Config::get('business.company_name'))?></span> construye sistemas que hacen crecer tu empresa</h2>
+                    <h2 class="vzl-section-title">En <span class="vzl-text-gradient-vibrant"><?= mb_strtoupper(\Core\Config::get('business.company_name'))?></span> construimos sistemas que hacen crecer tu empresa</h2>
                 </div>
             </div>
         </div>
@@ -273,12 +273,12 @@ if (is_dir(public_path($stackDir))) {
         <div class="vzl-section-header text-center mb-5">
             <div class="d-inline-flex align-items-center gap-2 mb-3 px-4 py-2 rounded-pill border border-warning bg-warning-subtle">
                 <span class="material-symbols-outlined text-warning fs-6">workspace_premium</span>
-                <span class="x-small text-warning fw-bold uppercase tracking-widest">Producto Exclusivo de <?= \Core\Config::get('business.company_name') ?></span>
+                <span class="x-small text-warning fw-bold uppercase tracking-widest">APP-CRM es Exclusivo de <?= \Core\Config::get('business.company_name') ?></span>
             </div>
             <h6 class="vzl-section-subtitle">Control Maestro</h6>
             <h2 class="vzl-section-title">Te ofrecemos un <span class="vzl-text-gradient-vibrant">Sistema Operativo Propio</span></h2>
             <p class="text-white-50 mx-auto mt-3" style="max-width: 680px;">
-                App-CRM es nuestra plataforma enterprise construida en producción real. La misma herramienta que usamos para gestionar nuestros clientes, ahora disponible para tu empresa.
+                App-CRM es nuestra plataforma enterprise construida con los más altos estándares de la industria. La misma herramienta que usamos para gestionar nuestros clientes, ahora disponible para tu empresa.
             </p>
         </div>
 
@@ -296,7 +296,7 @@ if (is_dir(public_path($stackDir))) {
                         <div class="carousel-item">
                             <img src="<?= url('assets/images/vzl_os_ai.png'); ?>" class="d-block w-100" style="height: 380px; object-fit: cover;" alt="AI Module">
                             <div class="position-absolute bottom-0 start-0 w-100 px-4 py-3 glass-morphism">
-                                <span class="x-small text-white fw-bold uppercase tracking-widest">🤖 IA Copilot Integrado</span>
+                                <span class="x-small text-white fw-bold uppercase tracking-widest">🤖 Vezi Copilot Integrado</span>
                             </div>
                         </div>
                         <div class="carousel-item">
@@ -360,7 +360,7 @@ if (is_dir(public_path($stackDir))) {
                     <div class="col-6">
                         <div class="p-3 rounded-4 border border-white-10 bg-white-02 hover-lift transition-all h-100">
                             <span class="material-symbols-outlined text-magenta fs-3 mb-2 d-block" style="color: var(--vzl-magenta);">smart_toy</span>
-                            <h5 class="text-white h6 fw-bold mb-1">IA Copilot</h5>
+                            <h5 class="text-white h6 fw-bold mb-1">Vezi Copilot</h5>
                             <p class="text-white-50 xx-small mb-0">Resúmenes, action items y asistente de respuestas.</p>
                         </div>
                     </div>

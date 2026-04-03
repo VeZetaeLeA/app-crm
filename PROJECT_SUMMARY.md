@@ -126,7 +126,7 @@ El sistema ahora opera bajo un modelo de **Arquitectura de Capas** refinada y re
 ### 6. Evolución 11.0: Enterprise Reactor & GAI (COMPLETO)
 - [x] **Generative AI (GAI) Powered by Groq**: 
     - [x] Motor **Llama-3.1-8b-instant** para baja latencia y alta precisión lógica.
-    - [x] Resúmenes ejecutivos, extracción de tareas y Copilot de chat inteligente con preservación de contexto inicial.
+    - [x] Resúmenes ejecutivos, extracción de tareas y Vezi Copilot de chat inteligente con preservación de contexto inicial.
     - [x] **Resiliencia Operativa**: Bypass de verificación SSL en capa de servicio local para asegurar conectividad de APIs REST externas (Groq) en entornos de desarrollo restrictivos (XAMPP/Windows).
 - [x] **Exportación Core & PDF Engine**: 
     - [x] Refactorización arquitectónica de generador de códigos QR a **Endroid v6**.
@@ -137,7 +137,7 @@ El sistema ahora opera bajo un modelo de **Arquitectura de Capas** refinada y re
 ---
 ### 7. UX/UI & Sistema de Routing (Sprint 8.1)
 - [x] **Admin Center**: Neutralización de márgenes y paddings residuales (Zero-Gap) para una estética de Centro de Mando inmersiva.
-- [x] **Copilot Chat Pro**: Implementación de inputs de texto multilinea (TextArea con auto-resize inteligente) mejorando la legibilidad conversacional.
+- [x] **Vezi Copilot Chat Pro**: Implementación de inputs de texto multilinea (TextArea con auto-resize inteligente) mejorando la legibilidad conversacional.
 - [x] **Insight Engine Dinámico**: Los algoritmos de recomendación de clientes (Alta tasa de conversión) ahora redirigen unificadamente hacia el último ticket de la entidad interactuada.
 - [x] **Defensiva Core**: Blindaje avanzado del `RateLimiter` (`array_filter` safe) para neutralizar errores fatales derivados de archivos de caché truncados o corruptos.
 

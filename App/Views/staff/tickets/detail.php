@@ -101,7 +101,7 @@
 
                     <hr class="border-white-10 my-4">
                     <div class="mb-4">
-                        <label class="text-white-50 x-small uppercase fw-bold tracking-widest d-block mb-3">Copilot GAI</label>
+                        <label class="text-white-50 x-small uppercase fw-bold tracking-widest d-block mb-3"><?= __('tickets.ai_copilot') ?></label>
                         <button type="button" id="btn-generate-summary" class="btn btn-outline-info btn-sm w-100 fw-bold py-2 mb-3 d-flex align-items-center justify-content-center gap-2">
                             <span class="material-symbols-outlined fs-6">auto_awesome</span>
                             Generar Resumen de IA

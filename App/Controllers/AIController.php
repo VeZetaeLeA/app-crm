@@ -33,7 +33,7 @@ class AIController extends Controller
         $chats = $stmt->fetchAll();
 
         if (count($chats) < 1) { 
-            echo json_encode(['success' => false, 'error' => 'Inicia la conversación para que Copilot pueda generar un resumen.']);
+            echo json_encode(['success' => false, 'error' => 'Inicia la conversación para que Vezi Copilot pueda generar un resumen.']);
             return;
         }
 
@@ -87,7 +87,7 @@ class AIController extends Controller
         $suggestion = $this->aiService->suggestResponse($messagesForAI, $description);
 
         if (!$suggestion) {
-            echo json_encode(['success' => false, 'error' => 'Inicia el diálogo con el cliente para que Copilot pueda sugerir una respuesta basada en contexto.']);
+            echo json_encode(['success' => false, 'error' => 'Inicia el diálogo con el cliente para que Vezi Copilot pueda sugerir una respuesta basada en contexto.']);
             return;
         }
 
@@ -116,7 +116,7 @@ class AIController extends Controller
         $rewritten = $this->aiService->rewriteDraft($draft, $tone);
 
         if (!$rewritten) {
-            echo json_encode(['success' => false, 'error' => 'El Copilot no pudo reescribir el borrador.']);
+            echo json_encode(['success' => false, 'error' => 'El Vezi Copilot no pudo reescribir el borrador.']);
             return;
         }
 

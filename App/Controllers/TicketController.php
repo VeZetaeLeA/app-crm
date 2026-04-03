@@ -232,7 +232,7 @@ class TicketController extends Controller
                     }
                     
                     // Mensaje de sistema (Unificado)
-                    $sysMsg = "🤖 Copilot GAI ha analizado tu requerimiento.\nSentimiento detectado: " . ($analysis['sentiment'] ?? 'neutral') . ".\nHe sugerido " . count($tasks) . " tareas iniciales.";
+                    $sysMsg = "🤖 Vezi Copilot ha analizado tu requerimiento.\nSentimiento detectado: " . ($analysis['sentiment'] ?? 'neutral') . ".\nHe sugerido " . count($tasks) . " tareas iniciales.";
                     $this->ticketRepo->createMessage($lastTicketId, null, $sysMsg, 'system');
                 }
             }
