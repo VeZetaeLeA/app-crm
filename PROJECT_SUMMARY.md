@@ -15,6 +15,7 @@ VeZetaeLeA OS ha alcanzado la **Evolución 20.2.0**. En esta fase se ha consolid
 - [x] **Zero-Hardcode Typography**: Actualización del protocolo de inyección para soportar stacks de fuentes simplificados desde `.env`.
 - [x] **SMTP Identity Correction**: Sincronización forzada de la tabla `app_config` con el `.env` mediante `fix_demo_mail.php`. Se eliminaron los valores estáticos en la migración `create_app_config` para asegurar que el remitente coincida siempre con el usuario autenticado.
 - [x] **Mail Job Consistency**: Unificación de llaves de configuración (`mail.enabled`) en el sistema de colas asíncronas para evitar fallos silenciosos en entornos demo.
+- [x] **Homepage Elite Copywriting Audit:** Ejecución de pivot estratégico hacia el tono "Anti-Agencia" en la landing publica, reforzando autoridad técnica y eliminando conceptos B2C (Hero, CTAs motivacionales y FAQs reestructuradas).
 
 ## 🎨 Visual Vanguard & Brand Maturity (Sprint 20.2.0)
 

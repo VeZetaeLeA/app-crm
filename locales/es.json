@@ -1,14 +1,14 @@
 {
     "home": {
         "hero": {
-            "title": "Convierte tu empresa<br><span class=\"vzl-text-gradient-vibrant\">en un sistema inteligente</span>",
-            "subtitle": "Aplicaciones, datos, procesos y automatización trabajando juntos para hacer crecer tu negocio.",
-            "cta_primary": "Explorar Servicios",
-            "cta_secondary": "Iniciar Proyecto"
+            "title": "No hacemos apps.<br><span class=\"vzl-text-gradient-vibrant\">Diseñamos tu motor de operaciones</span>",
+            "subtitle": "VeZetaeLeA es tu hub de ingeniería premium. Datos, integraciones y software propietario (App-CRM) orientados a una sola métrica: tu eficiencia.",
+            "cta_primary": "Obtener Acceso",
+            "cta_secondary": "Ver Casos de Uso"
         },
         "stats": {
             "years": "Años de<br>Experiencia",
-            "projects": "Proyectos<br>Entregados",
+            "projects": "Líneas de<br>Código Core",
             "verticals": "Verticales<br>Tecnológicas",
             "product": "Producto<br>Exclusivo (CRM)"
         }

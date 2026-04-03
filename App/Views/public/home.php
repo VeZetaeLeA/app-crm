@@ -35,22 +35,22 @@
     <div class="container">
         <div class="d-flex flex-wrap justify-content-center align-items-center gap-4 gap-md-5">
             <div class="d-flex align-items-center gap-3">
-                <span class="vzl-text-gradient-vibrant vzl-counter-display"><?php echo \Core\Config::get('business.years_exp', '10'); ?>+</span>
+                <span class="vzl-text-gradient-vibrant fs-2 fw-black"><span class="vzl-counter-display" data-target="<?php echo \Core\Config::get('business.years_exp', '10'); ?>">0</span>+</span>
                 <span class="text-white-50 small fw-bold uppercase tracking-widest"><?= __('home.stats.years') ?></span>
             </div>
             <div class="d-none d-md-block" style="width: 1px; height: 40px; background: rgba(255,255,255,0.08);"></div>
             <div class="d-flex align-items-center gap-3">
-                <span class="vzl-text-gradient-vibrant vzl-counter-display"><?php echo \Core\Config::get('business.projects_delivered', '45'); ?>+</span>
+                <span class="vzl-text-gradient-vibrant fs-2 fw-black"><span class="vzl-counter-display" data-target="85000">0</span>+</span>
                 <span class="text-white-50 small fw-bold uppercase tracking-widest"><?= __('home.stats.projects') ?></span>
             </div>
             <div class="d-none d-md-block" style="width: 1px; height: 40px; background: rgba(255,255,255,0.08);"></div>
             <div class="d-flex align-items-center gap-3">
-                <span class="vzl-text-gradient-vibrant vzl-counter-display">4</span>
+                <span class="vzl-text-gradient-vibrant fs-2 fw-black"><span class="vzl-counter-display" data-target="4">0</span></span>
                 <span class="text-white-50 small fw-bold uppercase tracking-widest"><?= __('home.stats.verticals') ?></span>
             </div>
             <div class="d-none d-md-block" style="width: 1px; height: 40px; background: rgba(255,255,255,0.08);"></div>
             <div class="d-flex align-items-center gap-3">
-                <span class="vzl-text-gradient-vibrant vzl-counter-display">1</span>
+                <span class="vzl-text-gradient-vibrant fs-2 fw-black"><span class="vzl-counter-display" data-target="1">0</span></span>
                 <span class="text-white-50 small fw-bold uppercase tracking-widest"><?= __('home.stats.product') ?></span>
             </div>
         </div>
@@ -65,7 +65,7 @@
             <div class="col-12">
                 <div class="vzl-section-header text-start">
                     <h6 class="vzl-section-subtitle">Nuestro Factor Tech-Estratégico</h6>
-                    <h2 class="vzl-section-title">En <span class="vzl-text-gradient-vibrant"><?= mb_strtoupper(\Core\Config::get('business.company_name'))?></span> construimos sistemas que hacen crecer tu empresa</h2>
+                    <h2 class="vzl-section-title">Diseñamos ecosistemas. <span class="vzl-text-gradient-vibrant">No herramientas aisladas.</span></h2>
                 </div>
             </div>
         </div>
@@ -390,9 +390,9 @@ if (is_dir(public_path($stackDir))) {
         <div class="glass-morphism rounded-5 p-5 text-center border-white-10 shadow-2xl">
             <div class="vzl-section-header">
                 <h6 class="vzl-section-subtitle">Impulsa tu éxito</h6>
-                <h2 class="vzl-section-title">¿Listo para transformar <span class="vzl-text-gradient-vibrant">tu visión</span>?</h2>
+                <h2 class="vzl-section-title">Tu próximo ciclo de optimización <span class="vzl-text-gradient-vibrant">empieza aquí.</span></h2>
             </div>
-            <p class="lead text-white-50 mx-auto mb-5" style="max-width: 700px;">Únete a las empresas que ya optimizan su éxito con <?= mb_strtoupper(\Core\Config::get('business.company_name')) ?>.</p>
+            <p class="lead text-white-50 mx-auto mb-5" style="max-width: 700px;">No enviamos "presupuestos" genéricos. Diseñamos un diagnóstico inicial, una propuesta de arquitectura y estimación de KPIs para tu empresa.</p>
 
             <div id="dynamic-ticket-flow">
                 <div class="mb-5">
@@ -464,44 +464,33 @@ if (is_dir(public_path($stackDir))) {
                 <!-- FAQ 01 — open by default -->
                 <div class="vzl-faq-item vzl-faq-active mb-3 border border-white-05 rounded-4 bg-white-02 overflow-hidden">
                     <div class="vzl-faq-question cursor-pointer d-flex justify-content-between align-items-center p-4" onclick="FAQ.toggle(this)">
-                        <h4 class="h6 text-white mb-0 fw-bold">Quiero contratar un servicio, ¿cómo debo proceder?</h4>
+                        <h4 class="h6 text-white mb-0 fw-bold">¿Cómo inicio un ciclo de trabajo con <?= mb_strtoupper(\Core\Config::get('business.company_name')) ?>?</h4>
                         <span class="material-symbols-outlined text-primary fs-4 transition-all" style="transform: rotate(180deg);">expand_more</span>
                     </div>
                     <div class="vzl-faq-answer px-4 pb-4">
-                        <p class="text-white-50 small mb-0">Empieza contándonos tu idea a través del formulario de solicitud de presupuesto de esta página. No es solo un formulario de contacto; es el primer paso para que podamos evaluar tu necesidad y entender qué estás buscando.<br><br>Una vez enviada la solicitud, nuestro equipo la revisará y se comunicará contigo a través del mismo ticket para analizar alternativas, resolver dudas y avanzar hacia una propuesta de servicio.</p>
+                        <p class="text-white-50 small mb-0">Todo inicia con un diagnóstico técnico. En lugar de enviar un brief genérico, selecciona en nuestra sección de contacto el pilar operativo que necesitas optimizar. Nuestro equipo analizará tu caso y agendará una sesión para plantear una arquitectura técnica, definir KPIs y establecer el roadmap de ejecución.</p>
                     </div>
                 </div>
 
                 <!-- FAQ 02 -->
                 <div class="vzl-faq-item mb-3 border border-white-05 rounded-4 bg-white-02 overflow-hidden">
                     <div class="vzl-faq-question cursor-pointer d-flex justify-content-between align-items-center p-4" onclick="FAQ.toggle(this)">
-                        <h4 class="h6 text-white mb-0 fw-bold">¿Qué garantías ofrecen con respecto al trabajo que realizan?</h4>
+                        <h4 class="h6 text-white mb-0 fw-bold">¿Qué respaldo técnico tienen las arquitecturas que desarrollan?</h4>
                         <span class="material-symbols-outlined text-primary fs-4 transition-all">expand_more</span>
                     </div>
                     <div class="vzl-faq-answer px-4 pb-4 d-none">
-                        <p class="text-white-50 small mb-0">Ofrecemos una garantía de satisfacción y soporte post-lanzamiento. Todos nuestros desarrollos incluyen un período de mantenimiento para asegurar que todo funcione a la perfección y tu equipo esté capacitado en el uso de las herramientas.</p>
+                        <p class="text-white-50 small mb-0">Enfoque en escalabilidad y estabilidad total. Operamos bajo estrictos estándares de ingeniería de software: código documentado, pruebas automatizadas, monitoreo de rendimiento y SLAs (Acuerdos de Nivel de Servicio) definidos. Además, todas las infraestructuras incluyen un ciclo de soporte evolutivo post-despliegue para garantizar adopción y eficiencia.</p>
                     </div>
                 </div>
 
                 <!-- FAQ 03 -->
                 <div class="vzl-faq-item mb-3 border border-white-05 rounded-4 bg-white-02 overflow-hidden">
                     <div class="vzl-faq-question cursor-pointer d-flex justify-content-between align-items-center p-4" onclick="FAQ.toggle(this)">
-                        <h4 class="h6 text-white mb-0 fw-bold">¿Cuál es el tiempo de entrega para un proyecto?</h4>
+                        <h4 class="h6 text-white mb-0 fw-bold">¿Cuáles son los tiempos de despliegue y Go-to-Market?</h4>
                         <span class="material-symbols-outlined text-primary fs-4 transition-all">expand_more</span>
                     </div>
                     <div class="vzl-faq-answer px-4 pb-4 d-none">
-                        <p class="text-white-50 small mb-0">Los tiempos varían según la complejidad. Un MVP o Landing Page puede estar listo en 2-3 semanas, mientras que plataformas complejas o automatizaciones industriales pueden requerir de 2 a 4 meses de desarrollo y pruebas.</p>
-                    </div>
-                </div>
-
-                <!-- FAQ 04 -->
-                <div class="vzl-faq-item mb-3 border border-white-05 rounded-4 bg-white-02 overflow-hidden">
-                    <div class="vzl-faq-question cursor-pointer d-flex justify-content-between align-items-center p-4" onclick="FAQ.toggle(this)">
-                        <h4 class="h6 text-white mb-0 fw-bold">Quiero trabajar con ustedes, ¿cómo hago?</h4>
-                        <span class="material-symbols-outlined text-primary fs-4 transition-all">expand_more</span>
-                    </div>
-                    <div class="vzl-faq-answer px-4 pb-4 d-none">
-                        <p class="text-white-50 small mb-0">Estamos siempre en busca de talento. Puedes enviarnos tu CV o portfolio a través de nuestro correo de contacto especificando en el asunto "Oportunidad Laboral". Valoramos la pasión por la tecnología y la capacidad de resolver problemas complejos.</p>
+                        <p class="text-white-50 small mb-0">Diseñamos para la velocidad sin comprometer la infraestructura. Un Minimum Viable Product (MVP) operativo o una integración de datos puede desplegarse en 3 a 5 semanas. Para plataformas complejas, App-CRMs a medida o arquitecturas FinOps, operamos mediante sprints iterativos que entregan valor utilizable mes a mes.</p>
                     </div>
                 </div>
 
@@ -600,6 +589,49 @@ if (is_dir(public_path($partnersDir))) {
 
 
 <script>
+    // Animated Counters
+    const counters = document.querySelectorAll('.vzl-counter-display');
+    const animateCounters = () => {
+        counters.forEach(counter => {
+            const updateCount = () => {
+                const target = +counter.getAttribute('data-target');
+                const count = +counter.innerText.replace(/k/g, '');
+                // Calculate increment based on target size for smooth 2-second animation
+                const frames = 60; 
+                const inc = target / frames;
+
+                if (count < target) {
+                    const newValue = Math.ceil(count + inc);
+                    if(target >= 1000 && newValue >= 1000) {
+                        counter.innerText = (newValue / 1000).toFixed(1).replace('.0','') + 'k';
+                    } else {
+                        counter.innerText = newValue;
+                    }
+                    setTimeout(updateCount, 30);
+                } else {
+                    if(target >= 1000) {
+                        counter.innerText = Math.floor(target / 1000) + 'k';
+                    } else {
+                        counter.innerText = target;
+                    }
+                }
+            };
+            updateCount();
+        });
+    }
+
+    const observer = new IntersectionObserver((entries) => {
+        if(entries[0].isIntersecting) {
+            animateCounters();
+            observer.disconnect();
+        }
+    }, { threshold: 0.5 });
+    
+    if (counters.length > 0) {
+        const proofSection = document.querySelector('.vzl-social-proof');
+        if (proofSection) observer.observe(proofSection);
+    }
+
     // FAQ Modern Toggle
     window.FAQ = {
         toggle: function(element) {
