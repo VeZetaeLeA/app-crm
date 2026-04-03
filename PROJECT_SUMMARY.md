@@ -8,6 +8,7 @@ VeZetaeLeA OS ha alcanzado la **Evolución 20.2.0**. En esta fase se ha consolid
 ---
 
 ## ⚡ High-Performance & Stability (Sprint 20.2.1)
+- [x] **Email Zero-Hardcoding (Brand Consistency):** Refactorización del motor `Core/Mail.php` para sincronizar tipografías, gradientes índigo-magenta y la escala de grises al 100% con los tokens del archivo `.env`.
 - [x] **MIME Expansion (WebP & SVG)**: Soporte completo para formatos de imagen de próxima generación con validación binaria estricta.
 - [x] **UI Inheritance Fix**: Corregido el problema de fuentes (fallo Times New Roman) mediante la eliminación de saneamiento HTML en variables CSS dinámicas.
 - [x] **Sidebar Layout Stability**: Refuerzo de posicionamiento `fixed` y anulación de gaps en resoluciones móviles/tablets.
