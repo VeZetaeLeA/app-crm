@@ -93,7 +93,11 @@ class InvoiceController extends Controller
         if (!Auth::isClient())
             $this->redirect('/dashboard');
 
-        $invoice_id = $_POST['invoice_id'];
+        $invoice_id = filter_input(INPUT_POST, 'invoice_id', FILTER_VALIDATE_INT);
+        if (!$invoice_id) {
+            Session::flash('error', 'Factura no identificada o formato inválido.');
+            $this->redirect('/invoice');
+        }
         $db = Database::getInstance()->getConnection();
 
         // Hardened file upload logic
@@ -365,7 +369,7 @@ class InvoiceController extends Controller
             $finOps = new \App\Services\FinOpsService();
             // Record VOID event. Amount is the negative of the total to balance out.
             $finOps->recordEvent((int)$id, 'VOID', -(float)$invoice['total'], [
-                'reason' => $_POST['reason'] ?? 'Anulación administrativa',
+                'reason' => !empty($_POST['reason']) ? trim($_POST['reason']) : \Core\Config::get('app.default_void_reason', 'Anulación administrativa'),
                 'voided_by' => Auth::user()['id']
             ], Auth::user()['id']);
 
@@ -408,7 +412,7 @@ class InvoiceController extends Controller
             $finOps = new \App\Services\FinOpsService();
             // recordEvent for REFUND. FinOpsService::calculateBalance subtracts REFUND sum from totalPaid.
             $finOps->recordEvent((int)$id, 'REFUND', $refundAmount, [
-                'reason' => $_POST['reason'] ?? 'Reembolso al cliente',
+                'reason' => !empty($_POST['reason']) ? trim($_POST['reason']) : \Core\Config::get('app.default_refund_reason', 'Reembolso al cliente'),
                 'refunded_by' => Auth::user()['id']
             ], Auth::user()['id']);
 

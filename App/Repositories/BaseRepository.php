@@ -32,7 +32,8 @@ abstract class BaseRepository implements RepositoryInterface
      */
     protected function fetch(string $sql, array $params = [], int $fetchMode = \PDO::FETCH_ASSOC)
     {
-        return $this->execute($sql, $params)->fetch($fetchMode);
+        $result = $this->execute($sql, $params)->fetch($fetchMode);
+        return $result !== false ? $result : null;
     }
 
     /**

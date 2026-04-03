@@ -1,20 +1,22 @@
 <?php
+declare(strict_types=1);
+
 namespace App\Repositories;
 
 use PDO;
 
-class UserRepository extends BaseRepository
+class UserRepository extends BaseRepository implements UserRepositoryInterface
 {
     protected string $table = 'users';
 
-    public function findByEmail(string $email)
+    public function findByEmail(string $email): ?array
     {
         $tenantId = $this->getTenantId();
         $stmt = $this->db->prepare("SELECT * FROM {$this->table} WHERE email = ? AND tenant_id = ? AND deleted_at IS NULL");
         $stmt->execute([$email, $tenantId]);
-        return $stmt->fetch() ?: null;
+        $row = $stmt->fetch();
+        return $row ?: null;
     }
-
 
     public function create(array $data)
     {

@@ -16,6 +16,9 @@ VeZetaeLeA OS ha alcanzado la **Evolución 20.2.0**. En esta fase se ha consolid
 - [x] **SMTP Identity Correction**: Sincronización forzada de la tabla `app_config` con el `.env` mediante `fix_demo_mail.php`. Se eliminaron los valores estáticos en la migración `create_app_config` para asegurar que el remitente coincida siempre con el usuario autenticado.
 - [x] **Mail Job Consistency**: Unificación de llaves de configuración (`mail.enabled`) en el sistema de colas asíncronas para evitar fallos silenciosos en entornos demo.
 - [x] **Homepage Elite Copywriting Audit:** Ejecución de pivot estratégico hacia el tono "Anti-Agencia" en la landing publica, reforzando autoridad técnica y eliminando conceptos B2C (Hero, CTAs motivacionales y FAQs reestructuradas).
+- [x] **Type Safety & Defensive Programming (Zero-Hardcode):** Refactor de `BaseRepository::fetch()` neutralizando el retorno de `false` interno de PDO hacia un predecible `null` y arreglando en cadena crashes latentes del sistema.
+- [x] **Strict Domain Contracts:** Implementación de firmas estables (`declare(strict_types=1)`) y return types estrictos en todo el patrón `ProjectRepository`.
+- [x] **Zero Hardcode & Superglobal Sanitization:** Erradicación de lecturas crudas a `$_POST` (InvoiceController) usando `filter_input`, y erradicación de strings crudos mediante configuración dinámica (`Config::get()`).
 
 ## 🎨 Visual Vanguard & Brand Maturity (Sprint 20.2.0)
 

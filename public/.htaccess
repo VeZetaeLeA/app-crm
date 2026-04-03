@@ -4,6 +4,9 @@
     # Redirect sitemap.xml to controller
     RewriteRule ^sitemap.xml$ index.php?url=sitemap [L,QSA]
 
+    # Exclude deployment fix from router
+    RewriteCond %{REQUEST_URI} !deploy_fix.php
+
     RewriteCond %{REQUEST_FILENAME} !-f
     RewriteCond %{REQUEST_FILENAME} !-d
     RewriteRule ^(.*)$ index.php?url=$1 [QSA,L]
