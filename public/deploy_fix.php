@@ -1,76 +1,95 @@
 <?php
 /**
- * RECUERDA: DESPLEGAR ESTE ARCHIVO A GITHUB PARA PODER EJECUTARLO EN LA DEMO
- * URL: https://vezetaelea.com/demo/app-crm/deploy_fix.php (o tu ruta actual)
+ * VeZetaeLeA OS - Deploy Fix & OPcache Repair Tool
+ * Access via: /public/deploy_fix.php
+ * Self-destructs after execution for security.
  */
+define('BASE_PATH', dirname(__DIR__));
+header('Content-Type: text/plain; charset=utf-8');
 
-define('BASE_PATH', __DIR__);
+echo "=== VeZetaeLeA OS — Deploy Fix & Repair Tool ===\n\n";
+echo "Server: " . php_uname() . "\n";
+echo "PHP Version: " . phpversion() . "\n";
+echo "Base Path: " . BASE_PATH . "\n\n";
 
-header('Content-Type: text/plain');
-
-echo "=== VeZetaeLeA OS: Deployment Fix & Autoloader Repair ===\n\n";
-
-// 1. Verificar existencia de archivos críticos
-$filesToCheck = [
+// 1. Check critical files
+$critical = [
     'App/Controllers/ProjectController.php',
     'App/Repositories/ProjectRepository.php',
-    'App/Repositories/UserRepositoryInterface.php',
-    'Core/App.php'
+    'App/Repositories/ProjectRepositoryInterface.php',
+    'App/Repositories/BaseRepository.php',
+    'vendor/autoload.php',
 ];
 
-echo "1. Checking critical files:\n";
-foreach ($filesToCheck as $file) {
-    if (file_exists($file)) {
-        $size = filesize($file);
-        $firstLine = fgets(fopen($file, 'r'));
-        echo "[OK] $file ($size bytes) - Start: " . trim($firstLine) . "\n";
+echo "--- [1] Critical File Check ---\n";
+$allOk = true;
+foreach ($critical as $relPath) {
+    $abs = BASE_PATH . '/' . $relPath;
+    if (!file_exists($abs)) {
+        echo "[MISSING] $relPath\n";
+        $allOk = false;
     } else {
-        echo "[ERROR] Missing: $file\n";
+        $fh = fopen($abs, 'r');
+        $firstLine = trim(fgets($fh));
+        fclose($fh);
+        echo "[OK] $relPath | First line: $firstLine\n";
     }
 }
 
-// 2. Intentar limpiar cache de OPcache (si existe)
-echo "\n2. Clearing OPcache:\n";
+// 2. OPcache clear
+echo "\n--- [2] OPcache ---\n";
 if (function_exists('opcache_reset')) {
-    opcache_reset();
-    echo "[OK] OPcache reset success.\n";
-} else {
-    echo "[SKIP] OPcache not available.\n";
-}
-
-// 3. Verificar permisos de la carpeta storage y logs
-echo "\n3. Checking Directory Permissions:\n";
-$dirsToPerm = ['storage', 'logs', 'tmp', 'public/storage'];
-foreach ($dirsToPerm as $dir) {
-    if (is_dir($dir)) {
-        $perms = substr(sprintf('%o', fileperms($dir)), -4);
-        echo "[OK] $dir ($perms) - Is Writable: " . (is_writable($dir) ? 'YES' : 'NO') . "\n";
+    if (opcache_reset()) {
+        echo "[OK] OPcache cleared successfully.\n";
     } else {
-        mkdir($dir, 0755, true);
-        echo "[CREATED] $dir\n";
+        echo "[WARN] OPcache reset returned false.\n";
     }
+} elseif (function_exists('opcache_invalidate')) {
+    foreach ($critical as $relPath) {
+        opcache_invalidate(BASE_PATH . '/' . $relPath, true);
+    }
+    echo "[OK] OPcache invalidated for critical files.\n";
+} else {
+    echo "[SKIP] OPcache functions not available on this server.\n";
 }
 
-// 4. Forzar autocarga manual por si el autoloader de composer falló en la demo
-echo "\n4. Classes mapping verification:\n";
+// 3. Autoloader test
+echo "\n--- [3] Autoloader & Class Resolution ---\n";
 try {
-    require_once 'vendor/autoload.php';
-    echo "[OK] Composer Autoloader loaded.\n";
-    
+    require_once BASE_PATH . '/vendor/autoload.php';
+    echo "[OK] Composer autoloader loaded.\n";
+
     if (class_exists('\\App\\Controllers\\ProjectController')) {
-        echo "[SUCCESS] ProjectController is now visible to PHP.\n";
+        echo "[SUCCESS] ProjectController resolved correctly via autoloader.\n";
     } else {
-        echo "[ALERT] ProjectController is still not visible via Autoloader.\n";
-        echo "Attempting manual inclusion...\n";
-        include_once 'App/Controllers/ProjectController.php';
-        if (class_exists('\\App\\Controllers\\ProjectController')) {
-            echo "[FIXED] Manual include successful.\n";
+        echo "[WARN] ProjectController not found via autoloader. Trying manual include...\n";
+        $manualPath = BASE_PATH . '/App/Controllers/ProjectController.php';
+        if (file_exists($manualPath)) {
+            include_once $manualPath;
+            echo class_exists('\\App\\Controllers\\ProjectController')
+                ? "[FIXED] Class resolved after manual include.\n"
+                : "[FAIL] Class still not resolvable. Check namespace or syntax error in file.\n";
+        } else {
+            echo "[FAIL] File does not exist: $manualPath\n";
         }
     }
-} catch (\Exception $e) {
-    echo "[FATAL] Autoload error: " . $e->getMessage() . "\n";
+} catch (\Throwable $e) {
+    echo "[FATAL] " . $e->getMessage() . "\n";
 }
 
-echo "\n=== Proceso finalizado. Si ves [SUCCESS] o [FIXED], ya puedes usar /project/workspace ===\n";
-unlink(__FILE__); // Autodestrucción por seguridad
-echo "Script eliminado por seguridad.\n";
+// 4. Writable dirs
+echo "\n--- [4] Directory Permissions ---\n";
+$dirs = ['storage', 'logs', 'tmp', 'public/storage'];
+foreach ($dirs as $d) {
+    $abs = BASE_PATH . '/' . $d;
+    if (!is_dir($abs)) {
+        @mkdir($abs, 0755, true);
+        echo "[CREATED] $d\n";
+    } else {
+        echo (is_writable($abs) ? "[OK]" : "[NOT WRITABLE]") . " $d\n";
+    }
+}
+
+echo "\n=== Done. Script self-destructing now. ===\n";
+@unlink(__FILE__);
+echo "File deleted for security.\n";

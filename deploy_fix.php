@@ -1,7 +1,8 @@
 <?php
 /**
  * RECUERDA: DESPLEGAR ESTE ARCHIVO A GITHUB PARA PODER EJECUTARLO EN LA DEMO
- * URL: https://vezetaelea.com/demo/VeZetaeLeA/app-crm/public/deploy_fix.php (o tu ruta actual)
+ * URL: https://vezetaelea.com/demo/VeZetaeLeA/app-crm/public/deploy_fix.php 
+ * https://vezetaelea.com/demo/VeZetaeLeA/app-crm/public/repair_vzl.php (o tu ruta actual)
  */
 
 define('BASE_PATH', __DIR__);
