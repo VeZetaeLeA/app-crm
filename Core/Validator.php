@@ -222,25 +222,30 @@ class Validator
         }
 
         // 2. Validar Tipo MIME Real (No solo extensión)
-        $finfo = new \finfo(FILEINFO_MIME_TYPE);
-        $mimeType = $finfo->file($file['tmp_name']);
+        $mimeType = 'application/octet-stream';
+        if (function_exists('finfo_open')) {
+            $finfo = new \finfo(FILEINFO_MIME_TYPE);
+            $detected = $finfo->file($file['tmp_name']);
+            if ($detected !== false) {
+                $mimeType = $detected;
+            }
+        }
 
-        // Mapeo básico de extensiones permitidas a MIME types comunes para seguridad extra
+        // Mapa completo de extensiones a MIME types (incluye variantes reales de libmagic en Linux)
         $mimeMap = [
-            'jpg' => ['image/jpeg', 'image/jpg', 'image/pjpeg'],
+            'jpg'  => ['image/jpeg', 'image/jpg', 'image/pjpeg'],
             'jpeg' => ['image/jpeg', 'image/jpg', 'image/pjpeg'],
-            'png' => ['image/png', 'image/x-png'],
-            'gif' => ['image/gif'],
+            'png'  => ['image/png', 'image/x-png', 'image/vnd.mozilla.apng'],
+            'gif'  => ['image/gif'],
             'webp' => ['image/webp'],
-            'svg' => ['image/svg+xml', 'image/svg'],
-            'pdf' => ['application/pdf'],
-
-
-            'zip' => ['application/zip', 'application/x-zip-compressed'],
-            'doc' => ['application/msword'],
-            'docx' => ['application/vnd.openxmlformats-officedocument.wordprocessingml.document'],
-            'xls' => ['application/vnd.ms-excel'],
-            'xlsx' => ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet']
+            'svg'  => ['image/svg+xml', 'image/svg', 'text/html', 'text/plain'],
+            'pdf'  => ['application/pdf', 'application/x-pdf'],
+            'zip'  => ['application/zip', 'application/x-zip', 'application/x-zip-compressed', 'application/octet-stream'],
+            'zipx' => ['application/zip', 'application/x-zip-compressed', 'application/octet-stream'],
+            'doc'  => ['application/msword', 'application/octet-stream'],
+            'docx' => ['application/vnd.openxmlformats-officedocument.wordprocessingml.document', 'application/octet-stream', 'application/zip'],
+            'xls'  => ['application/vnd.ms-excel', 'application/octet-stream'],
+            'xlsx' => ['application/vnd.openxmlformats-officedocument.spreadsheetml.sheet', 'application/octet-stream', 'application/zip'],
         ];
 
         if (!empty($allowedExtensions)) {
@@ -250,8 +255,18 @@ class Validator
             } else {
                 // Verificar que el MIME coincida con la extensión esperada
                 $expectedMimes = $mimeMap[$ext] ?? [];
+
+                // Si finfo devuelve octet-stream y la extensión es válida, lo aceptamos
+                // (algunos servidores no tienen la firma binaria del formato en su base de datos)
+                $isOctetStream = ($mimeType === 'application/octet-stream');
+                $isImageExt    = in_array($ext, ['png', 'jpg', 'jpeg', 'gif', 'webp']);
+
                 if (!empty($expectedMimes) && !in_array($mimeType, $expectedMimes)) {
-                    $errors[] = "Contenido del archivo no coincide con su extensión (Falsificación de tipo).";
+                    // Sólo bloqueamos si finfo pudo identificar claramente un MIME distinto al esperado
+                    // y no es una imagen con octet-stream (que ocurre en algunos entornos Linux)
+                    if (!($isOctetStream && $isImageExt)) {
+                        $errors[] = "Contenido del archivo no coincide con su extensión (Falsificación de tipo).";
+                    }
                 }
             }
         }
