@@ -220,9 +220,9 @@
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label class="text-white-50 x-small uppercase fw-bold mb-2">Imagen de Portada (PNG)</label>
+                        <label class="text-white-50 x-small uppercase fw-bold mb-2">Imagen de Portada (PNG, JPG, WebP, SVG)</label>
                         <input type="file" name="image" class="form-control bg-steel border-white-10 text-white p-3"
-                            accept="image/png">
+                            accept=".png,.jpg,.jpeg,.webp,.svg">
                     </div>
                     <div class="mb-0">
                         <label class="text-white-50 x-small uppercase fw-bold mb-2">Descripción</label>
@@ -284,9 +284,9 @@
                         </div>
                     </div>
                     <div class="mb-3">
-                        <label class="text-white-50 x-small uppercase fw-bold mb-2">Actualizar Imagen (PNG)</label>
+                        <label class="text-white-50 x-small uppercase fw-bold mb-2">Actualizar Imagen (PNG, JPG, WebP, SVG)</label>
                         <input type="file" name="image" class="form-control bg-steel border-white-10 text-white p-3"
-                            accept="image/png">
+                            accept=".png,.jpg,.jpeg,.webp,.svg">
                         <div id="image-preview-container" class="mt-2 text-center d-none">
                             <p class="x-small text-white-50 mb-1">Imagen actual:</p>
                             <img id="edit-cat-preview" src="" class="rounded border border-white-10"

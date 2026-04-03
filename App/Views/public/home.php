@@ -162,10 +162,24 @@
             <?php foreach ($categories as $category): ?>
                 <div class="col-md-6 col-lg-3">
                     <div class="card h-100 border-white-10 bg-deep-black p-0 overflow-hidden hover-lift transition-all rounded-5">
-                        <div class="p-4 d-flex flex-column h-100">
-                            <div class="mb-4 d-inline-flex align-items-center justify-content-center rounded-4 bg-white-5 text-primary shadow-gold" style="width: 50px; height: 50px;">
-                                <span class="material-symbols-outlined fs-2"><?= $category['icon']; ?></span>
+                        <?php if (!empty($category['image'])): ?>
+                            <div class="position-relative" style="height: 140px; overflow: hidden;">
+                                <div class="position-absolute w-100 h-100 bg-gradient-to-t from-deep-black via-transparent to-transparent opacity-90" style="z-index: 2;"></div>
+                                <img src="<?= url($category['image']); ?>" class="w-100 h-100 object-fit-cover transition-all" alt="<?= $category['name']; ?>" style="object-fit: cover;">
+                                
+                                <div class="position-absolute bottom-0 start-0 p-4" style="z-index: 3; margin-bottom: -25px;">
+                                    <div class="d-inline-flex align-items-center justify-content-center rounded-4 bg-midnight-soft text-primary shadow-gold border border-white-10" style="width: 50px; height: 50px;">
+                                        <span class="material-symbols-outlined fs-2"><?= $category['icon']; ?></span>
+                                    </div>
+                                </div>
                             </div>
+                            <div class="p-4 pt-5 d-flex flex-column h-100">
+                        <?php else: ?>
+                            <div class="p-4 d-flex flex-column h-100">
+                                <div class="mb-4 d-inline-flex align-items-center justify-content-center rounded-4 bg-white-5 text-primary shadow-gold" style="width: 50px; height: 50px;">
+                                    <span class="material-symbols-outlined fs-2"><?= $category['icon']; ?></span>
+                                </div>
+                        <?php endif; ?>
                             <h3 class="h6 text-white fw-bold mb-3 uppercase tracking-widest"><?= $category['name']; ?></h3>
                             <p class="text-white-50 x-small mb-4 flex-grow-1"><?= $category['description']; ?></p>
                             <a href="<?= url('service/category/' . $category['slug']); ?>" class="text-primary text-decoration-none fw-bold small text-uppercase tracking-widest d-flex align-items-center gap-2 mt-auto">

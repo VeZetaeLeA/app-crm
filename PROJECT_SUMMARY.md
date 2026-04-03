@@ -8,6 +8,9 @@ VeZetaeLeA OS ha alcanzado la **Evolución 20.2.0**. En esta fase se ha consolid
 ---
 
 ## 🛡️ Test Suite & Repository Hardening (Sprint 20.2.2)
+- [x] **CMS Image Audit (Fase 3.2)**: Certificación de seguridad del cargador de imágenes. Implementación de `ValidatorTest.php` cubriendo validación binaria, detección de spoofing de MIME y soporte de SVG/WebP.
+- [x] **Service Pillars Visual Refinement**: Activación de imágenes de portada en los pilares estratégicos de la Home Pública, integrando un diseño cinemático de alta gama SaaS.
+- [x] **CMS Unified Format Support**: Alineación de la UI administrativa con el backend para permitir la carga de formatos premium (SVG/WebP) en el catálogo de servicios.
 - [x] **Repository Layer Coverage (Fase 3.1)**: Implementación de `ProjectRepositoryTest.php` con mocks de PDO, blindando la recuperación de servicios y entregables contra fallos de tipo.
 - [x] **FinOps Partial Refunds**: Expansión de `FinOpsServiceTest` para validar el cálculo de balance y sincronización de estado tras reembolsos parciales (Event Sourcing integrity).
 - [x] **Lead-to-Ticket lifecycle (Feature Test)**: Automatización de la creación de leads con generación de tickets vinculados asegurando la integridad del flujo comercial.
