@@ -16,6 +16,7 @@ class App
         'cors' => \Core\Middlewares\CorsMiddleware::class,
         'sanitize' => \Core\Middlewares\SanitizeMiddleware::class,
         'rate_limit' => \Core\Middlewares\RateLimitMiddleware::class,
+        'tenant' => \App\Middlewares\TenantResolverMiddleware::class,
     ];
 
     /**

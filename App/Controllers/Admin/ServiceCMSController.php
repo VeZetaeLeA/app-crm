@@ -260,6 +260,8 @@ class ServiceCMSController extends Controller
             Session::flash('success', 'Categoría creada correctamente.');
         }
 
+        \Core\Cache::forget('home_service_categories');
+
         $this->redirect('/admin/services');
     }
 
@@ -311,6 +313,8 @@ class ServiceCMSController extends Controller
         if ($result) {
             Session::flash('success', 'Categoría actualizada correctamente.');
         }
+
+        \Core\Cache::forget('home_service_categories');
 
         $this->redirect('/admin/services');
     }

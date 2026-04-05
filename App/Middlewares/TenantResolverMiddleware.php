@@ -18,10 +18,15 @@ class TenantResolverMiddleware implements Middleware
         $host = $_SERVER['HTTP_HOST'] ?? '';
 
         // 2. Lookup tenant in DB (cached implementation would be better)
-        $db = Database::getInstance()->getConnection();
-        $stmt = $db->prepare("SELECT id FROM tenants WHERE domain = ? AND is_active = 1 LIMIT 1");
-        $stmt->execute([$host]);
-        $tenantId = $stmt->fetchColumn();
+        $tenantId = null;
+        try {
+            $db = Database::getInstance()->getConnection();
+            $stmt = $db->prepare("SELECT id FROM tenants WHERE domain = ? AND is_active = 1 LIMIT 1");
+            $stmt->execute([$host]);
+            $tenantId = $stmt->fetchColumn();
+        } catch (\PDOException $e) {
+            // Silently fail if table does not exist
+        }
 
         // 3. Set global context (for simplicity, we'll use Config)
         if ($tenantId) {

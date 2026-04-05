@@ -296,3 +296,18 @@ Animación `vzl-physi-flow` de 8s en loop infinito.
 |---------|-------------|
 | `database/schema_vezetaelea.sql` | Esquema completo consolidado v2.0 |
 | `database/seed_vezetaelea.sql` | Datos iniciales actualizados v2.0 |
+
+---
+
+## 13. Arquitectura Multi-Tenant (Protección de Datos)
+
+El sistema soporta una arquitectura SaaS "Multi-Tenant" implementada a nivel de la capa de Base de Datos (`BaseRepository.php`).
+
+### 13.1 Restricción Categórica (Production-Ready)
+Para garantizar el aislamiento de datos (Data Isolation), es obligatorio que todo controlador tenga al middleware encargado de resolver qué cliente es el propietario de la información.
+Si el entorno está configurado en producción (`ENVIRONMENT=production`) y la aplicación intenta realizar una consulta a Base de Datos sin haber resuelto un `tenant_id` válido, se lanzará inmediatamente un `Fallback Exception` (Internal Server Error) cortando por completo la consulta. Esto resulta en una seguridad paranoica por diseño que evita que fallas de programación expongan datos de otro cliente.
+
+### 13.2 Middleware Global (Fail-Safe)
+A partir del día 05 de Abril de 2026, el `TenantResolverMiddleware` quedó anclado en los `globalMiddlewares` dentro de `Core/App.php`. Esto inyecta el `$tenantId` mediante la consulta temprana a la tabla de `tenants` en cada petición. 
+
+Para prevenciones de interrupciones o despliegues incompletos (donde la migración Multi-Tenancy no ha finalizado), el Middleware cuenta con un mecanismo _try-catch_ silencioso; de fallar la conexión a las tablas de control, configurará un estado seguro donde `tenant_id` será 1 (Legacy Mode), restaurando la operabilidad en producción instantáneamente sin comprometer la base de datos ni detener el flujo crítico de UI.
