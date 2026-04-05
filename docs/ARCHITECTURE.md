@@ -1,5 +1,5 @@
 # VeZetaeLeA OS — Arquitectura Técnica
-## Versión 18.2.3 · Actualizado: 2026-03-30
+## Versión 20.3.0 · Actualizado: 2026-04-05 (Agent Edition)
 
 ---
 

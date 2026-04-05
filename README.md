@@ -2,18 +2,31 @@
 
 <div align="center">
 
-![Version](https://img.shields.io/badge/version-20.2.0-blue.svg)
-![PHP](https://img.shields.io/badge/PHP-8.0+-purple.svg)
+![Version](https://img.shields.io/badge/version-20.3.0-blue.svg)
+![PHP](https://img.shields.io/badge/PHP-8.1+-purple.svg)
 ![MySQL](https://img.shields.io/badge/MySQL-8.0+-orange.svg)
 ![License](https://img.shields.io/badge/license-Proprietary-red.svg)
 ![Status](https://img.shields.io/badge/status-SaaS--Ready%20Certified-brightgreen.svg)
 ![Security](https://img.shields.io/badge/security-Enterprise--Hardened-success.svg)
+![AI-Engine](https://img.shields.io/badge/AI--Engine-Agent--Powered-blueviolet.svg)
 
-**Plataforma Enterprise Certificada para Gestión de Servicios de Ingeniería de Datos y Transformación Digital**
+**Plataforma Enterprise Certificada para Gestión de Servicios de Ingeniería de Datos y Transformación Digital (Consolidada con Ecosistema de Agentes)**
 
-[Características](#-características-principales) • [Instalación](#-instalación) • [Deployment](#-deployment) • [Documentación](#-documentación)
+[Características](#-características-principales) • [Instalación](#-instalación) • [Deployment](#-deployment) • [Documentación](#-documentación) • [Agentes AI](#-ecosistema-de-agentes-ai)
 
 </div>
+
+---
+
+## 🤖 Ecosistema de Agentes AI
+
+La Evolución 20.3.0 introduce un motor de agentes autónomos integrados en el flujo de desarrollo y decisión del sistema. Este ecosistema permite:
+
+- **Diseño de Vanguardia:** Inteligencia de diseño con +50 estilos premium y +160 paletas cromáticas.
+- **Imagen Gen IA:** Generación de activos visuales directamente desde la terminal mediante modelos de alto rendimiento.
+- **Copywriting Persuasivo:** Generación y optimización de copys centrados en conversión y psicología del consumidor.
+- **Auditoría SEO:** Diagnóstico técnico y estratégico automatizado.
+- **Depuración Sistemática:** Protocolos de trazabilidad de errores (Zero-Symptom Fixing).
 
 ---
 

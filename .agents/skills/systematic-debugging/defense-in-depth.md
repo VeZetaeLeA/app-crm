@@ -1,101 +1,33 @@
-# Defense-in-Depth Validation
+# Defense-in-Depth
 
-## Overview
+When a root cause is identified, adding validation at multiple layers prevents similar issues from propagating in the future. Don't just fix it at the source—harden the system.
 
-When you fix a bug caused by invalid data, adding validation at one place feels sufficient. But that single check can be bypassed by different code paths, refactoring, or mocks.
+## The Strategy: Layered Defense
 
-**Core principle:** Validate at EVERY layer data passes through. Make the bug structurally impossible.
+1. **Layer 1: Input Validation**
+   - Validate data as soon as it enters the system (API, CLI, forms).
+   - Use schemas and type checking to ensure valid data at the boundary.
 
-## Why Multiple Layers
+2. **Layer 2: Internal Boundaries**
+   - Add checks between major internal components (controllers, services, repositories).
+   - Don't assume that data passed between internal parts is "clean" if it has been modified.
 
-Single validation: "We fixed the bug"
-Multiple layers: "We made the bug impossible"
+3. **Layer 3: Core Logic**
+   - Add defensive checks within functions that perform critical operations.
+   - Use assertions or error handling to abort early if state is inconsistent.
 
-Different layers catch different cases:
-- Entry validation catches most bugs
-- Business logic catches edge cases
-- Environment guards prevent context-specific dangers
-- Debug logging helps when other layers fail
+## Example: Database Injection Prevention
 
-## The Four Layers
+**Fix:** Escape user input in SQL queries.
 
-### Layer 1: Entry Point Validation
-**Purpose:** Reject obviously invalid input at API boundary
+**Defense-in-Depth:**
+- **Layer 1:** Validate the format of the user input (e.g., must be a number).
+- **Layer 2:** Use parameterized queries (prepared statements) to prevent injection.
+- **Layer 3:** Add database-level constraints (e.g., check constraints or foreign keys).
 
-```typescript
-function createProject(name: string, workingDirectory: string) {
-  if (!workingDirectory || workingDirectory.trim() === '') {
-    throw new Error('workingDirectory cannot be empty');
-  }
-  if (!existsSync(workingDirectory)) {
-    throw new Error(`workingDirectory does not exist: ${workingDirectory}`);
-  }
-  // ... proceed
-}
-```
+## Why Defense-in-Depth Matters
 
-### Layer 2: Business Logic Validation
-**Purpose:** Ensure data makes sense for this operation
-
-```typescript
-function initializeWorkspace(projectDir: string, sessionId: string) {
-  if (!projectDir) {
-    throw new Error('projectDir required for workspace initialization');
-  }
-  // ... proceed
-}
-```
-
-### Layer 3: Environment Guards
-**Purpose:** Prevent dangerous operations in specific contexts
-
-```typescript
-async function gitInit(directory: string) {
-  // In tests, refuse git init outside temp directories
-  if (process.env.NODE_ENV === 'test') {
-    const normalized = normalize(resolve(directory));
-    const tmpDir = normalize(resolve(tmpdir()));
-
-    if (!normalized.startsWith(tmpDir)) {
-      throw new Error(
-        `Refusing git init outside temp dir during tests: ${directory}`
-      );
-    }
-  }
-  // ... proceed
-}
-```
-
-### Layer 4: Debug Instrumentation
-**Purpose:** Capture context for forensics
-
-```typescript
-async function gitInit(directory: string) {
-  const stack = new Error().stack;
-  logger.debug('About to git init', {
-    directory,
-    cwd: process.cwd(),
-    stack,
-  });
-  // ... proceed
-}
-```
-
-## Applying the Pattern
-
-When you find a bug:
-
-1. **Trace the data flow** - Where does bad value originate? Where used?
-2. **Map all checkpoints** - List every point data passes through
-3. **Add validation at each layer** - Entry, business, environment, debug
-4. **Test each layer** - Try to bypass layer 1, verify layer 2 catches it
-
-## Key Insight
-
-All four layers are necessary. During testing, each layer catches bugs the others miss:
-- Different code paths bypass entry validation
-- Mocks bypass business logic checks
-- Edge cases on different platforms need environment guards
-- Debug logging identifies structural misuse
-
-**Don't stop at one validation point.** Add checks at every layer.
+- **Resilience to Future Changes**: If one layer is accidentally modified or removed, subsequent layers still provide protection.
+- **Early Error Detection**: Issues are caught sooner, making them easier to debug and reducing impact.
+- **Clear Boundaries**: Establishing validation at each layer makes the system's contract explicit.
+- **Security and Integrity**: Protects against unexpected or malicious input that might bypass a single layer of defense.

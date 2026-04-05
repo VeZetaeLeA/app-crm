@@ -231,11 +231,14 @@ class Validator
             }
         }
 
+        // Limpiar MIME detectado de sufijos como '; charset=binary'
+        $mimeType = explode(';', $mimeType)[0];
+
         // Mapa completo de extensiones a MIME types (incluye variantes reales de libmagic en Linux)
         $mimeMap = [
             'jpg'  => ['image/jpeg', 'image/jpg', 'image/pjpeg'],
             'jpeg' => ['image/jpeg', 'image/jpg', 'image/pjpeg'],
-            'png'  => ['image/png', 'image/x-png', 'image/vnd.mozilla.apng'],
+            'png'  => ['image/png', 'image/x-png', 'image/vnd.mozilla.apng', 'image/x-citrix-png', 'image/x-ms-png'],
             'gif'  => ['image/gif'],
             'webp' => ['image/webp'],
             'svg'  => ['image/svg+xml', 'image/svg', 'text/html', 'text/plain'],
@@ -256,16 +259,17 @@ class Validator
                 // Verificar que el MIME coincida con la extensión esperada
                 $expectedMimes = $mimeMap[$ext] ?? [];
 
-                // Si finfo devuelve octet-stream y la extensión es válida, lo aceptamos
-                // (algunos servidores no tienen la firma binaria del formato en su base de datos)
-                $isOctetStream = ($mimeType === 'application/octet-stream');
-                $isImageExt    = in_array($ext, ['png', 'jpg', 'jpeg', 'gif', 'webp']);
+                // Detectar si es una imagen y si el tipo detectado también es imagen
+                $isImageExt = in_array($ext, ['png', 'jpg', 'jpeg', 'gif', 'webp']);
+                $detectedAsImage = (strpos($mimeType, 'image/') === 0);
 
                 if (!empty($expectedMimes) && !in_array($mimeType, $expectedMimes)) {
                     // Sólo bloqueamos si finfo pudo identificar claramente un MIME distinto al esperado
-                    // y no es una imagen con octet-stream (que ocurre en algunos entornos Linux)
-                    if (!($isOctetStream && $isImageExt)) {
-                        $errors[] = "Contenido del archivo no coincide con su extensión (Falsificación de tipo).";
+                    // y no es un caso donde tanto la extensión como el contenido son imágenes
+                    $isOctetStream = ($mimeType === 'application/octet-stream');
+
+                    if (!($isOctetStream && $isImageExt) && !($isImageExt && $detectedAsImage)) {
+                        $errors[] = "Contenido del archivo ($mimeType) no coincide con su extensión.$ext (Falsificación de tipo).";
                     }
                 }
             }

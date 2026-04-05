@@ -81,13 +81,9 @@ You MUST complete each phase before proceeding to the next.
 
 5. **Trace Data Flow**
 
-   See `root-cause-tracing.md` in this directory for the complete backward tracing technique.
+   **WHEN error is deep in call stack:**
 
-   **Quick version:**
-   - Where does bad value originate?
-   - What called this with bad value?
-   - Keep tracing up until you find the source
-   - Fix at source, not at symptom
+   See `root-cause-tracing.md` in this directory for the complete backward tracing technique.
 
 ### Phase 2: Pattern Analysis
 **Find the pattern before fixing:**
@@ -141,7 +137,9 @@ You MUST complete each phase before proceeding to the next.
 1. **Create Failing Test Case**
    - Simplest possible reproduction
    - Automated test if possible
+   - One-off test script if no framework
    - MUST have before fixing
+   - Use the `test-driven-development` skill for writing proper failing tests
 
 2. **Implement Single Fix**
    - Address the root cause identified
@@ -158,7 +156,7 @@ You MUST complete each phase before proceeding to the next.
    - STOP
    - Count: How many fixes have you tried?
    - If < 3: Return to Phase 1, re-analyze with new information
-   - **If ≥ 3: STOP and question the architecture**
+   - **If ≥ 3: STOP and question the architecture (step 5 below)**
    - DON'T attempt Fix #4 without architectural discussion
 
 5. **If 3+ Fixes Failed: Question Architecture**
@@ -174,6 +172,8 @@ You MUST complete each phase before proceeding to the next.
    - Should we refactor architecture vs. continue fixing symptoms?
 
    **Discuss with your human partner before attempting more fixes**
+
+   This is NOT a failed hypothesis - this is a wrong architecture.
 
 ## Red Flags - STOP and Follow Process
 If you catch yourself thinking:
@@ -220,9 +220,5 @@ These techniques are part of systematic debugging and available in this director
 - **`defense-in-depth.md`** - Add validation at multiple layers after finding root cause
 - **`condition-based-waiting.md`** - Replace arbitrary timeouts with condition polling
 
-## Real-World Impact
-From debugging sessions:
-- Systematic approach: 15-30 minutes to fix
-- Random fixes approach: 2-3 hours of thrashing
-- First-time fix rate: 95% vs 40%
-- New bugs introduced: Near zero vs common
+**Related skills:**
+- **test-driven-development** - For creating failing test case (Phase 4, Step 1)

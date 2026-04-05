@@ -1,101 +1,40 @@
-## Overview
-Bugs often manifest deep in the call stack (git init in wrong directory, file created in wrong location, database opened with wrong path). Your instinct is to fix where the error appears, but that's treating a symptom.
+# Root Cause Tracing
 
-**Core principle:** Trace backward through the call chain until you find the original trigger, then fix at the source.
+When an error occurs deep in a call stack, identifying the true origin is critical. Don't just fix the symptom at the crash site—trace it back to the original source.
 
-## When to Use
+## The Process: Backward Tracing
 
-**Use when:**
-- Error happens deep in execution (not at entry point)
-- Stack trace shows long call chain
-- Unclear where invalid data originated
-- Need to find which test/code triggers the problem
+1. **Start at the Incident Site**
+   - Identify the exact line where the error occurred.
+   - Note the value that caused the failure (e.g., `null`, `undefined`, empty string, invalid object).
 
-## The Tracing Process
+2. **Step Backward (One Frame at a Time)**
+   - For each frame in the stack trace, ask:
+     - "Where did this value come from?"
+     - "Who passed this value to this function?"
+     - "Was it modified within this frame?"
 
-### 1. Observe the Symptom
-```
-Error: git init failed in /Users/jesse/project/packages/core
-```
+3. **Analyze the Data Flow**
+   - Keep stepping back through the frames until you find the point where the value was *different* from what you expected.
+   - The first point where the value deviates from expectation is the **Root Cause**.
 
-### 2. Find Immediate Cause
-**What code directly causes this?**
-```typescript
-await execFileAsync('git', ['init'], { cwd: projectDir });
-```
+## Example: Null Pointer Exception
 
-### 3. Ask: What Called This?
-```typescript
-WorktreeManager.createSessionWorktree(projectDir, sessionId)
-  → called by Session.initializeWorkspace()
-  → called by Session.create()
-  → called by test at Project.create()
-```
+**Crash site:** `UserDashboard.render()` fails because `user.profile` is `null`.
 
-### 4. Keep Tracing Up
-**What value was passed?**
-- `projectDir = ''` (empty string!)
-- Empty string as `cwd` resolves to `process.cwd()`
-- That's the source code directory!
+**Trace backward:**
+- `UserDashboard.render(user)` called by `AppController.showDashboard(userId)`.
+- `AppController.showDashboard(userId)` gets user from `UserRepository.findById(userId)`.
+- `UserRepository.findById(userId)` fetches from database.
+- Database returns `null` for that `userId`.
 
-### 5. Find Original Trigger
-**Where did empty string come from?**
-```typescript
-const context = setupCoreTest(); // Returns { tempDir: '' }
-Project.create('name', context.tempDir); // Accessed before beforeEach!
-```
+**Root cause:** The user ID being used doesn't exist in the database, but the system assumes it does.
 
-## Adding Stack Traces
-When you can't trace manually, add instrumentation:
+**Fix:** Handle the missing user at the repository or controller level, or investigate why an invalid ID was generated.
 
-```typescript
-// Before the problematic operation
-async function gitInit(directory: string) {
-  const stack = new Error().stack;
-  console.error('DEBUG git init:', {
-    directory,
-    cwd: process.cwd(),
-    nodeEnv: process.env.NODE_ENV,
-    stack,
-  });
+## Tips for Effective Tracing
 
-  await execFileAsync('git', ['init'], { cwd: directory });
-}
-```
-
-**Critical:** Use `console.error()` in tests (not logger - may not show)
-
-**Run and capture:**
-```bash
-npm test 2>&1 | grep 'DEBUG git init'
-```
-
-## Finding Which Test Causes Pollution
-If something appears during tests but you don't know which test:
-
-Use the bisection script `find-polluter.sh` in this directory:
-
-```bash
-./find-polluter.sh '.git' 'src/**/*.test.ts'
-```
-
-Runs tests one-by-one, stops at first polluter.
-
-## Key Principle
-
-**NEVER fix just where the error appears.** Trace back to find the original trigger.
-
-Then after fixing at source, add defense-in-depth validation at each layer to make the bug impossible.
-
-## Stack Trace Tips
-**In tests:** Use `console.error()` not logger - logger may be suppressed
-**Before operation:** Log before the dangerous operation, not after it fails
-**Include context:** Directory, cwd, environment variables, timestamps
-**Capture stack:** `new Error().stack` shows complete call chain
-
-## Real-World Impact
-From debugging session (2025-10-03):
-- Found root cause through 5-level trace
-- Fixed at source (getter validation)
-- Added 4 layers of defense
-- 1847 tests passed, zero pollution
+- **Use Debugging Tools**: Stepping through code with a debugger is much faster than manual tracing.
+- **Log Data at Boundaries**: Logging data as it enters and leaves major components helps pinpoint where it goes "bad."
+- **Check External Inputs**: Validating data from APIs, databases, and user input often reveals the root cause of "mysterious" errors.
+- **Don't Assume**: Even if a function "always works," verify its inputs and outputs when tracing.
