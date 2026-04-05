@@ -163,9 +163,9 @@
                 <div class="col-md-6 col-lg-3">
                     <div class="card h-100 border-white-10 bg-deep-black p-0 overflow-hidden hover-lift transition-all rounded-5">
                         <?php if (!empty($category['image'])): ?>
-                            <div class="position-relative" style="height: 140px; overflow: hidden;">
+                            <div class="position-relative" style="height: 160px; overflow: hidden;">
                                 <div class="position-absolute w-100 h-100 bg-gradient-to-t from-deep-black via-transparent to-transparent opacity-90" style="z-index: 2;"></div>
-                                <img src="<?= url($category['image']); ?>" class="w-100 h-100 object-fit-cover transition-all" alt="<?= $category['name']; ?>" style="object-fit: cover;">
+                                <img src="<?= url($category['image']); ?>" class="w-100 h-100 transition-all" alt="<?= $category['name']; ?>" style="object-fit: cover; object-position: center;">
                                 
                                 <div class="position-absolute bottom-0 start-0 p-4" style="z-index: 3; margin-bottom: -25px;">
                                     <div class="d-inline-flex align-items-center justify-content-center rounded-4 bg-midnight-soft text-primary shadow-gold border border-white-10" style="width: 50px; height: 50px;">
