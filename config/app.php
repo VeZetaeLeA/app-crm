@@ -21,6 +21,11 @@ return [
         'jwt_secret' => getenv('JWT_SECRET'),
         'jwt_ttl' => getenv('JWT_TTL') ?: 3600,
         'global_rate_limit' => getenv('GLOBAL_RATE_LIMIT') ?: 100,
+        'honeypot_enabled' => getenv('SECURITY_HONEYPOT_ENABLED') === 'true',
+        'min_form_time' => getenv('SECURITY_MIN_FORM_TIME') ?: 3,
+        'recaptcha_site_key' => getenv('RECAPTCHA_V3_SITE_KEY'),
+        'recaptcha_secret_key' => getenv('RECAPTCHA_V3_SECRET_KEY'),
+        'recaptcha_score' => getenv('RECAPTCHA_V3_SCORE_LMT') ?: 0.5,
     ],
     'intelligence' => [
         'rbac_mode' => getenv('RBAC_MODE') ?: 'classic',

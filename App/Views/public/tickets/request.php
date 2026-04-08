@@ -80,6 +80,13 @@
                         <?php echo csrf_field(); ?>
                         <input type="hidden" name="service_plan_id" id="selected-plan-id">
                         
+                        <!-- HONEYPOT & ANTI-SPAM FIELDS (Fricción Cero) -->
+                        <div style="position: absolute; left: -9999px; top: -9999px;" aria-hidden="true">
+                            <label for="_vzl_security_trap">Si eres humano, deja este campo vacío</label>
+                            <input type="text" name="_vzl_security_trap" id="_vzl_security_trap" tabindex="-1" autocomplete="off">
+                        </div>
+                        <input type="hidden" name="_vzl_load_time" value="<?php echo time(); ?>">
+                        
                         <div class="row g-4">
                             <div class="col-md-6">
                                 <label class="text-white-50 x-small mb-2 uppercase tracking-widest fw-bold">Nombre Completo</label>
@@ -115,3 +122,39 @@
         </div>
     </div>
 </section>
+
+<?php $recaptchaKey = \Core\Config::get('security.recaptcha_site_key'); ?>
+<?php if (!empty($recaptchaKey)): ?>
+<script src="https://www.google.com/recaptcha/api.js?render=<?= $recaptchaKey ?>"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const form = document.querySelector('form[action$="ticket/submit"]');
+        if (form) {
+            form.addEventListener('submit', function (e) {
+                if (!form.querySelector('input[name="g-recaptcha-response"]')) {
+                    e.preventDefault();
+                    const submitBtn = form.querySelector('button[type="submit"]');
+                    const originalText = submitBtn.innerHTML;
+                    submitBtn.disabled = true;
+                    submitBtn.innerHTML = 'Verificando seguridad... <span class="material-symbols-outlined ms-2 fs-6 pb-1 rotating">autorenew</span>';
+                    
+                    grecaptcha.ready(function() {
+                        grecaptcha.execute('<?= $recaptchaKey ?>', {action: 'ticket_request'}).then(function(token) {
+                            form.insertAdjacentHTML('beforeend', '<input type="hidden" name="g-recaptcha-response" value="' + token + '">');
+                            form.submit();
+                        }).catch(function() {
+                            submitBtn.disabled = false;
+                            submitBtn.innerHTML = originalText;
+                            alert('No se pudo verificar la prueba de seguridad. Intente de nuevo.');
+                        });
+                    });
+                }
+            });
+        }
+    });
+</script>
+<style>
+.rotating { animation: rotate 1.5s linear infinite; display: inline-block; vertical-align: middle; }
+@keyframes rotate { 100% { transform: rotate(360deg); } }
+</style>
+<?php endif; ?>

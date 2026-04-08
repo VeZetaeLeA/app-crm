@@ -53,8 +53,18 @@ class Validator
                 break;
 
             case 'email':
-                if ($value && !filter_var($value, FILTER_VALIDATE_EMAIL)) {
-                    $this->addError($field, "El campo $field debe ser un email válido.");
+                if ($value) {
+                    if (strpos($value, ',') !== false || strpos($value, ';') !== false) {
+                        $this->addError($field, "El campo $field debe contener un único correo válido, no se admiten listas.");
+                    } elseif (!filter_var($value, FILTER_VALIDATE_EMAIL)) {
+                        $this->addError($field, "El campo $field debe ser un email válido.");
+                    }
+                }
+                break;
+
+            case 'single_email':
+                if ($value && (strpos($value, ',') !== false || strpos($value, ';') !== false)) {
+                    $this->addError($field, "El campo $field estrictamente no permite listas separadas por coma.");
                 }
                 break;
 

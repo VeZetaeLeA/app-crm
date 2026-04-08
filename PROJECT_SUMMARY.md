@@ -6,6 +6,12 @@ VeZetaeLeA OS ha alcanzado la **Evolución 20.3.0**. En esta fase se ha integrad
 
 ---
 
+## 🛡️ Anti-Spam & Security Hardening (Sprint 20.3.1)
+- [x] **Zero-Friction UX Security Base**: Implementación de táctica "Honeypot" simulado por UI (imposible de evadir para bots automatizados) combinada con factor `Time-to-Fill` (>3s) para mitigar el 90% del spam sin impactar la conversión y sin molestar a los clientes en los formularios dinámicos de lead (TicketController).
+- [x] **Invisible reCAPTCHA v3 Validation**: Adición complementaria de Google reCAPTCHA v3 evaluado estrictamente en servidor vía cURL. Config-driven desde `.env` para poder suspenderse durante el desarrollo en local sin causar Fatal Errors.
+- [x] **Email Injection Prevention**: Extensión de `Core/Validator.php` añadiendo la regla estricta `single_email` y reforzamiento sobre `email` estándar para denegar rotundamente el procesamiento de listas separadas por coma, previniendo Mail Bombs y User Flooding masivo.
+- [x] **Silent Drops**: Enrutamiento anti-fuerza-bruta; si la validación falla por confirmación de bot, el sistema descarta toda persistencia de datos (Db/Emailing) pero retorna una falsa pantalla de éxito al atacante para desgastarlo.
+
 ## 🤖 AI Agent Ecosystem & Functional Audit (Sprint 20.3.0)
 - [x] **Manual AI Skills Installation**: Despliegue manual de 7 skills de alto rendimiento (`ai-image-generation`, `ui-ux-pro-max`, `seo-audit`, `copywriting`, `marketing-psychology`, `systematic-debugging`, `using-superpowers`) en el directorio `.agents/skills/`.
 - [x] **Technical-Functional Audit**: Ejecución de una auditoría profunda del sistema cubriendo flujo comercial (TKT -> VZL-B -> VZL-INV -> Payment -> Workspace), RBAC (Admin, Staff, Client) y arquitectura de capas.

@@ -121,11 +121,32 @@ class TicketController extends Controller
             return;
         }
 
-        // M-06 FIX: Validación server-side de campos críticos
+        $isHoneypotEnabled = \Core\Config::get('security.honeypot_enabled', true);
+        if ($isHoneypotEnabled) {
+            // Drop silencioso si el robot llenó el honeypot
+            if (!empty($_POST['_vzl_security_trap'])) {
+                \Core\SecurityLogger::log('bot_detected_honeypot', ['ip' => $ip, 'email' => $_POST['email'] ?? ''], 'WARN');
+                Session::flash('success', '¡Solicitud recibida! Hemos enviado detalles a tu correo.');
+                $this->redirect('/');
+                return;
+            }
+            
+            // Drop silencioso si el formulario fue enviado anormalmente rápido (menos de X segundos)
+            $loadTime = (int)($_POST['_vzl_load_time'] ?? 0);
+            $minTime = \Core\Config::get('security.min_form_time', 3);
+            if (time() - $loadTime < $minTime) {
+                \Core\SecurityLogger::log('bot_detected_speed', ['ip' => $ip, 'time' => time() - $loadTime], 'WARN');
+                Session::flash('success', '¡Solicitud recibida! Hemos enviado detalles a tu correo.');
+                $this->redirect('/');
+                return;
+            }
+        }
+
+        // M-06 FIX: Validación server-side de campos críticos (Reforzada con single_email)
         $validator = new \Core\Validator();
         $validator->validate($_POST, [
             'name'        => 'required|min:2|max:100',
-            'email'       => 'required|email',
+            'email'       => 'required|single_email|email',
             'subject'     => 'required|min:5|max:200',
             'description' => 'required|min:10|max:3000',
         ]);
@@ -134,6 +155,40 @@ class TicketController extends Controller
             Session::flash('error', implode(' ', $firstErrors));
             $this->redirect('/ticket/request');
             return;
+        }
+
+        // --- M-07 FIX: reCAPTCHA v3 Server-Side Validation ---
+        $recaptchaSecret = \Core\Config::get('security.recaptcha_secret_key');
+        if (!empty($recaptchaSecret)) {
+            $recaptchaResponse = $_POST['g-recaptcha-response'] ?? '';
+            if (empty($recaptchaResponse)) {
+                \Core\SecurityLogger::log('bot_detected_recaptcha_missing', ['ip' => $ip, 'email' => $_POST['email'] ?? ''], 'WARN');
+                Session::flash('error', 'Validación de seguridad requerida.');
+                $this->redirect('/ticket/request');
+                return;
+            }
+
+            $ch = curl_init();
+            curl_setopt($ch, CURLOPT_URL, "https://www.google.com/recaptcha/api/siteverify");
+            curl_setopt($ch, CURLOPT_POST, 1);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query([
+                'secret' => $recaptchaSecret,
+                'response' => $recaptchaResponse,
+                'remoteip' => $ip
+            ]));
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            $verifyResponse = curl_exec($ch);
+            curl_close($ch);
+            
+            $responseData = json_decode($verifyResponse);
+            $scoreLimit = \Core\Config::get('security.recaptcha_score', 0.5);
+
+            if (!$responseData || empty($responseData->success) || $responseData->score < $scoreLimit || $responseData->action !== 'ticket_request') {
+                \Core\SecurityLogger::log('bot_detected_recaptcha_score', ['ip' => $ip, 'score' => $responseData->score ?? 0], 'WARN');
+                Session::flash('error', 'Nuestros sistemas detectaron actividad inusual (Bot risk). Intenta de nuevo.');
+                $this->redirect('/ticket/request');
+                return;
+            }
         }
 
         $db = Database::getInstance()->getConnection();
