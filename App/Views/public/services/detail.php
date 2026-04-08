@@ -145,7 +145,7 @@
                                 <label for="_contact_website_url_check">Si eres humano, deja este campo vacío</label>
                                 <input type="text" name="_contact_website_url_check" id="_contact_website_url_check_detail" tabindex="-1" autocomplete="new-password">
                             </div>
-                            <input type="hidden" name="_vzl_load_time" id="_vzl_load_time_detail" value="">
+                            <input type="hidden" name="_vzl_load_time" id="_vzl_load_time_detail" value="<?php echo time(); ?>">
 
                             <div class="row g-4">
                                 <div class="col-md-6">
@@ -200,12 +200,6 @@
         document.getElementById('selected-plan-id').value = planId;
         document.getElementById('form-subject').value = `Solicitud: ${planName}`;
         document.getElementById('selected-plan-text').innerText = planName;
-
-        // Initialize load-time when the form becomes visible
-        const loadTimeField = document.getElementById('_vzl_load_time_detail');
-        if (loadTimeField && !loadTimeField.value) {
-            loadTimeField.value = Math.floor(Date.now() / 1000);
-        }
 
         contactSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }

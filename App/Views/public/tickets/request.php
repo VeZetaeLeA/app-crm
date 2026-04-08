@@ -85,7 +85,7 @@
                             <label for="_contact_website_url_check">Si eres humano, deja este campo vacío</label>
                             <input type="text" name="_contact_website_url_check" id="_contact_website_url_check" tabindex="-1" autocomplete="new-password">
                         </div>
-                        <input type="hidden" name="_vzl_load_time" id="_vzl_load_time" value="">
+                        <input type="hidden" name="_vzl_load_time" id="_vzl_load_time" value="<?php echo time(); ?>">
                         
                         <div class="row g-4">
                             <div class="col-md-6">
@@ -154,12 +154,6 @@
                 });
             });
             observer.observe(targetNode, { attributes: true, attributeFilter: ['class'] });
-        }
-
-        // Initialize dynamic load time to avoid server cache skew
-        const loadTimeInput = document.getElementById('_vzl_load_time');
-        if (loadTimeInput) {
-            loadTimeInput.value = Math.floor(Date.now() / 1000);
         }
 
         const form = document.querySelector('form[action$="ticket/submit"]');

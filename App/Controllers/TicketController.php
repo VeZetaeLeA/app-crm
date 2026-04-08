@@ -126,20 +126,21 @@ class TicketController extends Controller
             // Drop silencioso si el robot llenó el honeypot
             if (!empty($_POST['_contact_website_url_check'])) {
                 \Core\SecurityLogger::log('bot_detected_honeypot', ['ip' => $ip, 'email' => $_POST['email'] ?? ''], 'WARN');
-                // En vez de success falso, fallamos discretamente para evitar falsos positivos a usuarios reales, 
-                // ya que JS debería limpiar esto antes del submit.
-                Session::flash('error', 'Validación de seguridad fallida. Por favor, asegúrate de no tener autocompletar activado en campos ocultos.');
-                $this->redirect('/ticket/request');
+                Session::flash('error', 'Validación de seguridad fallida. Por favor, asegúrate de no autocompletar campos ocultos.');
+                $this->redirect($_SERVER['HTTP_REFERER'] ?? '/ticket/request');
                 return;
             }
             
-            // Revertir el bloqueo estricto de tiempo que daba falsos positivos en recargas
+            // Revertir el bloqueo estricto de tiempo que daba falsos positivos
+            // Eliminado el chequeo del cliente JS que causaba desincronización de reloj
             $loadTime = (int)($_POST['_vzl_load_time'] ?? 0);
             $minTime = \Core\Config::get('security.min_form_time', 2);
-            if ($loadTime > 0 && (time() - $loadTime < $minTime)) {
-                \Core\SecurityLogger::log('bot_detected_speed', ['ip' => $ip, 'time' => time() - $loadTime], 'WARN');
+            $timeDiff = time() - $loadTime;
+            // Si $timeDiff es negativo, es por desincronización de un reloj avanzado, así que asumimos bien (>0).
+            if ($loadTime > 0 && $timeDiff >= 0 && $timeDiff < $minTime) {
+                \Core\SecurityLogger::log('bot_detected_speed', ['ip' => $ip, 'time' => $timeDiff], 'WARN');
                 Session::flash('error', 'El formulario fue enviado demasiado rápido. Por favor, tómate un momento.');
-                $this->redirect('/ticket/request');
+                $this->redirect($_SERVER['HTTP_REFERER'] ?? '/ticket/request');
                 return;
             }
         }
@@ -160,7 +161,7 @@ class TicketController extends Controller
             ], 'WARN');
             $firstErrors = array_map(function($e) { return $e[0]; }, $validator->errors());
             Session::flash('error', implode(' ', $firstErrors));
-            $this->redirect('/ticket/request');
+            $this->redirect($_SERVER['HTTP_REFERER'] ?? '/ticket/request');
             return;
         }
 
@@ -171,8 +172,8 @@ class TicketController extends Controller
 
             if (empty($recaptchaResponse)) {
                 \Core\SecurityLogger::log('bot_detected_recaptcha_missing', ['ip' => $ip, 'email' => $_POST['email'] ?? ''], 'WARN');
-                Session::flash('error', 'Validación de seguridad requerida.');
-                $this->redirect('/ticket/request');
+                Session::flash('error', 'Validación de seguridad requerida. Verifique conexión.');
+                $this->redirect($_SERVER['HTTP_REFERER'] ?? '/ticket/request');
                 return;
             }
 
@@ -195,7 +196,7 @@ class TicketController extends Controller
             if ($verifyResponse === false) {
                 \Core\SecurityLogger::log('recaptcha_curl_error', ['error' => $curlError, 'ip' => $ip], 'ERROR');
                 Session::flash('error', 'Error de conexión con el servicio de seguridad. Reintente.');
-                $this->redirect('/ticket/request');
+                $this->redirect($_SERVER['HTTP_REFERER'] ?? '/ticket/request');
                 return;
             }
 
@@ -218,7 +219,7 @@ class TicketController extends Controller
                 ], 'WARN');
                 
                 Session::flash('error', 'Nuestros sistemas detectaron actividad inusual (Bot risk: ' . $score . '). Intenta de nuevo.');
-                $this->redirect('/ticket/request');
+                $this->redirect($_SERVER['HTTP_REFERER'] ?? '/ticket/request');
                 return;
             }
         }

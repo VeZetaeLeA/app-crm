@@ -455,7 +455,7 @@ if (is_dir(public_path($stackDir))) {
                                 <label for="_contact_website_url_check">Si eres humano, deja este campo vacío</label>
                                 <input type="text" name="_contact_website_url_check" id="_contact_website_url_check_home" tabindex="-1" autocomplete="new-password">
                             </div>
-                            <input type="hidden" name="_vzl_load_time" id="_vzl_load_time_home" value="">
+                            <input type="hidden" name="_vzl_load_time" id="_vzl_load_time_home" value="<?php echo time(); ?>">
 
                             <div class="row g-4">
                                 <div class="col-md-6"><input type="text" name="name" class="form-control bg-white-5 border-white-10 text-white" placeholder="Nombre completo" required></div>
