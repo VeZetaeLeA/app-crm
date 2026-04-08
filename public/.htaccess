@@ -1,6 +1,13 @@
 <IfModule mod_rewrite.c>
     RewriteEngine On
 
+    # ─────────────────────────────────────────────────────────────────
+    # CANONICAL: Redirect www → non-www (301 Permanent)
+    # Ensures all traffic uses the canonical domain without www
+    # ─────────────────────────────────────────────────────────────────
+    RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+    RewriteRule ^ https://%1%{REQUEST_URI} [R=301,L]
+
     # Redirect sitemap.xml to controller
     RewriteRule ^sitemap.xml$ index.php?url=sitemap [L,QSA]
 
@@ -22,6 +29,7 @@
     Header set Referrer-Policy "strict-origin-when-cross-origin"
     # HSTS - 1 year (only works over HTTPS)
     Header set Strict-Transport-Security "max-age=31536000; includeSubDomains; preload"
-    # CSP - Basic whitelist for internal assets + Google Fonts/Icons
-    Header set Content-Security-Policy "default-src 'self'; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net https://fonts.googleapis.com; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: *; frame-ancestors 'self';"
+    # CSP - Whitelist for internal assets + Google Fonts/Icons
+    # NOTE: Both www and non-www are explicitly listed for asset compatibility
+    Header set Content-Security-Policy "default-src 'self' https://vezetaelea.com https://www.vezetaelea.com; script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://www.google.com https://www.gstatic.com; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net; font-src 'self' data: https://fonts.gstatic.com; img-src 'self' data: *; frame-ancestors 'self'; frame-src https://www.google.com;"
 </IfModule>

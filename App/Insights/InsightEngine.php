@@ -55,7 +55,7 @@ class InsightEngine
                 'level' => 'medium',
                 'message' => 'Hay ' . count($idleTickets) . ' tickets sin actividad por más de 48h.',
                 'action_label' => 'Revisar Tickets',
-                'action_url' => '/admin/tickets?filter=idle'
+                'action_url' => '/ticket?filter=idle'
             ];
         }
 

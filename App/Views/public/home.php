@@ -449,12 +449,20 @@ if (is_dir(public_path($stackDir))) {
                         <form id="dynamic-ticket-form" action="<?= url('ticket/submit'); ?>" method="POST">
                             <?= csrf_field(); ?>
                             <input type="hidden" name="service_plan_id" id="selected-plan-id">
+
+                            <?php /* ── ANTI-BOT FIELDS (Fricción Cero) ─────────────────────────── */ ?>
+                            <div style="position: absolute; left: -9999px; top: -9999px;" aria-hidden="true">
+                                <label for="_vzl_security_trap_home">Si eres humano, deja este campo vacío</label>
+                                <input type="text" name="_vzl_security_trap" id="_vzl_security_trap_home" tabindex="-1" autocomplete="off">
+                            </div>
+                            <input type="hidden" name="_vzl_load_time" id="_vzl_load_time_home" value="">
+
                             <div class="row g-4">
                                 <div class="col-md-6"><input type="text" name="name" class="form-control bg-white-5 border-white-10 text-white" placeholder="Nombre completo" required></div>
                                 <div class="col-md-6"><input type="email" name="email" class="form-control bg-white-5 border-white-10 text-white" placeholder="Correo corporativo" required></div>
                                 <div class="col-12"><input type="text" name="subject" id="form-subject" class="form-control bg-white-5 border-white-10 text-white" placeholder="Asunto" required></div>
                                 <div class="col-12"><textarea name="description" class="form-control bg-white-5 border-white-10 text-white" rows="4" placeholder="Cuéntanos sobre tu proyecto..." required></textarea></div>
-                                <div class="col-12"><button type="submit" class="btn btn-primary w-100 py-3 text-dark uppercase fw-bold tracking-widest">Enviar Solicitud</button></div>
+                                <div class="col-12"><button type="submit" id="home-ticket-submit-btn" class="btn btn-primary w-100 py-3 text-dark uppercase fw-bold tracking-widest">Enviar Solicitud</button></div>
                             </div>
                         </form>
                     </div>
@@ -680,6 +688,51 @@ if (is_dir(public_path($partnersDir))) {
 
 </script>
 
+<?php $recaptchaKey = \Core\Config::get('security.recaptcha_site_key'); ?>
+<?php if (!empty($recaptchaKey)): ?>
+<!-- reCAPTCHA v3 — Home Page Ticket Form -->
+<script src="https://www.google.com/recaptcha/api.js?render=<?= $recaptchaKey ?>"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // Initialize load-time for bot-speed detection
+        const loadTimeField = document.getElementById('_vzl_load_time_home');
+        if (loadTimeField) {
+            loadTimeField.value = Math.floor(Date.now() / 1000);
+        }
+
+        // Hook reCAPTCHA v3 into the home ticket form on submit
+        const homeForm = document.getElementById('dynamic-ticket-form');
+        if (homeForm) {
+            homeForm.addEventListener('submit', function (e) {
+                // Avoid double-execution if token already injected
+                if (!homeForm.querySelector('input[name="g-recaptcha-response"]')) {
+                    e.preventDefault();
+                    const submitBtn = document.getElementById('home-ticket-submit-btn');
+                    const originalText = submitBtn ? submitBtn.innerHTML : '';
+                    if (submitBtn) {
+                        submitBtn.disabled = true;
+                        submitBtn.innerHTML = 'Verificando seguridad... <span class="material-symbols-outlined ms-2 fs-6 pb-1" style="animation:rotate 1.5s linear infinite;display:inline-block">autorenew</span>';
+                    }
+
+                    grecaptcha.ready(function () {
+                        grecaptcha.execute('<?= $recaptchaKey ?>', { action: 'ticket_request' }).then(function (token) {
+                            homeForm.insertAdjacentHTML('beforeend', '<input type="hidden" name="g-recaptcha-response" value="' + token + '">');
+                            homeForm.submit();
+                        }).catch(function () {
+                            if (submitBtn) {
+                                submitBtn.disabled = false;
+                                submitBtn.innerHTML = originalText;
+                            }
+                            alert('No se pudo verificar la prueba de seguridad. Intente de nuevo.');
+                        });
+                    });
+                }
+            });
+        }
+    });
+</script>
+<?php endif; ?>
+
 <style>
     /* Parallax global rule for home */
     .cta-parallax-bg {
@@ -688,4 +741,5 @@ if (is_dir(public_path($partnersDir))) {
         background-position: center !important;
         background-attachment: fixed !important;
     }
+    @keyframes rotate { 100% { transform: rotate(360deg); } }
 </style>

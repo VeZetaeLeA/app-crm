@@ -139,6 +139,14 @@
                         <form id="dynamic-ticket-form" action="<?php echo url('ticket/submit'); ?>" method="POST">
                             <?php echo csrf_field(); ?>
                             <input type="hidden" name="service_plan_id" id="selected-plan-id">
+
+                            <?php /* ── ANTI-BOT FIELDS (Fricción Cero) ─────────────────────────── */ ?>
+                            <div style="position: absolute; left: -9999px; top: -9999px;" aria-hidden="true">
+                                <label for="_vzl_security_trap_detail">Si eres humano, deja este campo vacío</label>
+                                <input type="text" name="_vzl_security_trap" id="_vzl_security_trap_detail" tabindex="-1" autocomplete="off">
+                            </div>
+                            <input type="hidden" name="_vzl_load_time" id="_vzl_load_time_detail" value="">
+
                             <div class="row g-4">
                                 <div class="col-md-6">
                                     <label class="text-white-50 x-small uppercase tracking-widest fw-bold mb-2">Nombre
@@ -169,7 +177,7 @@
                                         required></textarea>
                                 </div>
                                 <div class="col-12 mt-4">
-                                    <button type="submit"
+                                    <button type="submit" id="detail-ticket-submit-btn"
                                         class="btn vzl-btn-glow-magenta w-100 py-3 fw-bold uppercase tracking-widest">
                                         Enviar Solicitud <span
                                             class="material-symbols-outlined ms-2 align-middle">send</span>
@@ -192,6 +200,12 @@
         document.getElementById('selected-plan-id').value = planId;
         document.getElementById('form-subject').value = `Solicitud: ${planName}`;
         document.getElementById('selected-plan-text').innerText = planName;
+
+        // Initialize load-time when the form becomes visible
+        const loadTimeField = document.getElementById('_vzl_load_time_detail');
+        if (loadTimeField && !loadTimeField.value) {
+            loadTimeField.value = Math.floor(Date.now() / 1000);
+        }
 
         contactSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
     }
@@ -216,6 +230,42 @@
         }
     });
 </script>
+
+<?php $recaptchaKey = \Core\Config::get('security.recaptcha_site_key'); ?>
+<?php if (!empty($recaptchaKey)): ?>
+<!-- reCAPTCHA v3 — Service Detail Ticket Form -->
+<script src="https://www.google.com/recaptcha/api.js?render=<?= $recaptchaKey ?>"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const detailForm = document.getElementById('dynamic-ticket-form');
+        if (detailForm) {
+            detailForm.addEventListener('submit', function (e) {
+                if (!detailForm.querySelector('input[name="g-recaptcha-response"]')) {
+                    e.preventDefault();
+                    const submitBtn = document.getElementById('detail-ticket-submit-btn');
+                    const originalText = submitBtn ? submitBtn.innerHTML : '';
+                    if (submitBtn) {
+                        submitBtn.disabled = true;
+                        submitBtn.innerHTML = 'Verificando... <span class="material-symbols-outlined ms-2 align-middle" style="animation:rotate 1.5s linear infinite;display:inline-block">autorenew</span>';
+                    }
+                    grecaptcha.ready(function () {
+                        grecaptcha.execute('<?= $recaptchaKey ?>', { action: 'ticket_request' }).then(function (token) {
+                            detailForm.insertAdjacentHTML('beforeend', '<input type="hidden" name="g-recaptcha-response" value="' + token + '">');
+                            detailForm.submit();
+                        }).catch(function () {
+                            if (submitBtn) {
+                                submitBtn.disabled = false;
+                                submitBtn.innerHTML = originalText;
+                            }
+                            alert('No se pudo verificar la prueba de seguridad. Intente de nuevo.');
+                        });
+                    });
+                }
+            });
+        }
+    });
+</script>
+<?php endif; ?>
 
 <style>
     .transform-scale-105 {
