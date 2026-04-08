@@ -142,8 +142,8 @@
 
                             <?php /* ── ANTI-BOT FIELDS (Fricción Cero) ─────────────────────────── */ ?>
                             <div style="position: absolute; left: -9999px; top: -9999px;" aria-hidden="true">
-                                <label for="_vzl_security_trap_detail">Si eres humano, deja este campo vacío</label>
-                                <input type="text" name="_vzl_security_trap" id="_vzl_security_trap_detail" tabindex="-1" autocomplete="off">
+                                <label for="_contact_website_url_check">Si eres humano, deja este campo vacío</label>
+                                <input type="text" name="_contact_website_url_check" id="_contact_website_url_check_detail" tabindex="-1" autocomplete="new-password">
                             </div>
                             <input type="hidden" name="_vzl_load_time" id="_vzl_load_time_detail" value="">
 
@@ -234,37 +234,83 @@
 <?php $recaptchaKey = \Core\Config::get('security.recaptcha_site_key'); ?>
 <?php if (!empty($recaptchaKey)): ?>
 <!-- reCAPTCHA v3 — Service Detail Ticket Form -->
-<script src="https://www.google.com/recaptcha/api.js?render=<?= $recaptchaKey ?>"></script>
 <script>
+    let recaptchaLoadedDetail = false;
+    let recaptchaKeyDetail = '<?= $recaptchaKey ?>';
+
+    function loadRecaptchaDetail() {
+        if (recaptchaLoadedDetail) return;
+        recaptchaLoadedDetail = true;
+        const script = document.createElement('script');
+        script.src = "https://www.google.com/recaptcha/api.js?render=" + recaptchaKeyDetail;
+        document.head.appendChild(script);
+        document.body.classList.add('show-recaptcha');
+    }
+
     document.addEventListener('DOMContentLoaded', function () {
         const detailForm = document.getElementById('dynamic-ticket-form');
         if (detailForm) {
+            // Cargar reCAPTCHA solo cuando el usuario comienza a llenar el formulario (focus)
+            const inputs = detailForm.querySelectorAll('input:not([type="hidden"]), textarea');
+            inputs.forEach(input => {
+                input.addEventListener('focus', loadRecaptchaDetail, { once: true });
+            });
+
             detailForm.addEventListener('submit', function (e) {
-                if (!detailForm.querySelector('input[name="g-recaptcha-response"]')) {
-                    e.preventDefault();
-                    const submitBtn = document.getElementById('detail-ticket-submit-btn');
-                    const originalText = submitBtn ? submitBtn.innerHTML : '';
+                // Clear honeypot right before submit
+                const honeypot = document.getElementById('_contact_website_url_check_detail');
+                if (honeypot) honeypot.value = '';
+
+                if (detailForm.querySelector('input[name="g-recaptcha-response"]')) {
+                    return; // Permitir el envío
+                }
+
+                e.preventDefault();
+                const submitBtn = document.getElementById('detail-ticket-submit-btn');
+                const originalText = submitBtn ? submitBtn.innerHTML : '';
+
+                if (typeof grecaptcha === 'undefined') {
+                    console.warn('[reCAPTCHA] Script not loaded yet. Waiting...');
                     if (submitBtn) {
                         submitBtn.disabled = true;
-                        submitBtn.innerHTML = 'Verificando... <span class="material-symbols-outlined ms-2 align-middle" style="animation:rotate 1.5s linear infinite;display:inline-block">autorenew</span>';
+                        submitBtn.innerHTML = 'Verificando red...';
                     }
-                    grecaptcha.ready(function () {
-                        grecaptcha.execute('<?= $recaptchaKey ?>', { action: 'ticket_request' }).then(function (token) {
-                            detailForm.insertAdjacentHTML('beforeend', '<input type="hidden" name="g-recaptcha-response" value="' + token + '">');
-                            detailForm.submit();
-                        }).catch(function () {
-                            if (submitBtn) {
-                                submitBtn.disabled = false;
-                                submitBtn.innerHTML = originalText;
-                            }
-                            alert('No se pudo verificar la prueba de seguridad. Intente de nuevo.');
-                        });
-                    });
+                    setTimeout(() => {
+                        if (typeof grecaptcha !== 'undefined') detailForm.requestSubmit();
+                        else alert('Error de seguridad: Sistema de validación no disponible.');
+                        if (submitBtn) {
+                            submitBtn.disabled = false;
+                            submitBtn.innerHTML = originalText;
+                        }
+                    }, 2000);
+                    return;
                 }
+
+                if (submitBtn) {
+                    submitBtn.disabled = true;
+                    submitBtn.innerHTML = 'Verificando... <span class="material-symbols-outlined ms-2 align-middle" style="animation:rotate 1.5s linear infinite;display:inline-block">autorenew</span>';
+                }
+                
+                grecaptcha.ready(function () {
+                    grecaptcha.execute(recaptchaKeyDetail, { action: 'ticket_request' }).then(function (token) {
+                        detailForm.insertAdjacentHTML('beforeend', '<input type="hidden" name="g-recaptcha-response" value="' + token + '">');
+                        detailForm.submit();
+                    }).catch(function () {
+                        if (submitBtn) {
+                            submitBtn.disabled = false;
+                            submitBtn.innerHTML = originalText;
+                        }
+                        alert('No se pudo verificar la prueba de seguridad. Intente de nuevo.');
+                    });
+                });
             });
         }
     });
 </script>
+<style>
+/* Control visual del badge de ReCaptcha */
+body:not(.show-recaptcha) .grecaptcha-badge { visibility: hidden !important; opacity: 0 !important; pointer-events: none; }
+</style>
 <?php endif; ?>
 
 <style>

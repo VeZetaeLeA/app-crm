@@ -17,16 +17,18 @@ class Security
         // 3. Enables XSS Filter and tells it to stop page execution if attack is detected
         header('X-XSS-Protection: 1; mode=block');
 
-        // 4. Content Security Policy (Audit v2.5 Hardening)
-        $csp = "default-src 'self' https://vezetaelea.com https://www.vezetaelea.com; ";
+        // 4. Content Security Policy (Audit v2.7 Hardening - reCAPTCHA & Cross-Domain Fix)
+        $allowed_domains = "https://vezetaelea.com https://www.vezetaelea.com";
+        $csp = "default-src 'self' $allowed_domains; ";
         $csp .= "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://www.google.com https://www.gstatic.com; ";
         $csp .= "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net https://fonts.gstatic.com; ";
         $csp .= "font-src 'self' data: https://fonts.gstatic.com https://fonts.googleapis.com; ";
         $csp .= "img-src 'self' data: *; ";
         $csp .= "frame-src 'self' https://www.google.com; ";
+        $csp .= "connect-src 'self' https://www.google.com https://www.gstatic.com https://cdn.jsdelivr.net; ";
         $csp .= "frame-ancestors 'self'; ";
         $csp .= "base-uri 'self'; ";
-        $csp .= "form-action 'self' https://vezetaelea.com https://www.vezetaelea.com;";
+        $csp .= "form-action 'self' $allowed_domains;";
 
         header("Content-Security-Policy: $csp");
 
