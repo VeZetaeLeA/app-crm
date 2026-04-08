@@ -82,10 +82,10 @@
                         
                         <!-- HONEYPOT & ANTI-SPAM FIELDS (Fricción Cero) -->
                         <div style="position: absolute; left: -9999px; top: -9999px;" aria-hidden="true">
-                            <label for="_vzl_security_trap">Si eres humano, deja este campo vacío</label>
-                            <input type="text" name="_vzl_security_trap" id="_vzl_security_trap" tabindex="-1" autocomplete="off">
+                            <label for="_contact_website_url_check">Si eres humano, deja este campo vacío</label>
+                            <input type="text" name="_contact_website_url_check" id="_contact_website_url_check" tabindex="-1" autocomplete="new-password">
                         </div>
-                        <input type="hidden" name="_vzl_load_time" value="<?php echo time(); ?>">
+                        <input type="hidden" name="_vzl_load_time" id="_vzl_load_time" value="">
                         
                         <div class="row g-4">
                             <div class="col-md-6">
@@ -125,14 +125,52 @@
 
 <?php $recaptchaKey = \Core\Config::get('security.recaptcha_site_key'); ?>
 <?php if (!empty($recaptchaKey)): ?>
-<script src="https://www.google.com/recaptcha/api.js?render=<?= $recaptchaKey ?>"></script>
 <script>
+    // 1. Ocultar el badge genérico de Google visualmente usando CSS para todo el sitio.
+    // Solo se mostrará cuando se aplique la clase 'show-recaptcha' al body.
+    let recaptchaLoaded = false;
+    let recaptchaKey = '<?= $recaptchaKey ?>';
+
+    function loadRecaptcha() {
+        if (recaptchaLoaded) return;
+        recaptchaLoaded = true;
+        const script = document.createElement('script');
+        script.src = "https://www.google.com/recaptcha/api.js?render=" + recaptchaKey;
+        document.head.appendChild(script);
+        
+        // Habilitar la visibilidad visual solo cuando se carga
+        document.body.classList.add('show-recaptcha');
+    }
+
     document.addEventListener('DOMContentLoaded', function () {
+        // Observer: Habilitar recaptcha ONLY cuando el form-step se hace visible
+        const targetNode = document.getElementById('form-step');
+        if (targetNode) {
+            const observer = new MutationObserver(function(mutations) {
+                mutations.forEach(function(mutation) {
+                    if (!targetNode.classList.contains('d-none')) {
+                        loadRecaptcha();
+                    }
+                });
+            });
+            observer.observe(targetNode, { attributes: true, attributeFilter: ['class'] });
+        }
+
+        // Initialize dynamic load time to avoid server cache skew
+        const loadTimeInput = document.getElementById('_vzl_load_time');
+        if (loadTimeInput) {
+            loadTimeInput.value = Math.floor(Date.now() / 1000);
+        }
+
         const form = document.querySelector('form[action$="ticket/submit"]');
         if (form) {
             form.addEventListener('submit', function (e) {
+                // Clear honeypot right before submit to prevent browser autofill false-positives
+                const honeypot = document.getElementById('_contact_website_url_check');
+                if (honeypot) honeypot.value = '';
+
                 if (form.querySelector('input[name="g-recaptcha-response"]')) {
-                    return;
+                    return; // Ya procesado, permite el envio natural
                 }
 
                 e.preventDefault();
@@ -140,8 +178,20 @@
                 const originalText = submitBtn ? submitBtn.innerHTML : '';
 
                 if (typeof grecaptcha === 'undefined') {
-                    console.error('[reCAPTCHA] Script not loaded.');
-                    alert('Error de seguridad: reCAPTCHA no disponible.');
+                    console.warn('[reCAPTCHA] Script not loaded yet. Waiting...');
+                    // Fallbck por si la red va lenta
+                    if (submitBtn) {
+                        submitBtn.disabled = true;
+                        submitBtn.innerHTML = 'Verificando red...';
+                    }
+                    setTimeout(() => {
+                        if (typeof grecaptcha !== 'undefined') form.requestSubmit();
+                        else alert('Error de seguridad: Servicio inalcanzable. Revise su conexión.');
+                        if (submitBtn) {
+                            submitBtn.disabled = false;
+                            submitBtn.innerHTML = originalText;
+                        }
+                    }, 2000);
                     return;
                 }
 
@@ -151,7 +201,7 @@
                 }
                 
                 grecaptcha.ready(function() {
-                    grecaptcha.execute('<?= $recaptchaKey ?>', {action: 'ticket_request'}).then(function(token) {
+                    grecaptcha.execute(recaptchaKey, {action: 'ticket_request'}).then(function(token) {
                         const input = document.createElement('input');
                         input.type = 'hidden';
                         input.name = 'g-recaptcha-response';
@@ -174,5 +224,7 @@
 <style>
 .rotating { animation: rotate 1.5s linear infinite; display: inline-block; vertical-align: middle; }
 @keyframes rotate { 100% { transform: rotate(360deg); } }
+/* Control visual del badge de ReCaptcha */
+body:not(.show-recaptcha) .grecaptcha-badge { visibility: hidden !important; opacity: 0 !important; pointer-events: none; }
 </style>
 <?php endif; ?>

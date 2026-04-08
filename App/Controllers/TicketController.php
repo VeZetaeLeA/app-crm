@@ -124,20 +124,22 @@ class TicketController extends Controller
         $isHoneypotEnabled = \Core\Config::get('security.honeypot_enabled', true);
         if ($isHoneypotEnabled) {
             // Drop silencioso si el robot llenó el honeypot
-            if (!empty($_POST['_vzl_security_trap'])) {
+            if (!empty($_POST['_contact_website_url_check'])) {
                 \Core\SecurityLogger::log('bot_detected_honeypot', ['ip' => $ip, 'email' => $_POST['email'] ?? ''], 'WARN');
-                Session::flash('success', '¡Solicitud recibida! Hemos enviado detalles a tu correo.');
-                $this->redirect('/');
+                // En vez de success falso, fallamos discretamente para evitar falsos positivos a usuarios reales, 
+                // ya que JS debería limpiar esto antes del submit.
+                Session::flash('error', 'Validación de seguridad fallida. Por favor, asegúrate de no tener autocompletar activado en campos ocultos.');
+                $this->redirect('/ticket/request');
                 return;
             }
             
-            // Drop silencioso si el formulario fue enviado anormalmente rápido (menos de X segundos)
+            // Revertir el bloqueo estricto de tiempo que daba falsos positivos en recargas
             $loadTime = (int)($_POST['_vzl_load_time'] ?? 0);
-            $minTime = \Core\Config::get('security.min_form_time', 3);
-            if (time() - $loadTime < $minTime) {
+            $minTime = \Core\Config::get('security.min_form_time', 2);
+            if ($loadTime > 0 && (time() - $loadTime < $minTime)) {
                 \Core\SecurityLogger::log('bot_detected_speed', ['ip' => $ip, 'time' => time() - $loadTime], 'WARN');
-                Session::flash('success', '¡Solicitud recibida! Hemos enviado detalles a tu correo.');
-                $this->redirect('/');
+                Session::flash('error', 'El formulario fue enviado demasiado rápido. Por favor, tómate un momento.');
+                $this->redirect('/ticket/request');
                 return;
             }
         }
