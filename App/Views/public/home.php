@@ -694,39 +694,52 @@ if (is_dir(public_path($partnersDir))) {
 <script src="https://www.google.com/recaptcha/api.js?render=<?= $recaptchaKey ?>"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function () {
-        // Initialize load-time for bot-speed detection
+        // Initialize load-time (Bot Speed Detection)
         const loadTimeField = document.getElementById('_vzl_load_time_home');
         if (loadTimeField) {
             loadTimeField.value = Math.floor(Date.now() / 1000);
         }
 
-        // Hook reCAPTCHA v3 into the home ticket form on submit
         const homeForm = document.getElementById('dynamic-ticket-form');
         if (homeForm) {
             homeForm.addEventListener('submit', function (e) {
-                // Avoid double-execution if token already injected
-                if (!homeForm.querySelector('input[name="g-recaptcha-response"]')) {
-                    e.preventDefault();
-                    const submitBtn = document.getElementById('home-ticket-submit-btn');
-                    const originalText = submitBtn ? submitBtn.innerHTML : '';
-                    if (submitBtn) {
-                        submitBtn.disabled = true;
-                        submitBtn.innerHTML = 'Verificando seguridad... <span class="material-symbols-outlined ms-2 fs-6 pb-1" style="animation:rotate 1.5s linear infinite;display:inline-block">autorenew</span>';
-                    }
-
-                    grecaptcha.ready(function () {
-                        grecaptcha.execute('<?= $recaptchaKey ?>', { action: 'ticket_request' }).then(function (token) {
-                            homeForm.insertAdjacentHTML('beforeend', '<input type="hidden" name="g-recaptcha-response" value="' + token + '">');
-                            homeForm.submit();
-                        }).catch(function () {
-                            if (submitBtn) {
-                                submitBtn.disabled = false;
-                                submitBtn.innerHTML = originalText;
-                            }
-                            alert('No se pudo verificar la prueba de seguridad. Intente de nuevo.');
-                        });
-                    });
+                // If token already present, allow natural submit
+                if (homeForm.querySelector('input[name="g-recaptcha-response"]')) {
+                    return;
                 }
+
+                e.preventDefault();
+                const submitBtn = document.getElementById('home-ticket-submit-btn');
+                const originalText = submitBtn ? submitBtn.innerHTML : '';
+
+                if (typeof grecaptcha === 'undefined') {
+                    console.error('[reCAPTCHA] El script de Google no se cargó. Revisa tu CSP o conexión.');
+                    alert('Error de seguridad: No se pudo cargar el validador (reCAPTCHA).');
+                    return;
+                }
+
+                if (submitBtn) {
+                    submitBtn.disabled = true;
+                    submitBtn.innerHTML = 'Verificando seguridad... <span class="material-symbols-outlined ms-2 fs-6 pb-1" style="animation:rotate 1.5s linear infinite;display:inline-block">autorenew</span>';
+                }
+
+                grecaptcha.ready(function () {
+                    grecaptcha.execute('<?= $recaptchaKey ?>', { action: 'ticket_request' }).then(function (token) {
+                        const input = document.createElement('input');
+                        input.type = 'hidden';
+                        input.name = 'g-recaptcha-response';
+                        input.value = token;
+                        homeForm.appendChild(input);
+                        homeForm.submit();
+                    }).catch(function (err) {
+                        console.error('[reCAPTCHA] Error en ejecución:', err);
+                        if (submitBtn) {
+                            submitBtn.disabled = false;
+                            submitBtn.innerHTML = originalText;
+                        }
+                        alert('No se pudo verificar la prueba de seguridad. Intente de nuevo.');
+                    });
+                });
             });
         }
     });

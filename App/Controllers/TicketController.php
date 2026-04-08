@@ -151,7 +151,12 @@ class TicketController extends Controller
             'description' => 'required|min:10|max:3000',
         ]);
         if ($validator->fails()) {
-            $firstErrors = array_map(fn($e) => $e[0], $validator->errors());
+            \Core\SecurityLogger::log('ticket_validation_failed', [
+                'errors' => $validator->errors(),
+                'ip' => $ip,
+                'email' => $_POST['email'] ?? 'N/A'
+            ], 'WARN');
+            $firstErrors = array_map(function($e) { return $e[0]; }, $validator->errors());
             Session::flash('error', implode(' ', $firstErrors));
             $this->redirect('/ticket/request');
             return;
@@ -161,6 +166,7 @@ class TicketController extends Controller
         $recaptchaSecret = \Core\Config::get('security.recaptcha_secret_key');
         if (!empty($recaptchaSecret)) {
             $recaptchaResponse = $_POST['g-recaptcha-response'] ?? '';
+
             if (empty($recaptchaResponse)) {
                 \Core\SecurityLogger::log('bot_detected_recaptcha_missing', ['ip' => $ip, 'email' => $_POST['email'] ?? ''], 'WARN');
                 Session::flash('error', 'Validación de seguridad requerida.');
@@ -168,24 +174,48 @@ class TicketController extends Controller
                 return;
             }
 
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, "https://www.google.com/recaptcha/api/siteverify");
-            curl_setopt($ch, CURLOPT_POST, 1);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query([
-                'secret' => $recaptchaSecret,
-                'response' => $recaptchaResponse,
-                'remoteip' => $ip
-            ]));
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            $verifyResponse = curl_exec($ch);
-            curl_close($ch);
-            
-            $responseData = json_decode($verifyResponse);
-            $scoreLimit = \Core\Config::get('security.recaptcha_score', 0.5);
+            // Verify with Google (v3) - Using cURL POST (Standard)
+            $url = 'https://www.google.com/recaptcha/api/siteverify';
+            $postData = [
+                'secret'   => $recaptchaSecret,
+                'response' => $recaptchaResponse
+            ];
 
-            if (!$responseData || empty($responseData->success) || $responseData->score < $scoreLimit || $responseData->action !== 'ticket_request') {
-                \Core\SecurityLogger::log('bot_detected_recaptcha_score', ['ip' => $ip, 'score' => $responseData->score ?? 0], 'WARN');
-                Session::flash('error', 'Nuestros sistemas detectaron actividad inusual (Bot risk). Intenta de nuevo.');
+            $ch = curl_init($url);
+            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+            curl_setopt($ch, CURLOPT_POST, true);
+            curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($postData));
+            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false); // Compatibility with some local setups
+            $verifyResponse = curl_exec($ch);
+            $curlError = curl_error($ch);
+            curl_close($ch);
+
+            if ($verifyResponse === false) {
+                \Core\SecurityLogger::log('recaptcha_curl_error', ['error' => $curlError, 'ip' => $ip], 'ERROR');
+                Session::flash('error', 'Error de conexión con el servicio de seguridad. Reintente.');
+                $this->redirect('/ticket/request');
+                return;
+            }
+
+            $responseData = json_decode($verifyResponse);
+            $scoreLimit = (float)\Core\Config::get('security.recaptcha_score', 0.5);
+
+            $success = $responseData->success ?? false;
+            $score = (float)($responseData->score ?? 0);
+            $action = $responseData->action ?? '';
+
+            if (!$success || $score < $scoreLimit || (!empty($action) && $action !== 'ticket_request')) {
+                \Core\SecurityLogger::log('bot_detected_recaptcha_fail', [
+                    'ip' => $ip, 
+                    'score' => $score, 
+                    'action_expected' => 'ticket_request',
+                    'action_received' => $action,
+                    'success' => $success,
+                    'error_codes' => $responseData->{'error-codes'} ?? [],
+                    'response_raw' => $verifyResponse
+                ], 'WARN');
+                
+                Session::flash('error', 'Nuestros sistemas detectaron actividad inusual (Bot risk: ' . $score . '). Intenta de nuevo.');
                 $this->redirect('/ticket/request');
                 return;
             }

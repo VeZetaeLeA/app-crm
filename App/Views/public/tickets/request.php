@@ -131,24 +131,42 @@
         const form = document.querySelector('form[action$="ticket/submit"]');
         if (form) {
             form.addEventListener('submit', function (e) {
-                if (!form.querySelector('input[name="g-recaptcha-response"]')) {
-                    e.preventDefault();
-                    const submitBtn = form.querySelector('button[type="submit"]');
-                    const originalText = submitBtn.innerHTML;
+                if (form.querySelector('input[name="g-recaptcha-response"]')) {
+                    return;
+                }
+
+                e.preventDefault();
+                const submitBtn = form.querySelector('button[type="submit"]');
+                const originalText = submitBtn ? submitBtn.innerHTML : '';
+
+                if (typeof grecaptcha === 'undefined') {
+                    console.error('[reCAPTCHA] Script not loaded.');
+                    alert('Error de seguridad: reCAPTCHA no disponible.');
+                    return;
+                }
+
+                if (submitBtn) {
                     submitBtn.disabled = true;
                     submitBtn.innerHTML = 'Verificando seguridad... <span class="material-symbols-outlined ms-2 fs-6 pb-1 rotating">autorenew</span>';
-                    
-                    grecaptcha.ready(function() {
-                        grecaptcha.execute('<?= $recaptchaKey ?>', {action: 'ticket_request'}).then(function(token) {
-                            form.insertAdjacentHTML('beforeend', '<input type="hidden" name="g-recaptcha-response" value="' + token + '">');
-                            form.submit();
-                        }).catch(function() {
+                }
+                
+                grecaptcha.ready(function() {
+                    grecaptcha.execute('<?= $recaptchaKey ?>', {action: 'ticket_request'}).then(function(token) {
+                        const input = document.createElement('input');
+                        input.type = 'hidden';
+                        input.name = 'g-recaptcha-response';
+                        input.value = token;
+                        form.appendChild(input);
+                        form.submit();
+                    }).catch(function(err) {
+                        console.error('[reCAPTCHA] Execution error:', err);
+                        if (submitBtn) {
                             submitBtn.disabled = false;
                             submitBtn.innerHTML = originalText;
-                            alert('No se pudo verificar la prueba de seguridad. Intente de nuevo.');
-                        });
+                        }
+                        alert('No se pudo verificar la prueba de seguridad. Intente de nuevo.');
                     });
-                }
+                });
             });
         }
     });

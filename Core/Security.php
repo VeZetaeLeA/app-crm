@@ -17,18 +17,16 @@ class Security
         // 3. Enables XSS Filter and tells it to stop page execution if attack is detected
         header('X-XSS-Protection: 1; mode=block');
 
-        // 4. Content Security Policy (Basic restrictive policy)
-        // Allow images from current origin and data: (for logos/icons)
-        // Allow scripts from current origin and common CDNs used in the project
-        // Allow styles from current origin, Google Fonts, and Bootstrap CDNs
-        $csp = "default-src 'self'; ";
-        $csp .= "script-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://cdnjs.cloudflare.com; ";
+        // 4. Content Security Policy (Audit v2.5 Hardening)
+        $csp = "default-src 'self' https://vezetaelea.com https://www.vezetaelea.com; ";
+        $csp .= "script-src 'self' 'unsafe-inline' 'unsafe-eval' https://cdn.jsdelivr.net https://www.google.com https://www.gstatic.com; ";
         $csp .= "style-src 'self' 'unsafe-inline' https://fonts.googleapis.com https://cdn.jsdelivr.net https://fonts.gstatic.com; ";
         $csp .= "font-src 'self' data: https://fonts.gstatic.com https://fonts.googleapis.com; ";
-        $csp .= "img-src 'self' data: https://cdn.jsdelivr.net; ";
+        $csp .= "img-src 'self' data: *; ";
+        $csp .= "frame-src 'self' https://www.google.com; ";
         $csp .= "frame-ancestors 'self'; ";
         $csp .= "base-uri 'self'; ";
-        $csp .= "form-action 'self';";
+        $csp .= "form-action 'self' https://vezetaelea.com https://www.vezetaelea.com;";
 
         header("Content-Security-Policy: $csp");
 
