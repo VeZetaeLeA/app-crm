@@ -28,7 +28,7 @@ class AIService
         return !empty($this->apiKey);
     }
 
-    private function query(array $messages, float $temperature = 0.7)
+    public function query(array $messages, float $temperature = 0.7, bool $jsonMode = false)
     {
         if (!$this->isEnabled()) {
             return ['error' => 'API Key no configurada'];
@@ -39,6 +39,10 @@ class AIService
             'messages' => $messages,
             'temperature' => $temperature,
         ];
+
+        if ($jsonMode) {
+            $data['response_format'] = ['type' => 'json_object'];
+        }
 
         $ch = curl_init();
         curl_setopt($ch, CURLOPT_URL, $this->endpoint);
@@ -168,5 +172,21 @@ class AIService
 
         $result = $this->query($prompt, 0.5);
         return is_array($result) && isset($result['error']) ? null : trim($result);
+    }
+
+    /**
+     * GAI-06 - Genera estructura JSON estricta (útil para Instagram)
+     */
+    public function generateStructuredJSON(array $prompt, float $temperature = 0.7): ?array
+    {
+        $result = $this->query($prompt, $temperature, true);
+        if (is_array($result) && isset($result['error'])) {
+            return null;
+        }
+
+        $result = preg_replace('/```json|```/', '', $result);
+        $parsed = json_decode(trim($result), true);
+        
+        return is_array($parsed) ? $parsed : null;
     }
 }

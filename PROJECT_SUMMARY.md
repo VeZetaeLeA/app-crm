@@ -6,6 +6,14 @@ VeZetaeLeA OS ha alcanzado la **Evolución 20.3.0**. En esta fase se ha integrad
 
 ---
 
+## 📸 AI-First Instagram Strategy Module (Sprint 20.4.0)
+- [x] **Database Evolution**: Migración de la estructura `instagram_posts` con el campo `scenes_data (JSON)` para soportar la descomposición de arrays visuales complejos generados por IA.
+- [x] **LLM Structured Output (Groq)**: Implementación de Inferencia generativa. El LLM actúa como "Director Creativo B2B" forzando una respuesta en JSON estricta (System Prompt) a través del `AIService`.
+- [x] **Dynamic Sequences (Reels & Carousels)**: Lógica algorítmica para diferenciar Posts Simples de Secuencias Complejas. La IA divide la solicitud en Escenas Atómicas (Slide 1, Slide 2...), proveyendo textos gancho y prompts de imágenes cinemáticas discretas.
+- [x] **Neuro-Marketing & IKEA Effect**: Modificación del embudo de creación (`generate.php`) exigiendo al usuario la definición de un "Objetivo de Alta Conversión". Esto reduce la fricción inicial y aumenta el compromiso del autor humano usando modelos cognitivos.
+- [x] **Premium UX/UI con Delight (AJAX + Shimmer)**: Destrucción de la fricción en la experiencia de edición. La regeneración de contenido migró de un modelo rígido de postback a peticiones asíncronas vía Fetch API con estados visuales hipnóticos de "esqueleto de carga".
+- [x] **Accordion Sequences**: La tarjeta de lectura (`view.php`) se actualizó con un acordeón colapsable para inspeccionar quirúrgicamente la propuesta técnica (overlay text y visual prompt en inglés) de cada slide antes de enviarla al renderizador de imágenes final.
+
 ## 🛡️ Anti-Spam & Security Hardening (Sprint 20.3.1)
 - [x] **Zero-Friction UX Security Base**: Implementación de táctica "Honeypot" simulado por UI (imposible de evadir para bots automatizados) combinada con factor `Time-to-Fill` (>3s) para mitigar el 90% del spam sin impactar la conversión y sin molestar a los clientes en los formularios dinámicos de lead (TicketController).
 - [x] **Invisible reCAPTCHA v3 Validation**: Adición complementaria de Google reCAPTCHA v3 evaluado estrictamente en servidor vía cURL. Config-driven desde `.env` para poder suspenderse durante el desarrollo en local sin causar Fatal Errors.

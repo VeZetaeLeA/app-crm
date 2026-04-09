@@ -53,11 +53,12 @@ class InstagramController extends Controller
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $startDate = $_POST['start_date'] ?? date('Y-m-d');
+            $objective = $_POST['objective'] ?? 'Crecimiento de Autoridad y Nurturing B2B';
             $weekNumber = date('W', strtotime($startDate));
             $year = date('Y', strtotime($startDate));
             $weekLabel = "Semana $weekNumber - $year";
 
-            $calendarId = $this->instagramService->generateWeeklyCalendar($startDate, $weekLabel);
+            $calendarId = $this->instagramService->generateWeeklyCalendar($startDate, $weekLabel, $objective);
 
             if ($calendarId) {
                 Session::flash('success', 'Calendario generado exitosamente.');
@@ -129,13 +130,26 @@ class InstagramController extends Controller
             $postId = intval($_POST['post_id'] ?? 0);
             $calendarId = intval($_POST['calendar_id'] ?? 0);
 
-            if ($this->instagramService->regeneratePost($postId)) {
+            $success = $this->instagramService->regeneratePost($postId);
+
+            $isAjax = !empty($_SERVER['HTTP_ACCEPT']) && strpos($_SERVER['HTTP_ACCEPT'], 'application/json') !== false;
+
+            if ($isAjax) {
+                if ($success) {
+                    echo json_encode(['status' => 'success', 'message' => 'Contenido regenerado exitosamente. Recarga la página o se actualizará pronto.']);
+                } else {
+                    http_response_code(500);
+                    echo json_encode(['status' => 'error', 'message' => 'Fallo al regenerar el contenido.']);
+                }
+                exit;
+            }
+
+            if ($success) {
                 Session::flash('success', 'Contenido regenerado con IA.');
-                $this->redirect('/admin/instagram/view?id=' . $calendarId);
             } else {
                 Session::flash('error', 'Fallo al regenerar el contenido.');
-                $this->redirect('/admin/instagram/view?id=' . $calendarId);
             }
+            $this->redirect('/admin/instagram/view?id=' . $calendarId);
         }
     }
 

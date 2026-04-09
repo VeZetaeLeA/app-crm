@@ -68,19 +68,40 @@
                         </p>
                     </div>
 
+                    <?php if (!empty($post['scenes_data'])): ?>
+                    <?php $scenes = json_decode($post['scenes_data'], true); ?>
+                    <?php if (is_array($scenes)): ?>
+                    <div class="accordion accordion-flush bg-transparent mb-4" id="scenes-<?php echo $post['id']; ?>">
+                        <div class="accordion-item bg-transparent border-0">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed bg-white-5 text-white border-white-10 rounded-3 text-white-50 x-small uppercase tracking-widest shadow-none" type="button" data-bs-toggle="collapse" data-bs-target="#collapse-<?php echo $post['id']; ?>">
+                                    <span class="material-symbols-outlined fs-6 me-2">view_carousel</span> Ver Escenas (<?php echo count($scenes); ?>)
+                                </button>
+                            </h2>
+                            <div id="collapse-<?php echo $post['id']; ?>" class="accordion-collapse collapse" data-bs-parent="#scenes-<?php echo $post['id']; ?>">
+                                <div class="accordion-body px-0 pt-3 pb-0">
+                                    <?php foreach ($scenes as $scene): ?>
+                                    <div class="bg-black bg-opacity-50 border border-white-5 rounded-3 p-2 mb-2">
+                                        <span class="text-accent x-small fw-bold d-block mb-1">Slide <?php echo $scene['slide_number']; ?></span>
+                                        <p class="text-white-75 x-small mb-1"><strong>Texto:</strong> <?php echo htmlspecialchars($scene['text_overlay'] ?? ''); ?></p>
+                                        <p class="text-white-50 x-small mb-0 fst-italic"><strong>Prompt:</strong> <?php echo htmlspecialchars($scene['visual_prompt'] ?? ''); ?></p>
+                                    </div>
+                                    <?php endforeach; ?>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <?php endif; ?>
+                    <?php endif; ?>
+
                     <div class="d-flex gap-2 mt-auto">
                         <button onclick="editPost(<?php echo htmlspecialchars(json_encode($post)); ?>)" class="btn btn-sm btn-outline-light w-100 border-white-10 hover-white d-flex justify-content-center align-items-center gap-1">
                             <span class="material-symbols-outlined fs-6">edit</span> Editar
                         </button>
                         <?php if ($calendar['status'] !== 'finalized'): ?>
-                            <form action="<?php echo url('admin/instagram/regeneratePost'); ?>" method="POST" class="w-100 m-0" onsubmit="return confirm('¿Regenerar este contenido con IA? Se perderán los cambios manuales.')">
-                                <?php echo csrf_field(); ?>
-                                <input type="hidden" name="post_id" value="<?php echo $post['id']; ?>">
-                                <input type="hidden" name="calendar_id" value="<?php echo $calendar['id']; ?>">
-                                <button type="submit" class="btn btn-sm btn-outline-info w-100 d-flex justify-content-center align-items-center gap-1">
-                                    <span class="material-symbols-outlined fs-6">cycle</span> Re-generar
-                                </button>
-                            </form>
+                            <button onclick="regeneratePost(<?php echo $post['id']; ?>, <?php echo $calendar['id']; ?>, this)" class="btn btn-sm btn-outline-info w-100 d-flex justify-content-center align-items-center gap-1">
+                                <span class="material-symbols-outlined fs-6">cycle</span> Re-generar
+                            </button>
                         <?php endif; ?>
                     </div>
                 </div>
@@ -154,9 +175,60 @@
 <style>
 .hover-card-lift { transition: transform 0.3s ease, box-shadow 0.3s ease; }
 .hover-card-lift:hover { transform: translateY(-5px); box-shadow: 0 10px 40px rgba(0,255,255,0.05) !important; border-color: rgba(255,255,255,0.2) !important; }
+
+/* Shimmer Animation Neuromarketing focus */
+@keyframes shimmer {
+    0% { background-position: -1000px 0; }
+    100% { background-position: 1000px 0; }
+}
+.skeleton-shimmer {
+    animation: shimmer 2s infinite linear;
+    background: linear-gradient(to right, rgba(255,255,255,0.02) 4%, rgba(255,255,255,0.08) 25%, rgba(255,255,255,0.02) 36%);
+    background-size: 1000px 100%;
+}
 </style>
 
 <script>
+function regeneratePost(postId, calendarId, btnElem) {
+    if(!confirm('¿Regenerar este contenido con IA? Se perderán los cambios manuales.')) return;
+    
+    // UI Shimmer effect
+    const card = btnElem.closest('.card');
+    card.classList.add('skeleton-shimmer');
+    btnElem.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span> Generando...';
+    btnElem.disabled = true;
+
+    const formData = new FormData();
+    formData.append('post_id', postId);
+    formData.append('calendar_id', calendarId);
+    
+    // Usar CSRF si está definido globalmente o leer de algún form
+    const csrfInput = document.querySelector('input[name="csrf_token"]');
+    if (csrfInput) formData.append('csrf_token', csrfInput.value);
+
+    fetch('<?php echo url("admin/instagram/regeneratePost"); ?>', {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json'
+        },
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.status === 'success') {
+            window.location.reload(); // Recarga para mostrar todo actualizado. Se puede evolucionar a fetch parcial.
+        } else {
+            alert(data.message || 'Error al regenerar');
+            window.location.reload();
+        }
+    })
+    .catch(error => {
+        console.error(error);
+        alert('Error de red al regenerar el contenido.');
+        window.location.reload();
+    });
+}
+
 function editPost(post) {
     document.getElementById('edit_post_id').value = post.id;
     document.getElementById('edit_title').value = post.internal_title;
@@ -169,7 +241,6 @@ function editPost(post) {
     
     document.getElementById('modalTitleText').innerText = 'Editar Post: ' + post.day_of_week;
     
-    // Si no está inicializado, inicializar el modal de bootstrap
     var editModal = new bootstrap.Modal(document.getElementById('editModal'));
     editModal.show();
 }

@@ -10,9 +10,21 @@
             <form action="<?php echo url('admin/instagram/generate'); ?>" method="POST">
                 <?php echo csrf_field(); ?>
 
-                <div class="mb-4">
-                    <label class="form-label text-white-50 small uppercase tracking-widest">Fecha de Inicio (Lunes preferentemente):</label>
-                    <input type="date" name="start_date" value="<?php echo date('Y-m-d', strtotime('next monday')); ?>" required class="form-control bg-black border-white-10 text-white focus-ring-accent">
+                <div class="row g-3 mb-4">
+                    <div class="col-md-4">
+                        <label class="form-label text-white-50 small uppercase tracking-widest">Fecha de Inicio (Lunes):</label>
+                        <input type="date" name="start_date" value="<?php echo date('Y-m-d', strtotime('next monday')); ?>" required class="form-control bg-black border-white-10 text-white focus-ring-accent">
+                    </div>
+                    <div class="col-md-8">
+                        <label class="form-label text-white-50 small uppercase tracking-widest">Objetivo Principal de la Semana:</label>
+                        <select name="objective" class="form-select bg-black border-white-10 text-white focus-ring-accent">
+                            <option value="Generar Autoridad y Confianza B2B">👑 Generar Autoridad y Confianza B2B</option>
+                            <option value="Educar sobre Transformación Digital">🧠 Educar sobre Transformación Digital</option>
+                            <option value="Conversión / Lanzamiento de Servicio">🚀 Conversión / Lanzamiento de Servicio</option>
+                            <option value="Humanizar la Marca / Cultura Empresarial">🫶 Humanizar la Marca / Cultura Empresarial</option>
+                            <option value="Derribar Objeciones Técnicas y de Precio">🛡️ Derribar Objeciones de Clientes</option>
+                        </select>
+                    </div>
                 </div>
 
                 <div class="bg-primary bg-opacity-10 border border-primary border-opacity-25 rounded-4 p-4 mb-4">
