@@ -1,7 +1,7 @@
 # 🔐 Guía de Seguridad y Mejores Prácticas - VeZetaeLeA OS
 
-**Versión:** 2.5.0  
-**Última actualización:** 03 de Marzo, 2026 (Fase 4 - Intelligence & SecOps)  
+**Versión:** 2.6.0  
+**Última actualización:** 08 de Abril, 2026 (Fase UX & SecOps)  
 
 ---
 
@@ -380,7 +380,14 @@ $clean = HTMLPurifier::purify($dirtyHtml);
 // La verificación es AUTOMÁTICA en el constructor de Core\App.php
 ```
 
-### 5.4 Clickjacking
+### 5.4 Protección Anti-Bot (Friction-Zero) y ReCAPTCHA
+
+VeZetaeLeA implementa un esquema dual pasivo-activo enfocado en conversiones:
+- **Honeypot Silencioso**: Implementamos un campo oculto pero con un naming orgánico: `_contact_website_url_check`. Además, usa `autocomplete="new-password"` para evitar los falsos positivos por auto-llenado de Chrome y Safari. Los bots que lo llenen son vetados internamente sin lanzar alarmas sonoras al sistema.
+- **Validación de Velocidad Localizada**: Relegamos el estampillado de *Timestamps* hacia el Servidor PHP (`<?php echo time(); ?>`) y no al cliente (mediante JS). Esto evita falsos bloqueos en ambientes con desincronización de reloj (*Time Drift*).
+- **Google ReCAPTCHA v3 Inyectado Contextualmente**: A diferencia de implementaciones legacy, el widget (y su masivo ancho de banda/impacto visual) no se carga a nivel de toda la página, sino única y exclusivamente cuando el usuario enfoca un campo de formulario. Este método **salva UX, performance y evita CSP Blocks** por integraciones fantasma.
+
+### 5.5 Clickjacking
 
 ```apache
 # En .htaccess
@@ -388,7 +395,7 @@ Header always set X-Frame-Options "SAMEORIGIN"
 Header always set Content-Security-Policy "frame-ancestors 'self'"
 ```
 
-### 5.5 Session Hijacking
+### 5.6 Session Hijacking
 
 ```php
 // Regenerar session ID después de login
@@ -610,5 +617,5 @@ Si encuentras una vulnerabilidad de seguridad, por favor repórtala a:
 
 ---
 
-**Última actualización:** Febrero 2026  
-**Próxima revisión:** Mayo 2026
+**Última actualización:** Abril 2026  
+**Próxima revisión:** Julio 2026
