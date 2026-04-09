@@ -25,7 +25,7 @@
 
         <div class="d-flex flex-column flex-sm-row justify-content-center gap-3">
             <a href="#pilares" class="btn btn-outline-white px-5 py-3 small fw-bold uppercase rounded-pill transition-all"><?= __('home.hero.cta_primary') ?></a>
-            <a href="#contacto" class="btn vzl-btn-glow-magenta px-5 py-3 fw-bold uppercase tracking-widest rounded-pill transition-all"><?= __('home.hero.cta_secondary') ?></a>
+            <a href="#kspace_premium" class="btn vzl-btn-glow-magenta px-5 py-3 fw-bold uppercase tracking-widest rounded-pill transition-all"><?= __('home.hero.cta_secondary') ?></a>
         </div>
     </div>
 </header>
@@ -297,42 +297,84 @@ if (is_dir(public_path($stackDir))) {
         </div>
 
         <div class="row g-5 align-items-center">
-            <!-- Left: Carousel Images -->
-            <div class="col-lg-6">
-                <div class="carousel slide carousel-fade glass-morphism p-3 rounded-5 border border-white-10 shadow-2xl overflow-hidden" data-bs-ride="carousel" data-bs-interval="3000">
-                    <div class="carousel-inner rounded-4">
-                        <div class="carousel-item active">
-                            <img src="<?= url('assets/images/vzl_os_crm.png'); ?>" class="d-block w-100" style="height: 380px; object-fit: cover;" alt="CRM Dashboard">
-                            <div class="position-absolute bottom-0 start-0 w-100 px-4 py-3 glass-morphism">
-                                <span class="x-small text-white fw-bold uppercase tracking-widest">📊 Dashboard Interactivo</span>
-                            </div>
+            <!-- Left: Floating SaaS Presentation Mockup -->
+            <div class="col-lg-6 position-relative">
+                <!-- Aesthetic Ambient Glow behind device -->
+                <div class="position-absolute top-50 start-50 translate-middle w-100 h-100 rounded-circle bg-magenta blur-3xl opacity-20" style="mix-blend-mode: screen; filter: blur(100px);"></div>
+                
+                <div class="vzl-browser-mockup position-relative z-1 shadow-2xl">
+                    <!-- Nav/Header Bar simulating an OS window -->
+                    <div class="vzl-browser-header bg-deep-black border-bottom border-white-10 d-flex align-items-center px-3 py-2">
+                        <div class="d-flex align-items-center gap-1">
+                            <div class="rounded-circle bg-danger" style="width: 10px; height: 10px; opacity: 0.8;"></div>
+                            <div class="rounded-circle bg-warning" style="width: 10px; height: 10px; opacity: 0.8;"></div>
+                            <div class="rounded-circle bg-success" style="width: 10px; height: 10px; opacity: 0.8;"></div>
                         </div>
-                        <div class="carousel-item">
-                            <img src="<?= url('assets/images/vzl_os_ai.png'); ?>" class="d-block w-100" style="height: 380px; object-fit: cover;" alt="AI Module">
-                            <div class="position-absolute bottom-0 start-0 w-100 px-4 py-3 glass-morphism">
-                                <span class="x-small text-white fw-bold uppercase tracking-widest">🤖 Vezi Copilot Integrado</span>
-                            </div>
-                        </div>
-                        <div class="carousel-item">
-                            <img src="<?= url('assets/images/vzl_os_finops.png'); ?>" class="d-block w-100" style="height: 380px; object-fit: cover;" alt="FinOps Module">
-                            <div class="position-absolute bottom-0 start-0 w-100 px-4 py-3 glass-morphism">
-                                <span class="x-small text-white fw-bold uppercase tracking-widest">💰 FinOps & Facturación</span>
-                            </div>
-                        </div>
-                        <div class="carousel-item">
-                            <img src="<?= url('assets/images/vzl_os_realtime.png'); ?>" class="d-block w-100" style="height: 380px; object-fit: cover;" alt="RealTime Module">
-                            <div class="position-absolute bottom-0 start-0 w-100 px-4 py-3 glass-morphism">
-                                <span class="x-small text-white fw-bold uppercase tracking-widest">⚡ Comunicación en Tiempo Real</span>
-                            </div>
+                        <div class="mx-auto text-white-50 uppercase fw-bold tracking-widest" style="font-size: 0.6rem; letter-spacing: 2px;">
+                            <span class="material-symbols-outlined align-middle me-1" style="font-size: 0.8rem;">lock</span> <?= \Core\Config::get('business.company_name') ?> OS Workspace
                         </div>
                     </div>
-                    <button class="carousel-control-prev" type="button" data-bs-target="#app-crm-expanded .carousel" data-bs-slide="prev">
-                        <span class="carousel-control-prev-icon"></span>
-                    </button>
-                    <button class="carousel-control-next" type="button" data-bs-target="#app-crm-expanded .carousel" data-bs-slide="next">
-                        <span class="carousel-control-next-icon"></span>
-                    </button>
+                    
+                    <!-- Screen content (Carousel) -->
+                    <div class="vzl-browser-screen position-relative bg-midnight overflow-hidden">
+                        <div id="vzl-system-showcase" class="carousel slide carousel-fade h-100 w-100" data-bs-ride="carousel" data-bs-interval="4000">
+                            <div class="carousel-inner h-100">
+                                <div class="carousel-item active h-100">
+                                    <img src="<?= url('assets/images/vzl_os_crm.png'); ?>" class="d-block w-100 h-100 object-fit-cover vzl-mockup-img" alt="CRM Dashboard">
+                                    <div class="position-absolute bottom-0 start-0 w-100 d-flex justify-content-center pb-4">
+                                        <div class="glass-pill px-4 py-2 border border-white-10 shadow-lg d-inline-flex align-items-center gap-2">
+                                            <span class="material-symbols-outlined text-primary fs-5">monitoring</span>
+                                            <span class="x-small text-white fw-bold uppercase tracking-widest">Dashboard Operativo</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="carousel-item h-100">
+                                    <img src="<?= url('assets/images/vzl_os_ai.png'); ?>" class="d-block w-100 h-100 object-fit-cover vzl-mockup-img" alt="AI Module">
+                                    <div class="position-absolute bottom-0 start-0 w-100 d-flex justify-content-center pb-4">
+                                        <div class="glass-pill px-4 py-2 border border-white-10 shadow-lg d-inline-flex align-items-center gap-2">
+                                            <span class="material-symbols-outlined text-magenta fs-5">smart_toy</span>
+                                            <span class="x-small text-white fw-bold uppercase tracking-widest">Análisis Predictivo (IA)</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="carousel-item h-100">
+                                    <img src="<?= url('assets/images/vzl_os_finops.png'); ?>" class="d-block w-100 h-100 object-fit-cover vzl-mockup-img" alt="FinOps Module">
+                                    <div class="position-absolute bottom-0 start-0 w-100 d-flex justify-content-center pb-4">
+                                        <div class="glass-pill px-4 py-2 border border-white-10 shadow-lg d-inline-flex align-items-center gap-2">
+                                            <span class="material-symbols-outlined text-success fs-5">account_balance</span>
+                                            <span class="x-small text-white fw-bold uppercase tracking-widest">Motor de FinOps</span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="carousel-item h-100">
+                                    <img src="<?= url('assets/images/vzl_os_realtime.png'); ?>" class="d-block w-100 h-100 object-fit-cover vzl-mockup-img" alt="RealTime Module">
+                                    <div class="position-absolute bottom-0 start-0 w-100 d-flex justify-content-center pb-4">
+                                        <div class="glass-pill px-4 py-2 border border-white-10 shadow-lg d-inline-flex align-items-center gap-2">
+                                            <span class="material-symbols-outlined text-warning fs-5">bolt</span>
+                                            <span class="x-small text-white fw-bold uppercase tracking-widest">Sincronización Inmediata</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Sleek Controls -->
+                            <button class="carousel-control-prev" type="button" data-bs-target="#vzl-system-showcase" data-bs-slide="prev" style="width: 5%;">
+                                <span class="d-inline-flex align-items-center justify-content-center bg-black bg-opacity-50 rounded-circle border border-white-10 text-white" style="width:35px; height:35px; backdrop-filter: blur(5px);">
+                                    <span class="material-symbols-outlined fs-5">chevron_left</span>
+                                </span>
+                            </button>
+                            <button class="carousel-control-next" type="button" data-bs-target="#vzl-system-showcase" data-bs-slide="next" style="width: 5%;">
+                                <span class="d-inline-flex align-items-center justify-content-center bg-black bg-opacity-50 rounded-circle border border-white-10 text-white" style="width:35px; height:35px; backdrop-filter: blur(5px);">
+                                    <span class="material-symbols-outlined fs-5">chevron_right</span>
+                                </span>
+                            </button>
+                        </div>
+                    </div>
                 </div>
+
+                <!-- Decoration elements (Accent lines) -->
+                <div class="position-absolute bg-gradient-to-r from-transparent via-primary to-transparent" style="bottom: -20px; left: 10%; width: 80%; height: 2px; filter: blur(2px); opacity: 0.8;"></div>
+                <div class="position-absolute bg-primary" style="bottom: -20px; left: 20%; width: 60%; height: 1px; opacity: 0.9;"></div>
             </div>
 
             <!-- Right: 6 Modules Grid + CTAs -->
@@ -786,4 +828,40 @@ body:not(.show-recaptcha) .grecaptcha-badge { visibility: hidden !important; opa
         background-attachment: fixed !important;
     }
     @keyframes rotate { 100% { transform: rotate(360deg); } }
+
+    /* Estilos del App-CRM Device Mockup Premium */
+    .vzl-browser-mockup {
+        border-radius: 18px;
+        overflow: hidden;
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        box-shadow: 0 35px 65px -15px rgba(0, 0, 0, 0.8), 0 0 25px rgba(255, 255, 255, 0.03);
+        transform-style: preserve-3d;
+        perspective: 1000px;
+        background: #0f1013;
+    }
+    .vzl-browser-header {
+        height: 32px;
+        background: linear-gradient(to right, #111216, #1c1d22);
+    }
+    .vzl-browser-screen {
+        height: 420px;
+        border-bottom-left-radius: 17px;
+        border-bottom-right-radius: 17px;
+    }
+    .vzl-mockup-img {
+        /* Darle un efecto elegante a las imagenes directas del sistema */
+        transform: scale(1.02);
+        transition: transform 10s ease;
+        image-rendering: high-quality;
+    }
+    .carousel-item.active .vzl-mockup-img {
+        transform: scale(1);
+    }
+    .glass-pill {
+        background: rgba(15, 16, 19, 0.65);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border-radius: 100px;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    }
 </style>
