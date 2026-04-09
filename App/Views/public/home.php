@@ -128,8 +128,8 @@
                     <div class="vzl-image-glow position-absolute top-50 start-50 translate-middle w-100 h-100 bg-primary opacity-10 blur-3xl" style="border-radius: 50%;"></div>
                     <div class="rounded-5 overflow-hidden border border-white-10 shadow-2xl position-relative flex-grow-1">
                         <img src="<?= url('assets/images/vezetaelea_working.png') ?>" alt="<?= \Core\Config::get('business.company_name') ?> — Ingeniería Estratégica" class="img-fluid w-100 h-100" style="object-fit: cover; object-position: center;">
-                        <div class="position-absolute bottom-0 start-0 w-100 p-4 bg-gradient-to-t from-midnight to-transparent">
-                            <!-- Tech Badges -->
+                        <div class="position-absolute bottom-0 start-0 w-100 p-4 bg-gradient-to-t from-midnight to-transparent d-none d-md-block">
+                            <!-- Tech Badges Desktop -->
                             <div class="d-flex gap-3 flex-wrap">
                                 <div class="vzl-tech-badge">
                                     <span class="material-symbols-outlined text-primary fs-5">verified</span>
@@ -140,6 +140,18 @@
                                     <span class="text-white fw-bold xx-small uppercase tracking-widest">Satisfacción en cada Sprint</span>
                                 </div>
                             </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Tech Badges Mobile (Moved below image so it doesn't cover it) -->
+                    <div class="d-md-none mt-3 w-100 d-flex flex-column gap-2">
+                        <div class="vzl-tech-badge d-flex align-items-center gap-2 p-3 rounded-4 border border-white-5 bg-white-02">
+                            <span class="material-symbols-outlined text-primary fs-5">verified</span>
+                            <span class="text-white fw-bold x-small uppercase tracking-widest">Excelencia Certificada</span>
+                        </div>
+                        <div class="vzl-tech-badge d-flex align-items-center gap-2 p-3 rounded-4 border border-white-5 bg-white-02">
+                            <span class="material-symbols-outlined text-warning fs-5">stars</span>
+                            <span class="text-white fw-bold x-small uppercase tracking-widest">Satisfacción en cada Sprint</span>
                         </div>
                     </div>
                 </div>
@@ -853,6 +865,8 @@ body:not(.show-recaptcha) .grecaptcha-badge { visibility: hidden !important; opa
         transform: scale(1.02);
         transition: transform 10s ease;
         image-rendering: high-quality;
+        object-fit: cover;
+        object-position: top center;
     }
     .carousel-item.active .vzl-mockup-img {
         transform: scale(1);
@@ -863,5 +877,31 @@ body:not(.show-recaptcha) .grecaptcha-badge { visibility: hidden !important; opa
         -webkit-backdrop-filter: blur(16px);
         border-radius: 100px;
         box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Ajustes UX/UI Resposivos (Mobile First Enhancements) */
+    @media (max-width: 991px) {
+        .vzl-browser-screen {
+            /* Forzar relación de aspecto apaisada para pantallas verticales */
+            height: 250px; 
+        }
+        .vzl-mockup-img {
+            object-position: top center !important;
+        }
+    }
+    
+    @media (max-width: 576px) {
+        .vzl-browser-screen {
+            height: 200px;
+        }
+        .glass-pill {
+            padding: 8px 16px !important;
+        }
+        .glass-pill span.fs-5 {
+            font-size: 1.1rem !important;
+        }
+        .glass-pill span.x-small {
+            font-size: 0.55rem !important;
+        }
     }
 </style>
